@@ -1,0 +1,45 @@
+Maintain a stable version for the production environment.
+Merge branch 'dubbo-2.4.x' of https://github.com/alibaba/dubbo.git
+Docs: http://alibaba.github.io/dubbo-doc-static/Home-zh.htm
+
+Changes:
+Maven code refactoring to make it can be successfully compiled and easier to understand.
+Only to update the pom version of dependency, no changes to a line of source code.
+Removed the internal jar dependencies of alibaba, and will not transitive dependencies of spring.
+Optimized dubbo-admin and dubbo-monitor merged into dubbo-ops, and using the standard java web structure.
+Optimized dubbo-demo-provider and dubbo-demo-consumer.
+
+
+Quick Start:
+
+  Export remote service:
+
+    <bean id="barService" class="com.foo.BarServiceImpl" />
+    <dubbo:service interface="com.foo.BarService" ref="barService" />
+
+  Refer remote service:
+
+    <dubbo:reference id="barService" interface="com.foo.BarService" />
+    <bean id="barAction" class="com.foo.BarAction">
+        <property name="barService" ref="barService" />
+    </bean>
+
+For more, please refer to: http://dubbo.io
+
+
+在 pom.xml 中加入:
+
+<repositories>
+    <repository>
+        <id>dubbo-mvn-github</id>
+        <url>https://raw.githubusercontent.com/lpn520/dubbo/master/mvn-repository</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo</artifactId>
+        <version>2.4.12</version>
+    </dependency>
+</dependencies>
