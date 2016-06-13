@@ -10,7 +10,6 @@
     <name>sjdbc</name>
     <modules>
         <module>sjdbc</module>
-        <module>sjdbc-xtx</module>
         <module>sjdbc-doc</module>
         <module>sjdbc-example</module>
     </modules>
@@ -24,10 +23,6 @@
         <repository>
             <id>sjdbc-mvn-github</id>
             <url>https://raw.githubusercontent.com/lpn520/sjdbc/master/mvn-repository</url>
-        </repository>
-        <repository>
-            <id>jsplite-mvn-github</id>
-            <url>https://raw.githubusercontent.com/lpn520/jsplite/master/mvn-repository</url>
         </repository>
     </repositories>
     <pluginRepositories>
