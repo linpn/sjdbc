@@ -103,19 +103,19 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/src-test/sjdbc-core</directory>
+                                    <directory>${basedir}/src-test/sjdbc-core/resources</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
                                 </resource>
                                 <resource>
-                                    <directory>${basedir}/src-test/sjdbc-config</directory>
+                                    <directory>${basedir}/src-test/sjdbc-config/resources</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
                                 </resource>
                                 <resource>
-                                    <directory>${basedir}/src-test/sjdbc-transaction</directory>
+                                    <directory>${basedir}/src-test/sjdbc-transaction/resources</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
@@ -171,6 +171,7 @@
 
     <!-- 包依赖 -->
     <dependencies>
+        <!-- core -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -262,6 +263,55 @@
             <artifactId>mockito-core</artifactId>
             <version>1.10.19</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- config -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <classifier>indy</classifier>
+            <version>2.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.16</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>4.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.1.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.16</version>
+        </dependency>
+
+        <!-- transaction -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-core</artifactId>
+            <version>1.0.6</version>
         </dependency>
 
     </dependencies>
