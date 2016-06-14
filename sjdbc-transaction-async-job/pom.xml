@@ -50,6 +50,7 @@
         </plugins>
     </build>
 
+    <!-- 包依赖 -->
     <dependencies>
         <dependency>
             <groupId>com.dangdang</groupId>
