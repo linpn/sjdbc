@@ -10,32 +10,9 @@
     <name>sjdbc</name>
     <modules>
         <module>sjdbc</module>
+        <module>sjdbc-transaction-async-job</module>
         <!--<module>sjdbc-doc</module>-->
         <!--<module>sjdbc-example</module>-->
     </modules>
-
-    <!-- 仓库 -->
-    <repositories>
-        <repository>
-            <id>oschina-mvn-repository</id>
-            <url>http://maven.oschina.net/content/groups/public</url>
-        </repository>
-        <repository>
-            <id>sjdbc-mvn-github</id>
-            <url>https://raw.githubusercontent.com/lpn520/sjdbc/master/mvn-repository</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>oschina-plugin-repository</id>
-            <url>http://maven.oschina.net/content/groups/public</url>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
 </project>
