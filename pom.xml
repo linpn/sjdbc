@@ -10,8 +10,8 @@
     <name>sjdbc</name>
     <modules>
         <module>sjdbc</module>
-        <module>sjdbc-doc</module>
-        <module>sjdbc-example</module>
+        <!--<module>sjdbc-doc</module>-->
+        <!--<module>sjdbc-example</module>-->
     </modules>
 
     <!-- 仓库 -->
