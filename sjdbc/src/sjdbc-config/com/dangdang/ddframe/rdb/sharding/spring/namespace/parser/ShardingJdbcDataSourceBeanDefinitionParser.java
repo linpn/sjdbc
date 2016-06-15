@@ -81,7 +81,6 @@ public class ShardingJdbcDataSourceBeanDefinitionParser extends AbstractBeanDefi
         String defaultDataSource = element.getAttribute(ShardingJdbcDataSourceBeanDefinitionParserTag.DEFAULT_DATA_SOURCE_TAG);
         if (!Strings.isNullOrEmpty(defaultDataSource)) {
             factory.addPropertyValue("defaultDataSourceName", defaultDataSource);
-
             // TODO: Linpn修改标记, 设置default-data-source
             factory.addPropertyValue("defaultDataSourceTaget", parserContext.getRegistry().getBeanDefinition(defaultDataSource));
         }

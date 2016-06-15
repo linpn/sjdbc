@@ -37,7 +37,6 @@ public final class DataSourceRule {
 
     @Getter
     private final String defaultDataSourceName;
-
     private final DataSource defaultDataSourceTaget;
 
     public DataSourceRule(final Map<String, DataSource> dataSourceMap) {
