@@ -17,14 +17,14 @@
 
 package com.dangdang.ddframe.rdb.sharding.config.common.api.config;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.sql.DataSource;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 分片规则配置.
@@ -38,6 +38,9 @@ public class ShardingRuleConfig {
     private Map<String, DataSource> dataSource = new HashMap<>();
 
     private String defaultDataSourceName;
+
+    // TODO: Linpn修改标记, 设置default-data-source
+    private DataSource defaultDataSourceTaget;
 
     private Map<String, TableRuleConfig> tables = new HashMap<>();
 

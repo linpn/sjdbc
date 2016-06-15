@@ -60,7 +60,7 @@ public class ShardingJdbcDataSourceBeanDefinitionParser extends AbstractBeanDefi
         Element shardingRuleElement = DomUtils.getChildElementByTagName(element, ShardingJdbcDataSourceBeanDefinitionParserTag.SHARDING_RULE_CONFIG_TAG);
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(ShardingRuleConfig.class);
         factory.addPropertyValue("dataSource", parseDataSources(shardingRuleElement, parserContext));
-        parseDefaultDataSource(factory, shardingRuleElement);
+        parseDefaultDataSource(factory, shardingRuleElement, parserContext);
         factory.addPropertyValue("tables", parseTableRulesConfig(shardingRuleElement));
         factory.addPropertyValue("bindingTables", parseBindingTablesConfig(shardingRuleElement));
         factory.addPropertyValue("defaultDatabaseStrategy", parseDefaultDatabaseStrategyConfig(shardingRuleElement));
@@ -77,10 +77,12 @@ public class ShardingJdbcDataSourceBeanDefinitionParser extends AbstractBeanDefi
         return result;
     }
 
-    private void parseDefaultDataSource(final BeanDefinitionBuilder factory, final Element element) {
+    private void parseDefaultDataSource(final BeanDefinitionBuilder factory, final Element element, final ParserContext parserContext) {
         String defaultDataSource = element.getAttribute(ShardingJdbcDataSourceBeanDefinitionParserTag.DEFAULT_DATA_SOURCE_TAG);
         if (!Strings.isNullOrEmpty(defaultDataSource)) {
             factory.addPropertyValue("defaultDataSourceName", defaultDataSource);
+            // TODO: Linpn修改标记, 设置default-data-source
+            factory.addPropertyValue("defaultDataSourceTaget", parserContext.getRegistry().getBeanDefinition(defaultDataSource));
         }
     }
 

@@ -37,24 +37,33 @@ public final class DataSourceRule {
 
     @Getter
     private final String defaultDataSourceName;
+    private final DataSource defaultDataSourceTaget;
 
     public DataSourceRule(final Map<String, DataSource> dataSourceMap) {
         this(dataSourceMap, null);
     }
 
     public DataSourceRule(final Map<String, DataSource> dataSourceMap, final String defaultDataSourceName) {
+        this(dataSourceMap, defaultDataSourceName, null);
+    }
+
+    // TODO: Linpn修改标记, 设置default-data-source
+    public DataSourceRule(final Map<String, DataSource> dataSourceMap, final String defaultDataSourceName, final DataSource defaultDataSourceTaget) {
         Preconditions.checkState(!dataSourceMap.isEmpty(), "Must have one data source at least.");
         this.dataSourceMap = dataSourceMap;
         if (1 == dataSourceMap.size()) {
             this.defaultDataSourceName = dataSourceMap.entrySet().iterator().next().getKey();
+            this.defaultDataSourceTaget = dataSourceMap.get(this.defaultDataSourceName);
             return;
         }
         if (Strings.isNullOrEmpty(defaultDataSourceName)) {
             this.defaultDataSourceName = null;
+            this.defaultDataSourceTaget = null;
             return;
         }
-        Preconditions.checkState(dataSourceMap.containsKey(defaultDataSourceName), "Data source rule must include default data source.");
+//        Preconditions.checkState(dataSourceMap.containsKey(defaultDataSourceName), "Data source rule must include default data source.");
         this.defaultDataSourceName = defaultDataSourceName;
+        this.defaultDataSourceTaget = defaultDataSourceTaget;
     }
 
     /**
@@ -64,7 +73,11 @@ public final class DataSourceRule {
      * @return 数据源实例
      */
     public DataSource getDataSource(final String name) {
-        return dataSourceMap.get(name);
+        // TODO: Linpn修改标记, 设置default-data-source
+        if (!dataSourceMap.containsKey(name) && name.equals(this.defaultDataSourceName))
+            return this.defaultDataSourceTaget;
+        else
+            return dataSourceMap.get(name);
     }
 
     /**
@@ -74,7 +87,13 @@ public final class DataSourceRule {
      */
     // TODO getDefaultDataSource暂时不支持读写分离
     public Optional<DataSource> getDefaultDataSource() {
-        return Optional.fromNullable(dataSourceMap.get(defaultDataSourceName));
+        // TODO: Linpn修改标记, 设置default-data-source
+        DataSource defaultDataSource;
+        if (dataSourceMap.containsKey(defaultDataSourceName))
+            defaultDataSource = dataSourceMap.get(defaultDataSourceName);
+        else
+            defaultDataSource = this.defaultDataSourceTaget;
+        return Optional.fromNullable(defaultDataSource);
     }
 
     /**
