@@ -3,7 +3,7 @@ Merge branch 'sjdbc-1.x' of https://github.com/dangdangdotcom/sharding-jdbc.git
 Docs: http://dangdangdotcom.github.io/sharding-jdbc
 
 Changes:
-Data source rules can not contain the default data source.
+Data source rules can include or not include default data source.
 
 
 在 pom.xml 中加入:
