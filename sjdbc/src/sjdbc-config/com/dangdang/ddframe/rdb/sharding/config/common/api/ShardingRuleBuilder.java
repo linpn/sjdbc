@@ -90,6 +90,7 @@ public final class ShardingRuleBuilder {
 
     private DataSourceRule buildDataSourceRule() {
         Preconditions.checkArgument(!shardingRuleConfig.getDataSource().isEmpty() || MapUtils.isNotEmpty(externalDataSourceMap), "Sharding JDBC: No data source config");
+
         // TODO: Linpn修改标记, 设置default-data-source
         return shardingRuleConfig.getDataSource().isEmpty() ? new DataSourceRule(externalDataSourceMap, shardingRuleConfig.getDefaultDataSourceName(), shardingRuleConfig.getDefaultDataSourceTaget())
                 : new DataSourceRule(shardingRuleConfig.getDataSource(), shardingRuleConfig.getDefaultDataSourceName(), shardingRuleConfig.getDefaultDataSourceTaget());

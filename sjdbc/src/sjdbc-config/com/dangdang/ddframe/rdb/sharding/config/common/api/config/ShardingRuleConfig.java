@@ -38,7 +38,6 @@ public class ShardingRuleConfig {
     private Map<String, DataSource> dataSource = new HashMap<>();
 
     private String defaultDataSourceName;
-
     // TODO: Linpn修改标记, 设置default-data-source
     private DataSource defaultDataSourceTaget;
 
