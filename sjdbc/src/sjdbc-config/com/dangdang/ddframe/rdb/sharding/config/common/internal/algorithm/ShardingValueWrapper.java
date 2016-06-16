@@ -47,6 +47,17 @@ public class ShardingValueWrapper {
      * @return 返回String.format的结果
      */
     public String format(final String format) {
+        return format(format, value);
+    }
+
+    /**
+     * 字符串格式化, 使用了String.format的方法
+     *
+     * @param format String.format的参数格式
+     * @param value  要格式化的值
+     * @return 返回String.format的结果
+     */
+    public String format(final String format, Object value) {
         return String.format(format, value);
     }
 
