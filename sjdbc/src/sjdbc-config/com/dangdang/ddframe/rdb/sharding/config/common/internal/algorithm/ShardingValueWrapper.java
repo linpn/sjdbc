@@ -41,6 +41,16 @@ public class ShardingValueWrapper {
     }
 
     /**
+     * 字符串格式化, 使用了String.format的方法
+     *
+     * @param format String.format的参数格式
+     * @return 返回String.format的结果
+     */
+    public String format(final String format) {
+        return String.format(format, value);
+    }
+
+    /**
      * 获取long值.
      *
      * @return long型返回值
@@ -58,14 +68,14 @@ public class ShardingValueWrapper {
         return numberValue().doubleValue();
     }
 
-    private Number numberValue() {
-        if (value instanceof Number) {
-            return (Number) value;
-        }
-        if (value instanceof Date) {
-            return ((Date) value).getTime();
-        }
-        return new BigDecimal(value.toString());
+    /**
+     * 将字符串转换为时间.
+     *
+     * @return 时间类型的值
+     * @throws ParseException
+     */
+    public Date dateValue() throws ParseException {
+        return dateValue(null);
     }
 
     /**
@@ -87,22 +97,12 @@ public class ShardingValueWrapper {
     }
 
     /**
-     * 将字符串转换为时间.
-     *
-     * @return 时间类型的值
-     * @throws ParseException
-     */
-    public Date dateValue() throws ParseException {
-        return dateValue(null);
-    }
-
-    /**
      * 将时间类型的值转换为字符串.
      *
      * @param format 时间格式化格式
      * @return 代表时间的字符串
      */
-    public String toString(final String format) {
+    public String dateString(final String format) {
         if (value instanceof Date) {
             return new SimpleDateFormat(format).format(((Date) value).getTime());
         }
@@ -115,5 +115,15 @@ public class ShardingValueWrapper {
     @Override
     public String toString() {
         return value.toString();
+    }
+
+    private Number numberValue() {
+        if (value instanceof Number) {
+            return (Number) value;
+        }
+        if (value instanceof Date) {
+            return ((Date) value).getTime();
+        }
+        return new BigDecimal(value.toString());
     }
 }

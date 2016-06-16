@@ -46,6 +46,12 @@ public final class ShardingValueWrapperTest {
     }
 
     @Test
+    public void testFormat() throws Exception {
+        assertThat(new ShardingValueWrapper((short) 0).format("%02d"), is("00"));
+        assertThat(new ShardingValueWrapper((short) 1).format("%04d"), is("0001"));
+    }
+
+    @Test
     public void testLongValue() throws Exception {
         assertThat(new ShardingValueWrapper((short) 1).longValue(), is(1L));
         assertThat(new ShardingValueWrapper(1).longValue(), is(1L));
@@ -85,9 +91,9 @@ public final class ShardingValueWrapperTest {
         assertThat(new ShardingValueWrapper(1.0D).toString(), is("1.0"));
         assertThat(new ShardingValueWrapper("1").toString(), is("1"));
         assertThat(new ShardingValueWrapper(NOW).toString(), is(NOW.toString()));
-        assertThat(new ShardingValueWrapper(date).toString(FORMAT_TEXT), is(DATE_TEXT));
-        assertThat(new ShardingValueWrapper(date.getTime()).toString(FORMAT_TEXT), is(DATE_TEXT));
-        assertThat(new ShardingValueWrapper(DATE_TEXT).toString(FORMAT_TEXT), is(DATE_TEXT));
+        assertThat(new ShardingValueWrapper(date).dateString(FORMAT_TEXT), is(DATE_TEXT));
+        assertThat(new ShardingValueWrapper(date.getTime()).dateString(FORMAT_TEXT), is(DATE_TEXT));
+        assertThat(new ShardingValueWrapper(DATE_TEXT).dateString(FORMAT_TEXT), is(DATE_TEXT));
     }
 
     @Test(expected = IllegalArgumentException.class)

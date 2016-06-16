@@ -3,7 +3,8 @@ Merge branch 'sjdbc-1.x' of https://github.com/dangdangdotcom/sharding-jdbc.git
 Docs: http://dangdangdotcom.github.io/sharding-jdbc
 
 Changes:
-Data source rules can include or not include default data source.
+1. Data source rules can include or not include default data source. Modified class: ShardingJdbcDataSourceBeanDefinitionParser、ShardingRuleConfig、ShardingRuleBuilder、DataSourceRule.
+2. Extend class ShardingValueWrapper to add a format string method.
 
 
 在 pom.xml 中加入:
