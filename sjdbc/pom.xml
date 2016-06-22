@@ -95,19 +95,19 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/src-test/sjdbc-core/resources</directory>
+                                    <directory>${basedir}/src-test/sjdbc-core</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
                                 </resource>
                                 <resource>
-                                    <directory>${basedir}/src-test/sjdbc-config/resources</directory>
+                                    <directory>${basedir}/src-test/sjdbc-config</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
                                 </resource>
                                 <resource>
-                                    <directory>${basedir}/src-test/sjdbc-transaction/resources</directory>
+                                    <directory>${basedir}/src-test/sjdbc-transaction</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
