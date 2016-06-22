@@ -38,12 +38,12 @@ public abstract class AbstractShardingTablesOnlyDBUnitTest extends AbstractDBUni
 
     @Override
     protected List<String> getSchemaFiles() {
-        return Collections.singletonList("integrate/schema/tbl/db_single.sql");
+        return Collections.singletonList("com/dangdang/ddframe/rdb/integrate/schema/tbl/db_single.sql");
     }
 
     @Override
     protected List<String> getDataSetFiles() {
-        return Collections.singletonList("integrate/dataset/tbl/init/db_single.xml");
+        return Collections.singletonList("com/dangdang/ddframe/rdb/integrate/dataset/tbl/init/db_single.xml");
     }
 
     protected final ShardingDataSource getShardingDataSource() {

@@ -152,7 +152,7 @@ public final class ShardingDataBasesOnlyForHintWithDMLTest extends AbstractShard
 
     private void assertDataSet(final String expectedDataSetPattern, final String status) throws SQLException, DatabaseUnitException {
         for (int i = 0; i < 10; i++) {
-            assertDataSet(String.format("integrate/dataset/db/expect/%s/db_%s.xml", expectedDataSetPattern, i),
+            assertDataSet(String.format("com/dangdang/ddframe/rdb/integrate/dataset/db/expect/%s/db_%s.xml", expectedDataSetPattern, i),
                     shardingDataSource.getConnection().getConnection(String.format("dataSource_db_%s", i), SQLStatementType.SELECT), "t_order", "SELECT * FROM `t_order` WHERE `status`=?", status);
         }
     }

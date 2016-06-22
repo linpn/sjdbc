@@ -45,31 +45,31 @@ public abstract class AbstractShardingDataBasesOnlyHintDBUnitTest extends Abstra
     @Override
     protected List<String> getSchemaFiles() {
         return Arrays.asList(
-                "integrate/schema/db/db_0.sql",
-                "integrate/schema/db/db_1.sql",
-                "integrate/schema/db/db_2.sql",
-                "integrate/schema/db/db_3.sql",
-                "integrate/schema/db/db_4.sql",
-                "integrate/schema/db/db_5.sql",
-                "integrate/schema/db/db_6.sql",
-                "integrate/schema/db/db_7.sql",
-                "integrate/schema/db/db_8.sql",
-                "integrate/schema/db/db_9.sql");
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_0.sql",
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_1.sql",
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_2.sql",
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_3.sql",
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_4.sql",
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_5.sql",
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_6.sql",
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_7.sql",
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_8.sql",
+                "com/dangdang/ddframe/rdb/integrate/schema/db/db_9.sql");
     }
 
     @Override
     protected List<String> getDataSetFiles() {
         return Arrays.asList(
-                "integrate/dataset/db/init/db_0.xml",
-                "integrate/dataset/db/init/db_1.xml",
-                "integrate/dataset/db/init/db_2.xml",
-                "integrate/dataset/db/init/db_3.xml",
-                "integrate/dataset/db/init/db_4.xml",
-                "integrate/dataset/db/init/db_5.xml",
-                "integrate/dataset/db/init/db_6.xml",
-                "integrate/dataset/db/init/db_7.xml",
-                "integrate/dataset/db/init/db_8.xml",
-                "integrate/dataset/db/init/db_9.xml");
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_0.xml",
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_1.xml",
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_2.xml",
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_3.xml",
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_4.xml",
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_5.xml",
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_6.xml",
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_7.xml",
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_8.xml",
+                "com/dangdang/ddframe/rdb/integrate/dataset/db/init/db_9.xml");
     }
 
     protected final ShardingDataSource getShardingDataSource() {

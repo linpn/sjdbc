@@ -40,29 +40,29 @@ public abstract class AbstractShardingBothForPStatementWithSelectTest extends Ab
     @Test
     public void assertSelectForFullTableNameWithSingleTable() throws SQLException, DatabaseUnitException {
         String sql = "SELECT `t_order`.order_id, `t_order`.user_id, `t_order`.status FROM `t_order` WHERE `t_order`.`user_id` = ? AND `t_order`.`order_id` = ?";
-        assertDataSet("integrate/dataset/dbtbl/expect/select/SelectEqualsWithSingleTable_0.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 1000);
+        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/expect/select/SelectEqualsWithSingleTable_0.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 1000);
     }
 
     @Test
     public void assertSelectEqualsWithSingleTable() throws SQLException, DatabaseUnitException {
         String sql = "SELECT * FROM `t_order` WHERE 1 = 1 AND `user_id` = ? AND `order_id` = ?";
-        assertDataSet("integrate/dataset/dbtbl/expect/select/SelectEqualsWithSingleTable_0.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 1000);
-        assertDataSet("integrate/dataset/dbtbl/expect/select/SelectEqualsWithSingleTable_1.xml", shardingDataSource.getConnection(), "t_order", sql, 12, 1201);
-        assertDataSet("integrate/dataset/Empty.xml", shardingDataSource.getConnection(), "t_order", sql, 12, 1000);
+        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/expect/select/SelectEqualsWithSingleTable_0.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 1000);
+        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/expect/select/SelectEqualsWithSingleTable_1.xml", shardingDataSource.getConnection(), "t_order", sql, 12, 1201);
+        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/Empty.xml", shardingDataSource.getConnection(), "t_order", sql, 12, 1000);
     }
 
     @Test
     public void assertSelectBetweenWithSingleTable() throws SQLException, DatabaseUnitException {
         String sql = "SELECT * FROM `t_order` WHERE `user_id` BETWEEN ? AND ? AND `order_id` BETWEEN ? AND ? ORDER BY user_id, order_id";
-        assertDataSet("integrate/dataset/dbtbl/expect/select/SelectBetweenWithSingleTable.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 1009, 1108);
-        assertDataSet("integrate/dataset/Empty.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 1309, 1408);
+        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/expect/select/SelectBetweenWithSingleTable.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 1009, 1108);
+        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/Empty.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 1309, 1408);
     }
 
     @Test
     public void assertSelectInWithSingleTable() throws SQLException, DatabaseUnitException {
         String sql = "SELECT * FROM `t_order` WHERE `user_id` IN (?, ?, ?) AND `order_id` IN (?, ?) ORDER BY user_id, order_id";
-        assertDataSet("integrate/dataset/dbtbl/expect/select/SelectInWithSingleTable_0.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 15, 1009, 1208);
-        assertDataSet("integrate/dataset/dbtbl/expect/select/SelectInWithSingleTable_1.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 15, 1009, 1108);
-        assertDataSet("integrate/dataset/Empty.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 15, 1309, 1408);
+        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/expect/select/SelectInWithSingleTable_0.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 15, 1009, 1208);
+        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/expect/select/SelectInWithSingleTable_1.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 15, 1009, 1108);
+        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/Empty.xml", shardingDataSource.getConnection(), "t_order", sql, 10, 12, 15, 1309, 1408);
     }
 }
