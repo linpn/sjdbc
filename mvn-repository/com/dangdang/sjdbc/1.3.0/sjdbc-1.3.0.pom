@@ -26,9 +26,6 @@
         <resources>
             <resource>
                 <directory>src/sjdbc-core</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
@@ -37,9 +34,6 @@
         <testResources>
             <testResource>
                 <directory>src-test/sjdbc-core</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
