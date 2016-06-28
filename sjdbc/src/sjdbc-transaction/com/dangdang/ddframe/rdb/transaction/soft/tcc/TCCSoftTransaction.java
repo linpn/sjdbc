@@ -25,14 +25,14 @@ import java.sql.SQLException;
 
 /**
  * TCC型柔性事务.
- *
+ * 
  * @author zhangliang
  */
 public final class TCCSoftTransaction extends AbstractSoftTransaction {
-
+    
     /**
      * 开启柔性事务.
-     *
+     * 
      * @param connection 数据库连接对象
      */
     public void begin(final Connection connection) throws SQLException {

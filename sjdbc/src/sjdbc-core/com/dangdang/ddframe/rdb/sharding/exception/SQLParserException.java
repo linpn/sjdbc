@@ -19,13 +19,13 @@ package com.dangdang.ddframe.rdb.sharding.exception;
 
 /**
  * SQL解析异常.
- *
+ * 
  * @author gaohongtao
  */
 public final class SQLParserException extends ShardingJdbcException {
-
+    
     private static final long serialVersionUID = -1498980479829506655L;
-
+    
     public SQLParserException(final String message, final Object... args) {
         super(message, args);
     }

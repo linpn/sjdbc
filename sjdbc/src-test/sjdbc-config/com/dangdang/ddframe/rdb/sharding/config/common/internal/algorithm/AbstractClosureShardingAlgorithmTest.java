@@ -32,17 +32,17 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.junit.Assert.assertThat;
 
 public abstract class AbstractClosureShardingAlgorithmTest {
-
+    
     protected static final String EXPRESSION = "target_${log.info(id.toString()); id.longValue() % 2}";
-
+    
     protected static final String WRONG_EXPRESSION = "target_${log.info(id.error());}";
-
+    
     protected static final String LOG_ROOT = "default";
-
+    
     protected abstract ClosureShardingAlgorithm createClosureShardingAlgorithm();
-
+    
     protected abstract ClosureShardingAlgorithm createErrorClosureShardingAlgorithm();
-
+    
     @Test
     public void assertEqual() {
         Collection<String> result = createClosureShardingAlgorithm().doSharding(
@@ -50,22 +50,22 @@ public abstract class AbstractClosureShardingAlgorithmTest {
         assertThat(result.size(), is(1));
         assertThat(result, hasItem("target_1"));
     }
-
+    
     @Test
     public void assertIn() {
-        Collection<String> result = createClosureShardingAlgorithm().doSharding(Arrays.asList("target_0", "target_1"),
+        Collection<String> result = createClosureShardingAlgorithm().doSharding(Arrays.asList("target_0", "target_1"), 
                 Collections.<ShardingValue<?>>singletonList(new ShardingValue<>("target", "id", Arrays.asList(1, 2))));
         assertThat(result.size(), is(2));
         assertThat(result, hasItem("target_0"));
         assertThat(result, hasItem("target_1"));
     }
-
+        
     @Test(expected = UnsupportedOperationException.class)
     public void assertBetween() {
-        createClosureShardingAlgorithm().doSharding(Arrays.asList("target_0", "target_1"),
+        createClosureShardingAlgorithm().doSharding(Arrays.asList("target_0", "target_1"), 
                 Collections.<ShardingValue<?>>singletonList(new ShardingValue<>("target", "id", Range.range(1, BoundType.CLOSED, 2, BoundType.OPEN))));
     }
-
+    
     @Test(expected = MissingMethodException.class)
     public void assertEvaluateInlineExpressionFailure() {
         createErrorClosureShardingAlgorithm().doSharding(Collections.singletonList("target_1"), Collections.<ShardingValue<?>>singletonList(new ShardingValue<>("target", "id", 1L)));

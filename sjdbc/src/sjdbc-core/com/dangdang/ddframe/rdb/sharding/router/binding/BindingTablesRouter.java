@@ -30,22 +30,22 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Binding库表路由类.
- *
+ * 
  * @author zhangliang
  */
 @Slf4j
 public class BindingTablesRouter {
-
+    
     private final ShardingRule shardingRule;
-
+    
     private final Collection<String> logicTables;
-
+    
     private final ConditionContext conditionContext;
-
+    
     private final BindingTableRule bindingTableRule;
-
+    
     private final SQLStatementType sqlStatementType;
-
+    
     public BindingTablesRouter(final ShardingRule shardingRule, final Collection<String> logicTables, final ConditionContext conditionContext, final SQLStatementType sqlStatementType) {
         this.shardingRule = shardingRule;
         this.logicTables = logicTables;
@@ -55,10 +55,10 @@ public class BindingTablesRouter {
         Preconditions.checkState(optionalBindingTableRule.isPresent());
         bindingTableRule = optionalBindingTableRule.get();
     }
-
+    
     /**
      * 路由.
-     *
+     * 
      * @return 路由结果
      */
     public BindingRoutingResult route() {

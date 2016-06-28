@@ -27,7 +27,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class SingleRouterUtilTest {
-
+    
     @Test
     public void testConvertConditionToShardingValue() throws Exception {
         Condition condition = new Condition(new Condition.Column("test", "test"), Condition.BinaryOperator.EQUAL);
@@ -35,7 +35,7 @@ public class SingleRouterUtilTest {
         ShardingValue<?> shardingValue = SingleRouterUtil.convertConditionToShardingValue(condition);
         assertThat(shardingValue.getType(), is(ShardingValue.ShardingValueType.SINGLE));
         assertThat((Integer) shardingValue.getValue(), is(1));
-
+        
         condition = new Condition(new Condition.Column("test", "test"), Condition.BinaryOperator.IN);
         condition.getValues().add(1);
         condition.getValues().add(2);
@@ -44,7 +44,7 @@ public class SingleRouterUtilTest {
         Iterator<?> iterator = shardingValue.getValues().iterator();
         assertThat((Integer) iterator.next(), is(1));
         assertThat((Integer) iterator.next(), is(2));
-
+        
         condition = new Condition(new Condition.Column("test", "test"), Condition.BinaryOperator.BETWEEN);
         condition.getValues().add(1);
         condition.getValues().add(2);

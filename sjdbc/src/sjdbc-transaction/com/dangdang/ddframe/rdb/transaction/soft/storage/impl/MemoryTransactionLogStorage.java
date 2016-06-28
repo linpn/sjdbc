@@ -30,24 +30,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 基于内存的事务日志存储器接口.
- *
+ * 
  * @author zhangliang
  */
 @RequiredArgsConstructor
 public final class MemoryTransactionLogStorage implements TransactionLogStorage {
-
+    
     private static final ConcurrentHashMap<String, TransactionLog> DATA = new ConcurrentHashMap<>();
-
+    
     @Override
     public void add(final TransactionLog transactionLog) {
         DATA.putIfAbsent(transactionLog.getId(), transactionLog);
     }
-
+    
     @Override
     public void remove(final String id) {
         DATA.remove(id);
     }
-
+    
     @Override
     public List<TransactionLog> findEligibleTransactionLogs(final int size, final int maxDeliveryTryTimes, final long maxDeliveryTryDelayMillis) {
         List<TransactionLog> result = new ArrayList<>();
@@ -57,7 +57,7 @@ public final class MemoryTransactionLogStorage implements TransactionLogStorage 
                 break;
             }
             if (each.getAsyncDeliveryTryTimes() < maxDeliveryTryTimes
-                    && SoftTransactionType.BestEffortsDelivery == each.getTransactionType()
+                    && SoftTransactionType.BestEffortsDelivery == each.getTransactionType() 
                     && each.getCreationTime() < System.currentTimeMillis() - maxDeliveryTryDelayMillis) {
                 result.add(each);
             }
@@ -65,7 +65,7 @@ public final class MemoryTransactionLogStorage implements TransactionLogStorage 
         }
         return result;
     }
-
+    
     @Override
     public void increaseAsyncDeliveryTryTimes(final String id) {
         if (DATA.containsKey(id)) {
@@ -74,7 +74,7 @@ public final class MemoryTransactionLogStorage implements TransactionLogStorage 
             DATA.put(id, transactionLog);
         }
     }
-
+    
     @Override
     public boolean processData(final Connection connection, final TransactionLog transactionLog, final int maxDeliveryTryTimes) {
         return false;

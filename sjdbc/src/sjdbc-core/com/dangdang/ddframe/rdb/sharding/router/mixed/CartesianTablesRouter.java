@@ -38,15 +38,15 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 笛卡尔积的库表路由.
- *
+ * 
  * @author zhangliang
  */
 @RequiredArgsConstructor
 @Slf4j
 final class CartesianTablesRouter {
-
+    
     private final Collection<SingleRoutingResult> routingResults;
-
+    
     CartesianResult route() {
         CartesianResult result = new CartesianResult();
         for (Entry<String, Set<String>> entry : getDataSourceLogicTablesMap().entrySet()) {
@@ -57,7 +57,7 @@ final class CartesianTablesRouter {
         log.trace("cartesian tables sharding result: {}", result);
         return result;
     }
-
+    
     private Map<String, Set<String>> getDataSourceLogicTablesMap() {
         Collection<String> intersectionDataSources = getIntersectionDataSources();
         Map<String, Set<String>> result = new HashMap<>(routingResults.size());
@@ -72,7 +72,7 @@ final class CartesianTablesRouter {
         }
         return result;
     }
-
+    
     private Collection<String> getIntersectionDataSources() {
         Collection<String> result = new HashSet<>();
         for (SingleRoutingResult each : routingResults) {
@@ -83,7 +83,7 @@ final class CartesianTablesRouter {
         }
         return result;
     }
-
+    
     private List<Set<String>> getActualTableGroups(final String dataSource, final Set<String> logicTables) {
         List<Set<String>> result = new ArrayList<>(logicTables.size());
         for (SingleRoutingResult each : routingResults) {
@@ -91,12 +91,12 @@ final class CartesianTablesRouter {
         }
         return result;
     }
-
+    
     private List<Set<SingleRoutingTableFactor>> toRoutingTableFactorGroups(final String dataSource, final List<Set<String>> actualTableGroups) {
         List<Set<SingleRoutingTableFactor>> result = new ArrayList<>(actualTableGroups.size());
         for (Set<String> each : actualTableGroups) {
             result.add(new HashSet<>(Lists.transform(new ArrayList<>(each), new Function<String, SingleRoutingTableFactor>() {
-
+    
                 @Override
                 public SingleRoutingTableFactor apply(final String input) {
                     return findRoutingTableFactor(dataSource, input);
@@ -105,7 +105,7 @@ final class CartesianTablesRouter {
         }
         return result;
     }
-
+    
     private SingleRoutingTableFactor findRoutingTableFactor(final String dataSource, final String actualTable) {
         for (SingleRoutingResult each : routingResults) {
             Optional<SingleRoutingTableFactor> result = each.findRoutingTableFactor(dataSource, actualTable);
@@ -115,7 +115,7 @@ final class CartesianTablesRouter {
         }
         throw new IllegalStateException(String.format("Cannot found routing table factor, data source: %s, actual table: %s", dataSource, actualTable));
     }
-
+    
     private List<CartesianTableReference> getCartesianTableReferences(final Set<List<SingleRoutingTableFactor>> cartesianRoutingTableFactorGroups) {
         List<CartesianTableReference> result = new ArrayList<>(cartesianRoutingTableFactorGroups.size());
         for (List<SingleRoutingTableFactor> each : cartesianRoutingTableFactorGroups) {

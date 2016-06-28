@@ -27,22 +27,22 @@ import lombok.ToString;
 
 /**
  * Binding表路由结果.
- *
+ * 
  * @author zhangliang
  */
 @ToString(callSuper = true)
 final class BindingRoutingResult extends SingleRoutingResult {
-
+    
     BindingRoutingResult(final SingleRoutingResult singleRoutingResult) {
         getRoutingDataSources().addAll(Lists.transform(singleRoutingResult.getRoutingDataSources(), new Function<SingleRoutingDataSource, BindingRoutingDataSource>() {
-
+            
             @Override
             public BindingRoutingDataSource apply(final SingleRoutingDataSource input) {
                 return new BindingRoutingDataSource(input);
             }
         }));
     }
-
+    
     void bind(final BindingTableRule bindingTableRule, final String bindingLogicTable) {
         for (SingleRoutingDataSource each : getRoutingDataSources()) {
             ((BindingRoutingDataSource) each).bind(bindingTableRule, bindingLogicTable);

@@ -30,22 +30,22 @@ import lombok.ToString;
 
 /**
  * 笛卡尔积路由结果.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 @ToString
 final class CartesianResult implements RoutingResult {
-
+    
     @Getter
     private final List<CartesianDataSource> routingDataSources = new ArrayList<>();
-
+    
     void merge(final String dataSource, final Collection<CartesianTableReference> routingTableReferences) {
         for (CartesianTableReference each : routingTableReferences) {
             merge(dataSource, each);
         }
     }
-
+    
     private void merge(final String dataSource, final CartesianTableReference routingTableReference) {
         for (CartesianDataSource each : routingDataSources) {
             if (each.getDataSource().equals(dataSource)) {
@@ -55,7 +55,7 @@ final class CartesianResult implements RoutingResult {
         }
         routingDataSources.add(new CartesianDataSource(dataSource, routingTableReference));
     }
-
+    
     @Override
     public Collection<SQLExecutionUnit> getSQLExecutionUnits(final SQLBuilder sqlBuilder) {
         Collection<SQLExecutionUnit> result = new ArrayList<>();

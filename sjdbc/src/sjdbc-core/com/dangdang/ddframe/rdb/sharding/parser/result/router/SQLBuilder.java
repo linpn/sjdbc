@@ -27,36 +27,36 @@ import com.google.common.base.Joiner;
 
 /**
  * SQL构建器.
- *
+ * 
  * @author gaohongtao
  */
 public class SQLBuilder implements Appendable {
-
+    
     private final Collection<Object> segments = new LinkedList<>();
-
+    
     private final Map<String, StringToken> tokenMap = new HashMap<>();
-
+    
     private StringBuilder currentSegment;
-
+    
     public SQLBuilder() {
         currentSegment = new StringBuilder();
         segments.add(currentSegment);
     }
-
+    
     /**
      * 增加占位符.
-     *
+     * 
      * @param token 占位符
      * @return SQL构建器
      */
     public SQLBuilder appendToken(final String token) {
         return appendToken(token, true);
     }
-
+    
     /**
      * 增加占位符.
-     *
-     * @param token      占位符
+     * 
+     * @param token 占位符
      * @param isSetValue 是否设置占位值
      * @return SQL构建器
      */
@@ -76,12 +76,12 @@ public class SQLBuilder implements Appendable {
         segments.add(currentSegment);
         return this;
     }
-
+    
     /**
      * 用实际的值替代占位符.
-     *
+     * 
      * @param originToken 占位符
-     * @param newToken    实际的值
+     * @param newToken 实际的值
      * @return SQL构建器
      */
     public SQLBuilder buildSQL(final String originToken, final String newToken) {
@@ -90,10 +90,10 @@ public class SQLBuilder implements Appendable {
         }
         return this;
     }
-
+    
     /**
      * 生成SQL语句.
-     *
+     * 
      * @return SQL语句
      */
     public String toSQL() {
@@ -103,24 +103,24 @@ public class SQLBuilder implements Appendable {
         }
         return result.toString();
     }
-
+    
     @Override
     public Appendable append(final CharSequence sql) throws IOException {
         currentSegment.append(sql);
         return this;
     }
-
+    
     @Override
     public Appendable append(final CharSequence sql, final int start, final int end) throws IOException {
         throw new UnsupportedOperationException();
     }
-
+    
     @Override
     public Appendable append(final char c) throws IOException {
         currentSegment.append(c);
         return this;
     }
-
+    
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -133,15 +133,15 @@ public class SQLBuilder implements Appendable {
         }
         return result.toString();
     }
-
+    
     private class StringToken {
-
+        
         private String value;
-
+        
         public String toToken() {
             return null == value ? "" : Joiner.on("").join("[Token(", value, ")]");
         }
-
+        
         @Override
         public String toString() {
             return null == value ? "" : value;

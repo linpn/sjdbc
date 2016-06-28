@@ -34,19 +34,19 @@ import java.util.Properties;
 
 /**
  * 支持分片的数据源.
- *
+ * 
  * @author zhangliang
  */
 public class ShardingDataSource extends AbstractDataSourceAdapter {
-
+    
     private final ShardingProperties shardingProperties;
-
+    
     private final ShardingContext shardingContext;
-
+    
     public ShardingDataSource(final ShardingRule shardingRule) {
         this(shardingRule, new Properties());
     }
-
+    
     public ShardingDataSource(final ShardingRule shardingRule, final Properties props) {
         Preconditions.checkNotNull(shardingRule);
         Preconditions.checkNotNull(props);
@@ -57,7 +57,7 @@ public class ShardingDataSource extends AbstractDataSourceAdapter {
             throw new ShardingJdbcException(ex);
         }
     }
-
+    
     private String getDatabaseProductName(final ShardingRule shardingRule) throws SQLException {
         String result = null;
         for (DataSource each : shardingRule.getDataSourceRule().getDataSources()) {
@@ -74,7 +74,7 @@ public class ShardingDataSource extends AbstractDataSourceAdapter {
         }
         return result;
     }
-
+    
     @Override
     public ShardingConnection getConnection() throws SQLException {
         MetricsContext.init(shardingProperties);

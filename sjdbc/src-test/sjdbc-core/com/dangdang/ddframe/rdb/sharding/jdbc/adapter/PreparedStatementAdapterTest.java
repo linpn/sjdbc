@@ -17,9 +17,13 @@
 
 package com.dangdang.ddframe.rdb.sharding.jdbc.adapter;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import com.dangdang.ddframe.rdb.integrate.db.AbstractShardingDataBasesOnlyDBUnitTest;
+import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingConnection;
+import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingPreparedStatement;
+import com.mysql.jdbc.Blob;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -37,37 +41,28 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Calendar;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.dangdang.ddframe.rdb.integrate.db.AbstractShardingDataBasesOnlyDBUnitTest;
-import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource;
-import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingConnection;
-import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingPreparedStatement;
-import com.mysql.jdbc.Blob;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public final class PreparedStatementAdapterTest extends AbstractShardingDataBasesOnlyDBUnitTest {
-
-    private ShardingDataSource shardingDataSource;
-
+    
     private ShardingConnection shardingConnection;
-
+    
     private PreparedStatement actual;
-
+    
     @Before
     public void init() throws SQLException {
-        shardingDataSource = getShardingDataSource();
-        shardingConnection = shardingDataSource.getConnection();
+        shardingConnection = getShardingDataSource().getConnection();
         actual = shardingConnection.prepareStatement("SELECT user_id AS `uid` FROM `t_order` WHERE `status` IN (? ,? ,? ,? ,?)");
     }
-
+    
     @After
     public void close() throws SQLException {
         actual.close();
         shardingConnection.close();
     }
-
+    
     @Test
     public void assertSetNull() throws SQLException {
         actual.setNull(1, Types.VARCHAR);
@@ -75,61 +70,61 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
         assertParameter(actual, 1, null);
         assertParameter(actual, 2, null);
     }
-
+    
     @Test
     public void assertSetBoolean() throws SQLException {
         actual.setBoolean(1, true);
         assertParameter(actual, 1, true);
     }
-
+    
     @Test
     public void assertSetByte() throws SQLException {
         actual.setByte(1, (byte) 0);
         assertParameter(actual, 1, (byte) 0);
     }
-
+    
     @Test
     public void assertSetShort() throws SQLException {
         actual.setShort(1, (short) 0);
         assertParameter(actual, 1, (short) 0);
     }
-
+    
     @Test
     public void assertSetInt() throws SQLException {
         actual.setInt(1, 0);
         assertParameter(actual, 1, 0);
     }
-
+    
     @Test
     public void assertSetLong() throws SQLException {
         actual.setLong(1, 0L);
         assertParameter(actual, 1, 0L);
     }
-
+    
     @Test
     public void assertSetFloat() throws SQLException {
         actual.setFloat(1, 0F);
         assertParameter(actual, 1, 0F);
     }
-
+    
     @Test
     public void assertSetDouble() throws SQLException {
         actual.setDouble(1, 0D);
         assertParameter(actual, 1, 0D);
     }
-
+    
     @Test
     public void assertSetString() throws SQLException {
         actual.setString(1, "0");
         assertParameter(actual, 1, "0");
     }
-
+    
     @Test
     public void assertSetBigDecimal() throws SQLException {
         actual.setBigDecimal(1, BigDecimal.ZERO);
         assertParameter(actual, 1, BigDecimal.ZERO);
     }
-
+    
     @Test
     public void assertSetDate() throws SQLException {
         Date now = new Date(0L);
@@ -138,7 +133,7 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
         assertParameter(actual, 1, now);
         assertParameter(actual, 2, now);
     }
-
+    
     @Test
     public void assertSetTime() throws SQLException {
         Time now = new Time(0L);
@@ -147,7 +142,7 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
         assertParameter(actual, 1, now);
         assertParameter(actual, 2, now);
     }
-
+    
     @Test
     public void assertSetTimestamp() throws SQLException {
         Timestamp now = new Timestamp(0L);
@@ -156,16 +151,16 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
         assertParameter(actual, 1, now);
         assertParameter(actual, 2, now);
     }
-
+    
     @Test
     public void assertSetBytes() throws SQLException {
-        actual.setBytes(1, new byte[]{});
-        assertParameter(actual, 1, new byte[]{});
+        actual.setBytes(1, new byte[] {});
+        assertParameter(actual, 1, new byte[] {});
     }
-
+    
     @Test
     public void assertSetBlob() throws SQLException, IOException {
-        try (InputStream inputStream = new ByteArrayInputStream(new byte[]{})) {
+        try (InputStream inputStream = new ByteArrayInputStream(new byte[] {})) {
             actual.setBlob(1, (Blob) null);
             actual.setBlob(2, inputStream);
             actual.setBlob(3, inputStream, 100L);
@@ -174,7 +169,7 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
             assertParameter(actual, 3, inputStream);
         }
     }
-
+    
     @Test
     public void assertSetClob() throws SQLException {
         Reader reader = new SerializableStringReader();
@@ -185,10 +180,10 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
         assertParameter(actual, 2, reader);
         assertParameter(actual, 3, reader);
     }
-
+    
     @Test
     public void assertSetAsciiStream() throws SQLException, IOException {
-        try (InputStream inputStream = new ByteArrayInputStream(new byte[]{})) {
+        try (InputStream inputStream = new ByteArrayInputStream(new byte[] {})) {
             actual.setAsciiStream(1, inputStream);
             actual.setAsciiStream(2, inputStream, 100);
             actual.setAsciiStream(3, inputStream, 100L);
@@ -197,19 +192,19 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
             assertParameter(actual, 3, inputStream);
         }
     }
-
+    
     @SuppressWarnings("deprecation")
     @Test
     public void assertSetUnicodeStream() throws SQLException, IOException {
-        try (InputStream inputStream = new ByteArrayInputStream(new byte[]{})) {
+        try (InputStream inputStream = new ByteArrayInputStream(new byte[] {})) {
             actual.setUnicodeStream(1, inputStream, 100);
             assertParameter(actual, 1, inputStream);
         }
     }
-
+    
     @Test
     public void assertSetBinaryStream() throws SQLException, IOException {
-        try (InputStream inputStream = new ByteArrayInputStream(new byte[]{})) {
+        try (InputStream inputStream = new ByteArrayInputStream(new byte[] {})) {
             actual.setBinaryStream(1, inputStream);
             actual.setBinaryStream(2, inputStream, 100);
             actual.setBinaryStream(3, inputStream, 100L);
@@ -218,7 +213,7 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
             assertParameter(actual, 3, inputStream);
         }
     }
-
+    
     @Test
     public void assertSetCharacterStream() throws SQLException {
         Reader reader = new SerializableStringReader();
@@ -229,25 +224,25 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
         assertParameter(actual, 2, reader);
         assertParameter(actual, 3, reader);
     }
-
+    
     @Test
     public void assertSetURL() throws SQLException {
         actual.setURL(1, null);
         assertParameter(actual, 1, null);
     }
-
+    
     @Test
     public void assertSetSQLXML() throws SQLException {
         actual.setSQLXML(1, null);
         assertParameter(actual, 1, null);
     }
-
+    
     @Test
     public void assertSetRef() throws SQLException {
         actual.setRef(1, null);
         assertParameter(actual, 1, null);
     }
-
+    
     @Test
     public void assertSetObject() throws SQLException {
         Object obj = "value";
@@ -260,7 +255,7 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
         assertParameter(actual, 4, null);
         assertParameter(actual, 5, obj);
     }
-
+    
     @Test
     public void assertClearParameters() throws SQLException {
         Object obj = new Object();
@@ -271,15 +266,15 @@ public final class PreparedStatementAdapterTest extends AbstractShardingDataBase
         actual.clearParameters();
         assertTrue(((ShardingPreparedStatement) actual).getParameters().isEmpty());
     }
-
+    
     private void assertParameter(final PreparedStatement actual, final int index, final Object parameter) {
         assertThat(((ShardingPreparedStatement) actual).getParameters().get(index - 1), is(parameter));
     }
-
+    
     private static class SerializableStringReader extends StringReader implements Serializable {
-
+        
         private static final long serialVersionUID = 5054305161835171548L;
-
+        
         SerializableStringReader() {
             super("value");
         }

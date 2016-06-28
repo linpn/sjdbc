@@ -36,15 +36,15 @@ import java.util.Set;
 
 /**
  * 单表路由结果.
- *
+ * 
  * @author gaohongtao
  */
 @ToString
 public class SingleRoutingResult implements RoutingResult {
-
+    
     @Getter
     private final List<SingleRoutingDataSource> routingDataSources = new ArrayList<>();
-
+    
     void put(final String dataSourceName, final SingleRoutingTableFactor routingTableFactor) {
         for (SingleRoutingDataSource each : routingDataSources) {
             if (each.getDataSource().equals(dataSourceName)) {
@@ -54,10 +54,10 @@ public class SingleRoutingResult implements RoutingResult {
         }
         routingDataSources.add(new SingleRoutingDataSource(dataSourceName, routingTableFactor));
     }
-
+    
     /**
      * 根据数据源名称获取数据源和逻辑表名称集合的映射关系.
-     *
+     * 
      * @param dataSources 待获取的数据源名称集合
      * @return 数据源和逻辑表名称集合的映射关系
      */
@@ -79,29 +79,29 @@ public class SingleRoutingResult implements RoutingResult {
         }
         return result;
     }
-
+    
     /**
      * 获取全部数据源名称.
-     *
+     * 
      * @return 数据源名称集合
      */
     public Collection<String> getDataSources() {
         return Lists.transform(routingDataSources, new Function<SingleRoutingDataSource, String>() {
-
+            
             @Override
             public String apply(final SingleRoutingDataSource input) {
                 return input.getDataSource();
             }
         });
     }
-
+    
     /**
      * 根据数据源和逻辑表名称获取真实表集合组.
      * <p>
      * 每一组的真实表集合都属于同一逻辑表.
      * </p>
-     *
-     * @param dataSource  数据源名称
+     * 
+     * @param dataSource 数据源名称
      * @param logicTables 逻辑表名称集合
      * @return 真实表集合组
      */
@@ -112,11 +112,11 @@ public class SingleRoutingResult implements RoutingResult {
         }
         return routingDataSource.get().getActualTableGroups(logicTables);
     }
-
+    
     /**
      * 根据数据源和真实表名称查找路由表单元.
-     *
-     * @param dataSource  数据源名称
+     * 
+     * @param dataSource 数据源名称
      * @param actualTable 真实表名称
      * @return 查找结果
      */
@@ -127,7 +127,7 @@ public class SingleRoutingResult implements RoutingResult {
         }
         return routingDataSource.get().findRoutingTableFactor(actualTable);
     }
-
+    
     private Optional<SingleRoutingDataSource> findRoutingDataSource(final String dataSource) {
         for (SingleRoutingDataSource each : routingDataSources) {
             if (each.getDataSource().equals(dataSource)) {
@@ -136,7 +136,7 @@ public class SingleRoutingResult implements RoutingResult {
         }
         return Optional.absent();
     }
-
+    
     @Override
     public Collection<SQLExecutionUnit> getSQLExecutionUnits(final SQLBuilder sqlBuilder) {
         Collection<SQLExecutionUnit> result = new ArrayList<>();

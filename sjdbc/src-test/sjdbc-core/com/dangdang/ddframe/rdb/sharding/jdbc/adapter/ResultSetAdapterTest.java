@@ -19,9 +19,9 @@ package com.dangdang.ddframe.rdb.sharding.jdbc.adapter;
 
 import com.dangdang.ddframe.rdb.integrate.AbstractDBUnitTest;
 import com.dangdang.ddframe.rdb.integrate.db.AbstractShardingDataBasesOnlyDBUnitTest;
-import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource;
 import com.dangdang.ddframe.rdb.sharding.constants.DatabaseType;
 import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingConnection;
+import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,49 +38,47 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public final class ResultSetAdapterTest extends AbstractShardingDataBasesOnlyDBUnitTest {
-
-    private ShardingDataSource shardingDataSource;
-
+    
     private ShardingConnection shardingConnection;
-
+    
     private Statement statement;
-
+    
     private ResultSet actual;
-
+    
     @Before
     public void init() throws SQLException {
-        shardingDataSource = getShardingDataSource();
+        ShardingDataSource shardingDataSource = getShardingDataSource();
         shardingConnection = shardingDataSource.getConnection();
         statement = shardingConnection.createStatement();
         actual = statement.executeQuery("SELECT user_id AS `uid` FROM `t_order` WHERE `status` = 'init'");
     }
-
+    
     @After
     public void close() throws SQLException {
         actual.close();
         statement.close();
         shardingConnection.close();
     }
-
+    
     @Test
     public void assertClose() throws SQLException {
         actual.close();
-        assertClose((AbstractReducerResultSetAdapter) actual);
+        assertClose((AbstractResultSetAdapter) actual);
     }
-
-    private void assertClose(final AbstractReducerResultSetAdapter actual) throws SQLException {
+    
+    private void assertClose(final AbstractResultSetAdapter actual) throws SQLException {
         assertTrue(actual.isClosed());
-        assertThat(actual.getInputResultSets().size(), is(10));
-        for (ResultSet each : actual.getInputResultSets()) {
+        assertThat(actual.getResultSets().size(), is(10));
+        for (ResultSet each : actual.getResultSets()) {
             assertTrue(each.isClosed());
         }
     }
-
+    
     @Test
     public void assertWasNull() throws SQLException {
         assertFalse(actual.wasNull());
     }
-
+    
     @Test
     public void assertSetFetchDirection() throws SQLException {
         assertThat(actual.getFetchDirection(), is(ResultSet.FETCH_FORWARD));
@@ -88,61 +86,61 @@ public final class ResultSetAdapterTest extends AbstractShardingDataBasesOnlyDBU
             actual.setFetchDirection(ResultSet.FETCH_REVERSE);
         } catch (final SQLException ignore) {
         }
-        assertFetchDirection((AbstractReducerResultSetAdapter) actual, ResultSet.FETCH_REVERSE);
+        assertFetchDirection((AbstractResultSetAdapter) actual, ResultSet.FETCH_REVERSE);
     }
-
-    private void assertFetchDirection(final AbstractReducerResultSetAdapter actual, final int fetchDirection) throws SQLException {
+    
+    private void assertFetchDirection(final AbstractResultSetAdapter actual, final int fetchDirection) throws SQLException {
         // H2数据库未实现getFetchDirection方法
         assertThat(actual.getFetchDirection(), is(DatabaseType.H2 == AbstractDBUnitTest.CURRENT_DB_TYPE ? ResultSet.FETCH_FORWARD : fetchDirection));
-        assertThat(actual.getInputResultSets().size(), is(10));
-        for (ResultSet each : actual.getInputResultSets()) {
+        assertThat(actual.getResultSets().size(), is(10));
+        for (ResultSet each : actual.getResultSets()) {
             assertThat(each.getFetchDirection(), is(DatabaseType.H2 == AbstractDBUnitTest.CURRENT_DB_TYPE ? ResultSet.FETCH_FORWARD : fetchDirection));
         }
     }
-
+    
     @Test
     public void assertSetFetchSize() throws SQLException {
         assertThat(actual.getFetchSize(), is(0));
         actual.setFetchSize(100);
-        assertFetchSize((AbstractReducerResultSetAdapter) actual, 100);
+        assertFetchSize((AbstractResultSetAdapter) actual, 100);
     }
-
-    private void assertFetchSize(final AbstractReducerResultSetAdapter actual, final int fetchSize) throws SQLException {
+    
+    private void assertFetchSize(final AbstractResultSetAdapter actual, final int fetchSize) throws SQLException {
         // H2数据库未实现getFetchSize方法
         assertThat(actual.getFetchSize(), is(DatabaseType.H2 == AbstractDBUnitTest.CURRENT_DB_TYPE ? 0 : fetchSize));
-        assertThat(actual.getInputResultSets().size(), is(10));
-        for (ResultSet each : actual.getInputResultSets()) {
+        assertThat(actual.getResultSets().size(), is(10));
+        for (ResultSet each : actual.getResultSets()) {
             assertThat(each.getFetchSize(), is(DatabaseType.H2 == AbstractDBUnitTest.CURRENT_DB_TYPE ? 0 : fetchSize));
         }
     }
-
+    
     @Test
     public void assertGetType() throws SQLException {
         assertThat(actual.getType(), is(ResultSet.TYPE_FORWARD_ONLY));
     }
-
+    
     @Test
     public void assertGetConcurrency() throws SQLException {
         assertThat(actual.getConcurrency(), is(ResultSet.CONCUR_READ_ONLY));
     }
-
+    
     @Test
     public void assertGetStatement() throws SQLException {
         assertNotNull(actual.getStatement());
     }
-
+    
     @Test
     public void assertClearWarnings() throws SQLException {
         assertNull(actual.getWarnings());
         actual.clearWarnings();
         assertNull(actual.getWarnings());
     }
-
+    
     @Test
     public void assertGetMetaData() throws SQLException {
         assertNotNull(actual.getMetaData());
     }
-
+    
     @Test
     public void assertFindColumn() throws SQLException {
         assertThat(actual.findColumn("uid"), is(1));

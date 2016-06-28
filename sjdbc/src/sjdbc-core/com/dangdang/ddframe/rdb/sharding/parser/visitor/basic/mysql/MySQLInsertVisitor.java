@@ -23,12 +23,12 @@ import com.google.common.base.Optional;
 
 /**
  * MySQL的INSERT语句访问器.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 public class MySQLInsertVisitor extends AbstractMySQLVisitor {
-
+    
     @Override
     public boolean visit(final MySqlInsertStatement x) {
         getParseContext().setCurrentTable(x.getTableName().toString(), Optional.fromNullable(x.getAlias()));

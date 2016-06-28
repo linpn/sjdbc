@@ -31,16 +31,16 @@ import lombok.Setter;
 @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Condition {
-
+    
     @XmlAttribute(name = "column-name")
     private String columnName;
-
+    
     @XmlAttribute(name = "table-name")
     private String tableName;
-
+    
     @XmlAttribute
     private String operator;
-
-    @XmlElement(name = "value")
+    
+    @XmlElement(name = "value") 
     private List<Value> values;
 }

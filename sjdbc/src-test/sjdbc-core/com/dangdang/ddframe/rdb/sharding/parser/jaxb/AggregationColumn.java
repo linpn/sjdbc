@@ -32,22 +32,22 @@ import lombok.Setter;
 @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class AggregationColumn {
-
+    
     @XmlAttribute
     private String expression;
-
+    
     @XmlAttribute(name = "aggregation-type")
     private String aggregationType;
-
+    
     @XmlAttribute
     private String alias;
-
-    @XmlAttribute
+    
+    @XmlAttribute 
     private String option;
-
-    @XmlAttribute
+    
+    @XmlAttribute 
     private Integer index;
-
-    @XmlElement(name = "derived-column")
+    
+    @XmlElement(name = "derived-column") 
     private List<AggregationColumn> derivedColumns = new ArrayList<>(2);
 }

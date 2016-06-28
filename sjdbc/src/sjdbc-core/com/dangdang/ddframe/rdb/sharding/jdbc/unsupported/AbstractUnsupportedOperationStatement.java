@@ -17,7 +17,6 @@
 
 package com.dangdang.ddframe.rdb.sharding.jdbc.unsupported;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
@@ -26,46 +25,41 @@ import com.dangdang.ddframe.rdb.sharding.jdbc.adapter.WrapperAdapter;
 
 /**
  * 声明不支持操作的静态语句对象.
- *
+ * 
  * @author gaohongtao
  */
 public abstract class AbstractUnsupportedOperationStatement extends WrapperAdapter implements Statement {
-
+    
     @Override
     public final int getFetchDirection() throws SQLException {
         throw new SQLFeatureNotSupportedException("getFetchDirection");
     }
-
+    
     @Override
     public final void setFetchDirection(final int direction) throws SQLException {
         throw new SQLFeatureNotSupportedException("setFetchDirection");
     }
-
-    @Override
-    public final ResultSet getGeneratedKeys() throws SQLException {
-        throw new SQLFeatureNotSupportedException("getGeneratedKeys");
-    }
-
+    
     @Override
     public final void addBatch(final String sql) throws SQLException {
         throw new SQLFeatureNotSupportedException("addBatch sql");
     }
-
+    
     @Override
     public void clearBatch() throws SQLException {
         throw new SQLFeatureNotSupportedException("clearBatch");
     }
-
+    
     @Override
     public int[] executeBatch() throws SQLException {
         throw new SQLFeatureNotSupportedException("executeBatch");
     }
-
+    
     @Override
     public final void closeOnCompletion() throws SQLException {
         throw new SQLFeatureNotSupportedException("closeOnCompletion");
     }
-
+    
     @Override
     public final boolean isCloseOnCompletion() throws SQLException {
         throw new SQLFeatureNotSupportedException("isCloseOnCompletion");

@@ -31,38 +31,38 @@ import java.util.List;
 
 /**
  * 最大努力送达型异步作业.
- *
+ * 
  * @author zhangliang
  * @author caohao
  */
 @Slf4j
 public class BestEffortsDeliveryJob extends AbstractIndividualThroughputDataFlowElasticJob<TransactionLog> {
-
+    
     @Setter
     private BestEffortsDeliveryConfiguration bedConfig;
-
+    
     @Setter
     private TransactionLogStorage transactionLogStorage;
-
+    
     @Override
     public List<TransactionLog> fetchData(final JobExecutionMultipleShardingContext context) {
-        return transactionLogStorage.findEligibleTransactionLogs(context.getFetchDataCount(),
-                bedConfig.getJobConfig().getMaxDeliveryTryTimes(), bedConfig.getJobConfig().getMaxDeliveryTryDelayMillis());
+        return transactionLogStorage.findEligibleTransactionLogs(context.getFetchDataCount(), 
+            bedConfig.getJobConfig().getMaxDeliveryTryTimes(), bedConfig.getJobConfig().getMaxDeliveryTryDelayMillis());
     }
-
+    
     @Override
     public boolean processData(final JobExecutionMultipleShardingContext context, final TransactionLog data) {
         try (
-                Connection conn = bedConfig.getTargetDataSource(data.getDataSource()).getConnection()) {
+            Connection conn = bedConfig.getTargetDataSource(data.getDataSource()).getConnection()) {
             transactionLogStorage.processData(conn, data, bedConfig.getJobConfig().getMaxDeliveryTryTimes());
         } catch (final SQLException | TransactionCompensationException ex) {
-            log.error(String.format("Async delivery times %s error, max try times is %s, exception is %s", data.getAsyncDeliveryTryTimes() + 1,
-                    bedConfig.getJobConfig().getMaxDeliveryTryTimes(), ex.getMessage()));
+            log.error(String.format("Async delivery times %s error, max try times is %s, exception is %s", data.getAsyncDeliveryTryTimes() + 1, 
+                bedConfig.getJobConfig().getMaxDeliveryTryTimes(), ex.getMessage()));
             return false;
         }
         return true;
     }
-
+    
     @Override
     public boolean isStreamingProcess() {
         return false;

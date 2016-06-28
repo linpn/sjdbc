@@ -26,7 +26,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class TableShardingStrategyTest {
-
+    
     @Test
     public void assertTableShardingStrategyWithSingleShardingColumn() {
         assertThat(new TableShardingStrategy("shardingColumn", null).getShardingColumns(), is((Collection<String>) Collections.singletonList("shardingColumn")));

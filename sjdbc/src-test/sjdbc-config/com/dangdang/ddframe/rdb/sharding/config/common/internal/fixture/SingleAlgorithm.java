@@ -23,17 +23,17 @@ import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.database.SingleKeyDatabaseShardingAlgorithm;
 
 public class SingleAlgorithm implements SingleKeyDatabaseShardingAlgorithm {
-
+    
     @Override
     public String doEqualSharding(final Collection availableTargetNames, final ShardingValue shardingValue) {
         return null;
     }
-
+    
     @Override
     public Collection<String> doInSharding(final Collection availableTargetNames, final ShardingValue shardingValue) {
         return null;
     }
-
+    
     @Override
     public Collection<String> doBetweenSharding(final Collection availableTargetNames, final ShardingValue shardingValue) {
         return null;

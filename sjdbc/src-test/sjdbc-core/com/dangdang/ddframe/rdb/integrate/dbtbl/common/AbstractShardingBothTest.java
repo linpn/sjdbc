@@ -24,36 +24,36 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractShardingBothTest extends AbstractDBUnitTest {
-
+    
     @Override
     protected List<String> getSchemaFiles() {
         return Arrays.asList(
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_0.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_1.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_2.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_3.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_4.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_5.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_6.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_7.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_8.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/dbtbl/dbtbl_9.sql");
+                "integrate/schema/dbtbl/dbtbl_0.sql", 
+                "integrate/schema/dbtbl/dbtbl_1.sql", 
+                "integrate/schema/dbtbl/dbtbl_2.sql", 
+                "integrate/schema/dbtbl/dbtbl_3.sql", 
+                "integrate/schema/dbtbl/dbtbl_4.sql", 
+                "integrate/schema/dbtbl/dbtbl_5.sql", 
+                "integrate/schema/dbtbl/dbtbl_6.sql", 
+                "integrate/schema/dbtbl/dbtbl_7.sql", 
+                "integrate/schema/dbtbl/dbtbl_8.sql", 
+                "integrate/schema/dbtbl/dbtbl_9.sql");
     }
-
+    
     @Override
     protected List<String> getDataSetFiles() {
         return Arrays.asList(
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_0.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_1.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_2.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_3.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_4.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_5.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_6.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_7.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_8.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/init/dbtbl_9.xml");
+                "integrate/dataset/dbtbl/init/dbtbl_0.xml", 
+                "integrate/dataset/dbtbl/init/dbtbl_1.xml", 
+                "integrate/dataset/dbtbl/init/dbtbl_2.xml", 
+                "integrate/dataset/dbtbl/init/dbtbl_3.xml", 
+                "integrate/dataset/dbtbl/init/dbtbl_4.xml", 
+                "integrate/dataset/dbtbl/init/dbtbl_5.xml", 
+                "integrate/dataset/dbtbl/init/dbtbl_6.xml", 
+                "integrate/dataset/dbtbl/init/dbtbl_7.xml", 
+                "integrate/dataset/dbtbl/init/dbtbl_8.xml", 
+                "integrate/dataset/dbtbl/init/dbtbl_9.xml");
     }
-
-    protected abstract ShardingDataSource getShardingDataSource();
+    
+    protected abstract ShardingDataSource getShardingDataSource(); 
 }

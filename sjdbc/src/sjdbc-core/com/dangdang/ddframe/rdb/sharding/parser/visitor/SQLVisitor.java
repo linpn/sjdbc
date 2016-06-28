@@ -22,35 +22,35 @@ import com.dangdang.ddframe.rdb.sharding.parser.result.router.SQLBuilder;
 
 /**
  * SQL解析基础访问器接口.
- *
+ * 
  * @author zhangliang
  */
 public interface SQLVisitor {
-
+    
     /**
      * 获取数据库类型.
-     *
+     * 
      * @return 数据库类型
      */
     DatabaseType getDatabaseType();
-
+    
     /**
      * 获取解析上下文对象.
-     *
+     * 
      * @return 解析上下文对象
      */
     ParseContext getParseContext();
-
+    
     /**
      * 获取SQL构建器.
-     *
+     * 
      * @return SQL构建器
      */
     SQLBuilder getSQLBuilder();
-
+    
     /**
      * 打印替换标记.
-     *
+     * 
      * @param token 替换标记
      */
     void printToken(String token);

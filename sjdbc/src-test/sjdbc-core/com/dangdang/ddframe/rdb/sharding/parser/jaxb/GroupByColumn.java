@@ -28,16 +28,16 @@ import javax.xml.bind.annotation.XmlAttribute;
 @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class GroupByColumn {
-
+    
     @XmlAttribute
     private String owner;
-
+    
     @XmlAttribute
     private String name;
-
+    
     @XmlAttribute
     private String alias;
-
-    @XmlAttribute(name = "order-by-type")
+    
+    @XmlAttribute(name = "order-by-type") 
     private String orderByType;
 }

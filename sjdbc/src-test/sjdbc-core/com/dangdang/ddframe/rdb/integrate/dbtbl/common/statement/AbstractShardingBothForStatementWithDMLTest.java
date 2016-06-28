@@ -34,15 +34,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public abstract class AbstractShardingBothForStatementWithDMLTest extends AbstractShardingBothTest {
-
+    
     @Getter(AccessLevel.PROTECTED)
     private ShardingDataSource shardingDataSource;
-
+    
     @Before
     public void init() throws SQLException {
         shardingDataSource = getShardingDataSource();
     }
-
+    
     @Test
     public void assertInsert() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` (`order_id`, `user_id`, `status`) VALUES (%s, %s, '%s')";
@@ -56,7 +56,7 @@ public abstract class AbstractShardingBothForStatementWithDMLTest extends Abstra
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertUpdate() throws SQLException, DatabaseUnitException {
         String sql = "UPDATE `t_order` SET `status` = '%s' WHERE `order_id` = %s AND `user_id` = %s";
@@ -70,7 +70,7 @@ public abstract class AbstractShardingBothForStatementWithDMLTest extends Abstra
         }
         assertDataSet("update", "updated");
     }
-
+    
     @Test
     public void assertDelete() throws SQLException, DatabaseUnitException {
         String sql = "DELETE `t_order` WHERE `order_id` = %s AND `user_id` = %s";
@@ -84,12 +84,12 @@ public abstract class AbstractShardingBothForStatementWithDMLTest extends Abstra
         }
         assertDataSet("delete", "init");
     }
-
+    
     protected void assertDataSet(final String expectedDataSetPattern, final String status) throws SQLException, DatabaseUnitException {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                assertDataSet(String.format("com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/expect/%s/dbtbl_%s.xml", expectedDataSetPattern, i),
-                        shardingDataSource.getConnection().getConnection(String.format("dataSource_dbtbl_%s", i), SQLStatementType.SELECT),
+                assertDataSet(String.format("integrate/dataset/dbtbl/expect/%s/dbtbl_%s.xml", expectedDataSetPattern, i), 
+                        shardingDataSource.getConnection().getConnection(String.format("dataSource_dbtbl_%s", i), SQLStatementType.SELECT), 
                         String.format("t_order_%s", j), String.format("SELECT * FROM `t_order_%s` WHERE `status`=?", j), status);
             }
         }

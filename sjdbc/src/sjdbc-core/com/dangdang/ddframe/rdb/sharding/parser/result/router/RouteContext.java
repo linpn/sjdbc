@@ -27,7 +27,7 @@ import lombok.ToString;
 
 /**
  * SQL路由上下文.
- *
+ * 
  * @author zhangliang
  */
 @Getter
@@ -35,10 +35,10 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 public final class RouteContext {
-
+    
     private final Collection<Table> tables = new LinkedHashSet<>();
-
+    
     private SQLStatementType sqlStatementType;
-
+    
     private SQLBuilder sqlBuilder;
 }

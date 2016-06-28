@@ -24,16 +24,16 @@ import javax.sql.DataSource;
 
 /**
  * 内存事务数据源.
- *
+ * 
  * @author caohao
  */
 public class MemoryTransactionLogDataSource implements TransactionLogDataSource {
-
+    
     @Override
     public TransactionLogDataSourceType getType() {
         return TransactionLogDataSourceType.MEMORY;
     }
-
+    
     //TODO return memory's map
     @Override
     public DataSource getDataSource() {

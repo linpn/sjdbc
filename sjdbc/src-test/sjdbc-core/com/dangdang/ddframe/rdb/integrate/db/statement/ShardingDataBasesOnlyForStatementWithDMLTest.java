@@ -33,14 +33,14 @@ import org.junit.Test;
 import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource;
 
 public class ShardingDataBasesOnlyForStatementWithDMLTest extends AbstractShardingDataBasesOnlyDBUnitTest {
-
+    
     private ShardingDataSource shardingDataSource;
-
+    
     @Before
     public void init() throws SQLException {
         shardingDataSource = getShardingDataSource();
     }
-
+    
     @Test
     public void assertInsert() throws SQLException, DatabaseUnitException {
         for (int i = 1; i <= 10; i++) {
@@ -53,7 +53,7 @@ public class ShardingDataBasesOnlyForStatementWithDMLTest extends AbstractShardi
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertUpdate() throws SQLException, DatabaseUnitException {
         for (int i = 10; i < 30; i++) {
@@ -66,7 +66,7 @@ public class ShardingDataBasesOnlyForStatementWithDMLTest extends AbstractShardi
         }
         assertDataSet("update", "updated");
     }
-
+    
     @Test
     public void assertUpdateWithoutShardingValue() throws SQLException, DatabaseUnitException {
         try (Connection connection = shardingDataSource.getConnection()) {
@@ -75,7 +75,7 @@ public class ShardingDataBasesOnlyForStatementWithDMLTest extends AbstractShardi
         }
         assertDataSet("update", "updated");
     }
-
+    
     @Test
     public void assertDelete() throws SQLException, DatabaseUnitException {
         for (int i = 10; i < 30; i++) {
@@ -88,7 +88,7 @@ public class ShardingDataBasesOnlyForStatementWithDMLTest extends AbstractShardi
         }
         assertDataSet("delete", "init");
     }
-
+    
     @Test
     public void assertDeleteWithoutShardingValue() throws SQLException, DatabaseUnitException {
         try (Connection connection = shardingDataSource.getConnection()) {
@@ -97,10 +97,10 @@ public class ShardingDataBasesOnlyForStatementWithDMLTest extends AbstractShardi
         }
         assertDataSet("delete", "init");
     }
-
+    
     private void assertDataSet(final String expectedDataSetPattern, final String status) throws SQLException, DatabaseUnitException {
         for (int i = 0; i < 10; i++) {
-            assertDataSet(String.format("com/dangdang/ddframe/rdb/integrate/dataset/db/expect/%s/db_%s.xml", expectedDataSetPattern, i),
+            assertDataSet(String.format("integrate/dataset/db/expect/%s/db_%s.xml", expectedDataSetPattern, i),
                     shardingDataSource.getConnection().getConnection(String.format("dataSource_db_%s", i), SQLStatementType.SELECT), "t_order", "SELECT * FROM `t_order` WHERE `status`=?", status);
         }
     }

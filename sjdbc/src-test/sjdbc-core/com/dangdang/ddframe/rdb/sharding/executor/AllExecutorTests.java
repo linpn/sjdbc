@@ -22,9 +22,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        ExecutorExceptionHandlerTest.class,
-        StatementExecutorTest.class,
-        PreparedStatementExecutorTest.class
-})
+    ExecutorExceptionHandlerTest.class,
+    StatementExecutorTest.class, 
+    PreparedStatementExecutorTest.class
+    })
 public class AllExecutorTests {
 }

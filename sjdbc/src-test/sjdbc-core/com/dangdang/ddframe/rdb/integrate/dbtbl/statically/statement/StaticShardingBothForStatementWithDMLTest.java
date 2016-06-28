@@ -31,12 +31,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class StaticShardingBothForStatementWithDMLTest extends AbstractShardingBothForStatementWithDMLTest {
-
+    
     @Override
     protected ShardingDataSource getShardingDataSource() {
         return StaticShardingBothHelper.getShardingDataSource(createDataSourceMap("dataSource_%s"));
     }
-
+    
     @Test
     public void assertUpdateWithoutShardingValue() throws SQLException, DatabaseUnitException {
         String sql = "UPDATE `t_order` SET `status` = '%s' WHERE `status` = '%s'";
@@ -46,7 +46,7 @@ public final class StaticShardingBothForStatementWithDMLTest extends AbstractSha
         }
         assertDataSet("update", "updated");
     }
-
+    
     @Test
     public void assertDeleteWithoutShardingValue() throws SQLException, DatabaseUnitException {
         String sql = "DELETE `t_order` WHERE `status` = '%s'";

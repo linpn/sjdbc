@@ -31,13 +31,13 @@ import com.google.common.base.Optional;
 
 /**
  * 逻辑OR条件访问器.
- *
+ * 
  * @author gaohongtao
  */
 public class OrVisitor extends AbstractMySQLVisitor {
-
+    
     private AbstractOrASTNode orASTNode;
-
+    
     public OrVisitor(final SQLASTOutputVisitor dependencyVisitor) {
         setParameters(dependencyVisitor.getParameters());
         SQLVisitor visitor = (SQLVisitor) dependencyVisitor;
@@ -47,7 +47,7 @@ public class OrVisitor extends AbstractMySQLVisitor {
         getParseContext().getParsedResult().getRouteContext().getTables().addAll(visitor.getParseContext().getParsedResult().getRouteContext().getTables());
         getParseContext().setShardingColumns(visitor.getParseContext().getShardingColumns());
     }
-
+    
     /**
      * 进行OR表达式的访问.
      *
@@ -60,13 +60,13 @@ public class OrVisitor extends AbstractMySQLVisitor {
         postVisitHandle();
         return Optional.fromNullable(orASTNode);
     }
-
+    
     private void reset() {
         orASTNode = null;
         getParseContext().getCurrentConditionContext().clear();
         getParseContext().setHasOrCondition(false);
     }
-
+    
     private void postVisitHandle() {
         if (null == orASTNode) {
             return;
@@ -79,10 +79,10 @@ public class OrVisitor extends AbstractMySQLVisitor {
         }
         orASTNode.createOrASTAsRootNode();
     }
-
+    
     /**
      * 逻辑OR访问器, 每次只解析一层OR条件.
-     *
+     * 
      * @param x 二元表达式
      * @return false 停止访问AST
      */
@@ -94,7 +94,14 @@ public class OrVisitor extends AbstractMySQLVisitor {
         if (Boolean.TRUE.equals(WallVisitorUtils.getValue(x))) {
             return false;
         }
-        orASTNode = new SimpleOrASTNode(x, new OrVisitor(this));
+        if (orASTNode == null) {
+            orASTNode = new SimpleOrASTNode(x, new OrVisitor(this));
+        } else {
+            CompositeOrASTNode existingOutConditionOrASTNode = new CompositeOrASTNode();
+            existingOutConditionOrASTNode.addSubNode(orASTNode);
+            existingOutConditionOrASTNode.addSubNode(new SimpleOrASTNode(x, new OrVisitor(this)));
+            orASTNode = existingOutConditionOrASTNode;
+        }
         return false;
     }
 }

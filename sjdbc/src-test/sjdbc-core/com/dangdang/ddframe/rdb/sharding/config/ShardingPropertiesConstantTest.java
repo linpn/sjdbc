@@ -24,12 +24,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class ShardingPropertiesConstantTest {
-
+    
     @Test
     public void testFindByKey() {
         assertThat(ShardingPropertiesConstant.findByKey("metrics.enable"), is(ShardingPropertiesConstant.METRICS_ENABLE));
     }
-
+    
     @Test
     public void testFindByKeyWhenNotFound() {
         assertNull(ShardingPropertiesConstant.findByKey("empty"));

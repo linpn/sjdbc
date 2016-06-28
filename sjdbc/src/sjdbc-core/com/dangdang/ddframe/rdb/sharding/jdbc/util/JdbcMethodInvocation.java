@@ -26,19 +26,19 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 反射调用JDBC相关方法的工具类.
- *
+ * 
  * @author gaohongtao
  */
 @RequiredArgsConstructor
 public final class JdbcMethodInvocation {
-
+    
     private final Method method;
-
+    
     private final Object[] arguments;
-
+    
     /**
      *  调用方法.
-     *
+     * 
      * @param target 目标对象
      */
     public void invoke(final Object target) {

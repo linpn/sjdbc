@@ -25,15 +25,15 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertThat;
 
 public final class MasterSlaveDataSourceFactoryTest {
-
+    
     @Test
     public void assertCreateDataSourceForSingleSlave() {
         assertThat(MasterSlaveDataSourceFactory.createDataSource("logic_ds", new TestDataSource("master_ds"), new TestDataSource("slave_ds")), instanceOf(MasterSlaveDataSource.class));
     }
-
+    
     @Test
     public void assertCreateDataSourceForMultipleSlaves() {
-        assertThat(MasterSlaveDataSourceFactory.createDataSource("logic_ds", new TestDataSource("master_ds"), new TestDataSource("slave_ds_0"), new TestDataSource("slave_ds_1")),
+        assertThat(MasterSlaveDataSourceFactory.createDataSource("logic_ds", new TestDataSource("master_ds"), new TestDataSource("slave_ds_0"), new TestDataSource("slave_ds_1")), 
                 instanceOf(MasterSlaveDataSource.class));
     }
 }

@@ -31,18 +31,18 @@ import net.sf.cglib.proxy.MethodProxy;
 
 /**
  * SQL解析日志打印.
- *
+ * 
  * @author gaohongtao
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public final class VisitorLogProxy {
-
+    
     /**
      * 打印SQL解析调用树.
-     *
+     * 
      * @param target 待增强类
-     * @param <T>    泛型
+     * @param <T> 泛型
      * @return 增强后的新类的对象
      */
     @SuppressWarnings("unchecked")
@@ -61,13 +61,13 @@ public final class VisitorLogProxy {
             }
         }
     }
-
+    
     private static class VisitorHandler implements MethodInterceptor {
-
+        
         private final StringBuilder hierarchyIndex = new StringBuilder();
-
+        
         private Integer depth = 0;
-
+        
         @Override
         public Object intercept(final Object enhancedObject, final Method method, final Object[] arguments, final MethodProxy methodProxy) throws Throwable {
             if (isPrintable(method)) {
@@ -86,15 +86,15 @@ public final class VisitorLogProxy {
             }
             return result;
         }
-
+        
         private boolean isPrintable(final Method method) {
             return log.isTraceEnabled() && "visit".equals(method.getName());
         }
-
+        
         private void hierarchyIn() {
             hierarchyIndex.append("  ").append(++depth).append(" ");
         }
-
+        
         private void hierarchyOut() {
             hierarchyIndex.delete(hierarchyIndex.length() - 3 - depth.toString().length(), hierarchyIndex.length());
             depth--;

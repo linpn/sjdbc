@@ -28,19 +28,19 @@ import javax.xml.bind.annotation.XmlAttribute;
 @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class OrderByColumn {
-
+    
     @XmlAttribute
     private String owner;
-
+    
     @XmlAttribute
     private String name;
-
+    
     @XmlAttribute
     private Integer index;
-
+    
     @XmlAttribute
     private String alias;
-
-    @XmlAttribute(name = "order-by-type")
+    
+    @XmlAttribute(name = "order-by-type") 
     private String orderByType;
 }

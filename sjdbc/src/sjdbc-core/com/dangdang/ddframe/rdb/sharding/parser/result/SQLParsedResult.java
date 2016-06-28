@@ -29,17 +29,17 @@ import lombok.ToString;
 
 /**
  * SQL解析结果.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 @Getter
 @ToString
 public final class SQLParsedResult {
-
+    
     private final RouteContext routeContext = new RouteContext();
-
+    
     private final List<ConditionContext> conditionContexts = new ArrayList<>();
-
+    
     private final MergeContext mergeContext = new MergeContext();
 }

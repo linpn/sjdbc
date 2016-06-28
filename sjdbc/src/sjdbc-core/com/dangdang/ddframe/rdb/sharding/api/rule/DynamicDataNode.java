@@ -19,13 +19,13 @@ package com.dangdang.ddframe.rdb.sharding.api.rule;
 
 /**
  * 动态表的分库分表数据单元.
- *
+ * 
  * @author zhangliang
  */
 public final class DynamicDataNode extends DataNode {
-
+    
     private static final String DYNAMIC_TABLE_PLACEHOLDER = "SHARDING_JDBC DYNAMIC_TABLE_PLACEHOLDER";
-
+    
     public DynamicDataNode(final String dataSourceName) {
         super(dataSourceName, DYNAMIC_TABLE_PLACEHOLDER);
     }

@@ -27,20 +27,20 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtil {
-
+    
     /**
      * 判断是否为boolean值.
-     *
+     * 
      * @param str 待判断的字符串
      * @return 是否为boolean值
      */
     public static boolean isBooleanValue(final String str) {
         return Boolean.TRUE.toString().equalsIgnoreCase(str) || Boolean.FALSE.toString().equalsIgnoreCase(str);
     }
-
+    
     /**
      * 判断是否为int值.
-     *
+     * 
      * @param str 待判断的字符串
      * @return 是否为int值
      */
@@ -52,7 +52,7 @@ public class StringUtil {
             return false;
         }
     }
-
+    
     /**
      * 判断是否为long值.
      *

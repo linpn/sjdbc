@@ -41,15 +41,15 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public final class RdbTransactionLogStorage implements TransactionLogStorage {
-
+    
     private final DataSource dataSource;
-
+    
     @Override
     public void add(final TransactionLog transactionLog) {
         String sql = "INSERT INTO `transaction_log` (`id`, `transaction_type`, `data_source`, `sql`, `parameters`, `creation_time`) VALUES (?, ?, ?, ?, ?, ?);";
         try (
-                Connection conn = dataSource.getConnection();
-                PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
             preparedStatement.setString(1, transactionLog.getId());
             preparedStatement.setString(2, SoftTransactionType.BestEffortsDelivery.name());
             preparedStatement.setString(3, transactionLog.getDataSource());
@@ -61,25 +61,25 @@ public final class RdbTransactionLogStorage implements TransactionLogStorage {
             throw new TransactionLogStorageException(ex);
         }
     }
-
+    
     @Override
     public void remove(final String id) {
         String sql = "DELETE FROM `transaction_log` WHERE `id`=?;";
         try (
-                Connection conn = dataSource.getConnection();
-                PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
             preparedStatement.setString(1, id);
             preparedStatement.executeUpdate();
         } catch (final SQLException ex) {
             throw new TransactionLogStorageException(ex);
         }
     }
-
+    
     @Override
     public List<TransactionLog> findEligibleTransactionLogs(final int size, final int maxDeliveryTryTimes, final long maxDeliveryTryDelayMillis) {
         List<TransactionLog> result = new ArrayList<>(size);
         String sql = "SELECT `id`, `transaction_type`, `data_source`, `sql`, `parameters`, `creation_time`, `async_delivery_try_times` "
-                + "FROM `transaction_log` WHERE `async_delivery_try_times`<? AND `transaction_type`=? AND `creation_time`<? LIMIT ?;";
+            + "FROM `transaction_log` WHERE `async_delivery_try_times`<? AND `transaction_type`=? AND `creation_time`<? LIMIT ?;";
         try (Connection conn = dataSource.getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
                 preparedStatement.setInt(1, maxDeliveryTryTimes);
@@ -89,8 +89,7 @@ public final class RdbTransactionLogStorage implements TransactionLogStorage {
                 try (ResultSet rs = preparedStatement.executeQuery()) {
                     while (rs.next()) {
                         Gson gson = new Gson();
-                        List<Object> parameters = gson.fromJson(rs.getString(5), new TypeToken<List<Object>>() {
-                        }.getType());
+                        List<Object> parameters = gson.fromJson(rs.getString(5), new TypeToken<List<Object>>() { }.getType());
                         result.add(new TransactionLog(rs.getString(1), "", SoftTransactionType.valueOf(rs.getString(2)), rs.getString(3), rs.getString(4), parameters, rs.getLong(6), rs.getInt(7)));
                     }
                 }
@@ -100,25 +99,25 @@ public final class RdbTransactionLogStorage implements TransactionLogStorage {
         }
         return result;
     }
-
+    
     @Override
     public void increaseAsyncDeliveryTryTimes(final String id) {
         String sql = "UPDATE `transaction_log` SET `async_delivery_try_times`=`async_delivery_try_times`+1 WHERE `id`=?;";
         try (
-                Connection conn = dataSource.getConnection();
-                PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            Connection conn = dataSource.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
             preparedStatement.setString(1, id);
             preparedStatement.executeUpdate();
         } catch (final SQLException ex) {
             throw new TransactionLogStorageException(ex);
         }
     }
-
+    
     @Override
     public boolean processData(final Connection connection, final TransactionLog transactionLog, final int maxDeliveryTryTimes) {
         try (
-                Connection conn = connection;
-                PreparedStatement preparedStatement = conn.prepareStatement(transactionLog.getSql())) {
+            Connection conn = connection;
+            PreparedStatement preparedStatement = conn.prepareStatement(transactionLog.getSql())) {
             for (int parameterIndex = 0; parameterIndex < transactionLog.getParameters().size(); parameterIndex++) {
                 preparedStatement.setObject(parameterIndex + 1, transactionLog.getParameters().get(parameterIndex));
             }

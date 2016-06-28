@@ -23,15 +23,15 @@ import com.dangdang.ddframe.rdb.sharding.router.strategy.ShardingStrategy;
 
 /**
  * 分表策略.
- *
+ * 
  * @author zhangliang
  */
 public final class TableShardingStrategy extends ShardingStrategy {
-
+    
     public TableShardingStrategy(final String shardingColumn, final SingleKeyTableShardingAlgorithm<?> tableShardingAlgorithm) {
         super(shardingColumn, tableShardingAlgorithm);
     }
-
+    
     public TableShardingStrategy(final Collection<String> shardingColumns, final MultipleKeysTableShardingAlgorithm tableShardingAlgorithm) {
         super(shardingColumns, tableShardingAlgorithm);
     }

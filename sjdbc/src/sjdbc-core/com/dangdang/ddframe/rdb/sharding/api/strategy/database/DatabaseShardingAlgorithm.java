@@ -21,7 +21,7 @@ import com.dangdang.ddframe.rdb.sharding.router.strategy.ShardingAlgorithm;
 
 /**
  * 分库算法接口.
- *
+ * 
  * @author zhangliang
  */
 public interface DatabaseShardingAlgorithm extends ShardingAlgorithm {

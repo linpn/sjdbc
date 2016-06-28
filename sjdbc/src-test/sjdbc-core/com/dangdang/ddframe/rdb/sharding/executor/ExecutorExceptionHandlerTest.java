@@ -28,25 +28,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ExecutorExceptionHandlerTest {
-
+    
     @After
     public void tearDown() throws NoSuchFieldException, IllegalAccessException {
         ExecutorTestUtil.clear();
     }
-
+    
     @Test(expected = ShardingJdbcException.class)
     public void assertHandleExceptionWithoutSet() {
         assertTrue(ExecutorExceptionHandler.isExceptionThrown());
         ExecutorExceptionHandler.handleException(new SQLException(""));
     }
-
+    
     @Test(expected = ShardingJdbcException.class)
     public void assertHandleExceptionWhenExceptionThrownIsTrue() {
         ExecutorExceptionHandler.setExceptionThrown(true);
         assertTrue(ExecutorExceptionHandler.isExceptionThrown());
         ExecutorExceptionHandler.handleException(new SQLException(""));
     }
-
+    
     @Test
     public void assertHandleExceptionWhenExceptionThrownIsFalse() {
         ExecutorExceptionHandler.setExceptionThrown(false);

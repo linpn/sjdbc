@@ -36,7 +36,7 @@ import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DynamicShardingBothHelper {
-
+    
     public static ShardingDataSource getShardingDataSource(final Map<String, DataSource> dataSourceMap) {
         DataSourceRule dataSourceRule = new DataSourceRule(dataSourceMap);
         TableRule orderTableRule = TableRule.builder("t_order").dynamic(true).dataSourceRule(dataSourceRule).build();

@@ -28,9 +28,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author zhangliang
  */
 public final class RoundRobinSlaveLoadBalanceStrategy implements SlaveLoadBalanceStrategy {
-
+    
     private static final ConcurrentHashMap<String, AtomicInteger> COUNT_MAP = new ConcurrentHashMap<>();
-
+    
     @Override
     public DataSource getDataSource(final String name, final List<DataSource> slaveDataSources) {
         AtomicInteger count = COUNT_MAP.containsKey(name) ? COUNT_MAP.get(name) : new AtomicInteger(0);

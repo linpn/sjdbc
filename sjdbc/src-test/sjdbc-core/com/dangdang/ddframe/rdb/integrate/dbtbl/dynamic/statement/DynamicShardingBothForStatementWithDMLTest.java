@@ -28,12 +28,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public final class DynamicShardingBothForStatementWithDMLTest extends AbstractShardingBothForStatementWithDMLTest {
-
+    
     @Override
     protected ShardingDataSource getShardingDataSource() {
         return DynamicShardingBothHelper.getShardingDataSource(createDataSourceMap("dataSource_%s"));
     }
-
+    
     @Test(expected = IllegalStateException.class)
     public void assertUpdateWithoutShardingValue() throws SQLException, DatabaseUnitException {
         String sql = "UPDATE `t_order` SET `status` = '%s' WHERE `status` = '%s'";
@@ -42,7 +42,7 @@ public final class DynamicShardingBothForStatementWithDMLTest extends AbstractSh
             stmt.executeUpdate(String.format(sql, "updated", "init"));
         }
     }
-
+    
     @Test(expected = IllegalStateException.class)
     public void assertDeleteWithoutShardingValue() throws SQLException, DatabaseUnitException {
         String sql = "DELETE `t_order` WHERE `status` = '%s'";

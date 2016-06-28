@@ -28,10 +28,10 @@ import lombok.Setter;
 @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Limit {
-
+    
     @XmlAttribute
     private Integer offset;
-
+    
     @XmlAttribute(name = "row-count")
     private Integer rowCount;
 }

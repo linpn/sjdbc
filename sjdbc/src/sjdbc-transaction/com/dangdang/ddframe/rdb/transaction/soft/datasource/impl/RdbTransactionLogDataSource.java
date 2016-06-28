@@ -25,19 +25,19 @@ import javax.sql.DataSource;
 
 /**
  * 关系型数据库事务数据源.
- *
+ * 
  * @author caohao
  */
 @RequiredArgsConstructor
 public class RdbTransactionLogDataSource implements TransactionLogDataSource {
-
+    
     private final DataSource dataSource;
-
+    
     @Override
     public TransactionLogDataSourceType getType() {
         return TransactionLogDataSourceType.RDB;
     }
-
+    
     @Override
     public DataSource getDataSource() {
         return dataSource;

@@ -34,23 +34,23 @@ import java.util.Set;
 
 /**
  * 单表路由数据源.
- *
+ * 
  * @author zhangliang
  */
 @RequiredArgsConstructor
 @Getter
 @ToString
 public class SingleRoutingDataSource {
-
+    
     private final String dataSource;
-
+    
     private final List<SingleRoutingTableFactor> routingTableFactors = new ArrayList<>();
-
+    
     SingleRoutingDataSource(final String dataSource, final SingleRoutingTableFactor routingTableFactor) {
         this(dataSource);
         routingTableFactors.add(routingTableFactor);
     }
-
+    
     Collection<SQLExecutionUnit> getSQLExecutionUnits(final SQLBuilder sqlBuilder) {
         Collection<SQLExecutionUnit> result = new ArrayList<>();
         for (SingleRoutingTableFactor each : routingTableFactors) {
@@ -59,11 +59,11 @@ public class SingleRoutingDataSource {
         }
         return result;
     }
-
+    
     Set<String> getLogicTables() {
         Set<String> result = new HashSet<>(routingTableFactors.size());
         result.addAll(Lists.transform(routingTableFactors, new Function<SingleRoutingTableFactor, String>() {
-
+            
             @Override
             public String apply(final SingleRoutingTableFactor input) {
                 return input.getLogicTable();
@@ -71,7 +71,7 @@ public class SingleRoutingDataSource {
         }));
         return result;
     }
-
+    
     List<Set<String>> getActualTableGroups(final Set<String> logicTables) {
         List<Set<String>> result = new ArrayList<>();
         for (String logicTable : logicTables) {
@@ -82,7 +82,7 @@ public class SingleRoutingDataSource {
         }
         return result;
     }
-
+    
     private Set<String> getActualTables(final String logicTable) {
         Set<String> result = new HashSet<>();
         for (SingleRoutingTableFactor each : routingTableFactors) {
@@ -92,7 +92,7 @@ public class SingleRoutingDataSource {
         }
         return result;
     }
-
+    
     Optional<SingleRoutingTableFactor> findRoutingTableFactor(final String actualTable) {
         for (SingleRoutingTableFactor each : routingTableFactors) {
             if (each.getActualTable().equals(actualTable)) {

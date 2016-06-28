@@ -31,26 +31,26 @@ import java.util.List;
 
 /**
  * 最大努力送达型异步作业.
- *
+ * 
  * @author zhangliang
  * @author caohao
  */
 @Slf4j
 public class NestedBestEffortsDeliveryJob extends AbstractIndividualThroughputDataFlowElasticJob<TransactionLog> {
-
+    
     @Setter
     private SoftTransactionConfiguration transactionConfig;
-
+    
     @Setter
     private TransactionLogStorage transactionLogStorage;
-
+    
     @Override
     public List<TransactionLog> fetchData(final JobExecutionMultipleShardingContext context) {
-        return transactionLogStorage.findEligibleTransactionLogs(context.getFetchDataCount(),
-                transactionConfig.getBestEffortsDeliveryJobConfiguration().get().getAsyncMaxDeliveryTryTimes(),
-                transactionConfig.getBestEffortsDeliveryJobConfiguration().get().getAsyncMaxDeliveryTryDelayMillis());
+        return transactionLogStorage.findEligibleTransactionLogs(context.getFetchDataCount(), 
+            transactionConfig.getBestEffortsDeliveryJobConfiguration().get().getAsyncMaxDeliveryTryTimes(), 
+            transactionConfig.getBestEffortsDeliveryJobConfiguration().get().getAsyncMaxDeliveryTryDelayMillis());
     }
-
+    
     @Override
     public boolean processData(final JobExecutionMultipleShardingContext context, final TransactionLog data) {
         try {
@@ -60,7 +60,7 @@ public class NestedBestEffortsDeliveryJob extends AbstractIndividualThroughputDa
             throw new ShardingJdbcException(ex);
         }
     }
-
+    
     @Override
     public boolean isStreamingProcess() {
         return false;

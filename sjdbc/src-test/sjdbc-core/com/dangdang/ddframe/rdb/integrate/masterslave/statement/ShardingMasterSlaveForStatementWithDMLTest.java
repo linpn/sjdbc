@@ -34,14 +34,14 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public final class ShardingMasterSlaveForStatementWithDMLTest extends AbstractShardingMasterSlaveDBUnitTest {
-
+    
     private ShardingDataSource shardingDataSource;
-
+    
     @Before
     public void init() throws SQLException {
         shardingDataSource = getShardingDataSource();
     }
-
+    
     @Test
     public void assertUpdateWithoutShardingValue() throws SQLException, DatabaseUnitException {
         assertSelectBeforeUpdate();
@@ -53,7 +53,7 @@ public final class ShardingMasterSlaveForStatementWithDMLTest extends AbstractSh
         assertDataSet("update", "updated");
         assertSelectAfterUpdate();
     }
-
+    
     private void assertSelectBeforeUpdate() throws SQLException, DatabaseUnitException {
         String sql = "SELECT * FROM `t_order` WHERE `status` = '%s'";
         try (Connection connection = getShardingDataSource().getConnection()) {
@@ -61,7 +61,7 @@ public final class ShardingMasterSlaveForStatementWithDMLTest extends AbstractSh
             assertFalse(stmt.executeQuery(String.format(sql, "updated")).next());
         }
     }
-
+    
     private void assertSelectAfterUpdate() throws SQLException, DatabaseUnitException {
         String sql = "SELECT * FROM `t_order` WHERE `status` = '%s'";
         try (Connection connection = getShardingDataSource().getConnection()) {
@@ -69,7 +69,7 @@ public final class ShardingMasterSlaveForStatementWithDMLTest extends AbstractSh
             assertTrue(stmt.executeQuery(String.format(sql, "updated")).next());
         }
     }
-
+    
     @Test
     public void assertDeleteWithoutShardingValue() throws SQLException, DatabaseUnitException {
         String sql = "DELETE `t_order` WHERE `status` = '%s'";
@@ -79,12 +79,12 @@ public final class ShardingMasterSlaveForStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("delete", "init");
     }
-
+    
     protected void assertDataSet(final String expectedDataSetPattern, final String status) throws SQLException, DatabaseUnitException {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                assertDataSet(String.format("com/dangdang/ddframe/rdb/integrate/dataset/masterslave/expect/%s/master_%s.xml", expectedDataSetPattern, i),
-                        shardingDataSource.getConnection().getConnection(String.format("ms_%s", i), SQLStatementType.SELECT),
+                assertDataSet(String.format("integrate/dataset/masterslave/expect/%s/master_%s.xml", expectedDataSetPattern, i),
+                        shardingDataSource.getConnection().getConnection(String.format("ms_%s", i), SQLStatementType.INSERT),
                         String.format("t_order_%s", j), String.format("SELECT * FROM `t_order_%s` WHERE `status`=?", j), status);
             }
         }

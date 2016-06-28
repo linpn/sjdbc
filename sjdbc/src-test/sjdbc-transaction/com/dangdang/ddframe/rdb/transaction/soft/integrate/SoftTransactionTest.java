@@ -35,7 +35,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class SoftTransactionTest extends AbstractSoftTransactionIntegrationTest {
-
+    
     @Test
     public void bedSoftTransactionTest() throws SQLException {
         SoftTransactionManager transactionManagerFactory = new SoftTransactionManager(getSoftTransactionConfiguration(getShardingDataSource()));
@@ -46,7 +46,7 @@ public final class SoftTransactionTest extends AbstractSoftTransactionIntegratio
         assertThat(select(), is(1));
         transactionManager.end();
     }
-
+    
     private void insert() throws SQLException {
         String dbSchema = "insert into transaction_test(id) values (1)";
         try (
@@ -57,13 +57,13 @@ public final class SoftTransactionTest extends AbstractSoftTransactionIntegratio
             e.printStackTrace();
         }
     }
-
+    
     private int select() throws SQLException {
         String dbSchema = "select * from `transaction_test`;";
         int id = 0;
         try (
-                Connection conn = getShardingDataSource().getConnection().getConnection("db_trans", SQLStatementType.SELECT);
-                PreparedStatement preparedStatement = conn.prepareStatement(dbSchema)) {
+            Connection conn = getShardingDataSource().getConnection().getConnection("db_trans", SQLStatementType.SELECT);
+            PreparedStatement preparedStatement = conn.prepareStatement(dbSchema)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 id = resultSet.getInt(1);
@@ -71,9 +71,9 @@ public final class SoftTransactionTest extends AbstractSoftTransactionIntegratio
         } catch (final SQLException e) {
             e.printStackTrace();
         }
-        return id;
+        return  id;
     }
-
+    
     private SoftTransactionConfiguration getSoftTransactionConfiguration(final ShardingDataSource dataSource) {
         SoftTransactionConfiguration result = new SoftTransactionConfiguration(dataSource);
         result.setTransactionLogDataSource(getTransactionDataSource());

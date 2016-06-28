@@ -18,12 +18,12 @@
 package com.dangdang.ddframe.rdb.sharding.config.common.internal.algorithm;
 
 public final class ClosureTableShardingAlgorithmTest extends AbstractClosureShardingAlgorithmTest {
-
+    
     @Override
     protected ClosureShardingAlgorithm createClosureShardingAlgorithm() {
         return new ClosureTableShardingAlgorithm(EXPRESSION, LOG_ROOT);
     }
-
+    
     @Override
     protected ClosureShardingAlgorithm createErrorClosureShardingAlgorithm() {
         return new ClosureTableShardingAlgorithm(WRONG_EXPRESSION, LOG_ROOT);

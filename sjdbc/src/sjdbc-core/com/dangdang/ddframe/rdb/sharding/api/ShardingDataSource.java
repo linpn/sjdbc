@@ -23,21 +23,21 @@ import java.util.Properties;
 
 /**
  * 支持分片的数据源.
- * <p>
+ * 
  * <p>
  * 已废弃, 请使用ShardingDataSourceFactory创建数据源. 未来版本中将删除此类.
  * </p>
- *
- * @author zhangliang
+ * 
  * @deprecated 已废弃, 请使用ShardingDataSourceFactory创建数据源. 未来版本中将删除此类.
+ * @author zhangliang
  */
 @Deprecated
 public class ShardingDataSource extends com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource {
-
+    
     public ShardingDataSource(final ShardingRule shardingRule) {
         super(shardingRule);
     }
-
+    
     public ShardingDataSource(final ShardingRule shardingRule, final Properties props) {
         super(shardingRule, props);
     }

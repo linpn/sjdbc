@@ -26,16 +26,16 @@ import com.dangdang.ddframe.rdb.sharding.jdbc.adapter.WrapperAdapter;
 
 /**
  * 声明不支持操作的数据源对象.
- *
+ * 
  * @author zhangliang
  */
 public abstract class AbstractUnsupportedOperationDataSource extends WrapperAdapter implements DataSource {
-
+    
     @Override
     public final int getLoginTimeout() throws SQLException {
         throw new SQLFeatureNotSupportedException("unsupported getLoginTimeout()");
     }
-
+    
     @Override
     public final void setLoginTimeout(final int seconds) throws SQLException {
         throw new SQLFeatureNotSupportedException("unsupported setLoginTimeout(int seconds)");

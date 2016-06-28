@@ -60,6 +60,7 @@ public class ShardingJdbcDataSourceBeanDefinitionParser extends AbstractBeanDefi
         Element shardingRuleElement = DomUtils.getChildElementByTagName(element, ShardingJdbcDataSourceBeanDefinitionParserTag.SHARDING_RULE_CONFIG_TAG);
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(ShardingRuleConfig.class);
         factory.addPropertyValue("dataSource", parseDataSources(shardingRuleElement, parserContext));
+        // TODO: Linpn修改标记
         parseDefaultDataSource(factory, shardingRuleElement, parserContext);
         factory.addPropertyValue("tables", parseTableRulesConfig(shardingRuleElement));
         factory.addPropertyValue("bindingTables", parseBindingTablesConfig(shardingRuleElement));

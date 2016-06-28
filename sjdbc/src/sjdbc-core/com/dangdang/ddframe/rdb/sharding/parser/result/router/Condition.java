@@ -27,7 +27,7 @@ import lombok.ToString;
 
 /**
  * 条件对象.
- *
+ * 
  * @author gaohongtao
  */
 @RequiredArgsConstructor
@@ -35,16 +35,16 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public final class Condition {
-
+    
     private final Column column;
-
+    
     private final BinaryOperator operator;
-
+    
     private final List<Comparable<?>> values = new ArrayList<>();
-
+    
     /**
      * 列对象.
-     *
+     * 
      * @author gaohongtao
      * @author zhangliang
      */
@@ -53,26 +53,26 @@ public final class Condition {
     @EqualsAndHashCode
     @ToString
     public static final class Column {
-
+        
         private final String columnName;
-
+        
         private final String tableName;
     }
-
+    
     /**
      * 操作符枚举.
-     *
+     * 
      * @author gaohongtao
      * @author zhangliang
      */
     @RequiredArgsConstructor
     public enum BinaryOperator {
-
+        
         EQUAL("="), BETWEEN("BETWEEN"), IN("IN");
-
+        
         @Getter
         private final String expression;
-
+        
         @Override
         public String toString() {
             return expression;

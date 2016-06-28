@@ -19,15 +19,15 @@ package com.dangdang.ddframe.rdb.sharding.exception;
 
 /**
  * 不支持的数据库抛出的异常.
- *
+ * 
  * @author zhangliang
  */
 public final class DatabaseTypeUnsupportedException extends ShardingJdbcException {
-
+    
     private static final long serialVersionUID = -7807395469148925091L;
-
+    
     private static final String MESSAGE = "Can not support database type [%s].";
-
+    
     public DatabaseTypeUnsupportedException(final String databaseType) {
         super(MESSAGE, databaseType);
     }

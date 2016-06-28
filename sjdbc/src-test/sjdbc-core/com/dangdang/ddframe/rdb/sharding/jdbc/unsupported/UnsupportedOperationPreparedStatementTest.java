@@ -17,86 +17,81 @@
 
 package com.dangdang.ddframe.rdb.sharding.jdbc.unsupported;
 
+import com.dangdang.ddframe.rdb.integrate.db.AbstractShardingDataBasesOnlyDBUnitTest;
+import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingConnection;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.StringReader;
 import java.sql.NClob;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.dangdang.ddframe.rdb.integrate.db.AbstractShardingDataBasesOnlyDBUnitTest;
-import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource;
-import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingConnection;
-
 public final class UnsupportedOperationPreparedStatementTest extends AbstractShardingDataBasesOnlyDBUnitTest {
-
-    private ShardingDataSource shardingDataSource;
-
+    
     private ShardingConnection shardingConnection;
-
+    
     private PreparedStatement actual;
-
+    
     @Before
     public void init() throws SQLException {
-        shardingDataSource = getShardingDataSource();
-        shardingConnection = shardingDataSource.getConnection();
+        shardingConnection = getShardingDataSource().getConnection();
         actual = shardingConnection.prepareStatement("SELECT user_id AS `uid` FROM `t_order` WHERE `status` = 'init'");
     }
-
+    
     @After
     public void close() throws SQLException {
         actual.close();
         shardingConnection.close();
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertGetMetaData() throws SQLException {
         actual.getMetaData();
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertGetParameterMetaData() throws SQLException {
         actual.getParameterMetaData();
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertSetNString() throws SQLException {
         actual.setNString(1, "");
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertSetNClob() throws SQLException {
         actual.setNClob(1, (NClob) null);
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertSetNClobForReader() throws SQLException {
         actual.setNClob(1, new StringReader(""));
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertSetNClobForReaderAndLength() throws SQLException {
         actual.setNClob(1, new StringReader(""), 1);
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertSetNCharacterStream() throws SQLException {
         actual.setNCharacterStream(1, new StringReader(""));
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertSetNCharacterStreamWithLength() throws SQLException {
         actual.setNCharacterStream(1, new StringReader(""), 1);
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertSetArray() throws SQLException {
         actual.setArray(1, null);
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertSetRowId() throws SQLException {
         actual.setRowId(1, null);

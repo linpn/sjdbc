@@ -27,7 +27,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public final class HintManagerTest {
-
+    
     @Test
     public void assertAddDatabaseShardingValueForEquals() {
         try (HintManager hintManager = HintManager.getInstance()) {
@@ -39,7 +39,7 @@ public final class HintManagerTest {
             assertThat(hintManager.getDatabaseShardingValue(shardingKey).getValue(), is((Comparable) 1));
         }
     }
-
+    
     @Test
     public void assertAddDatabaseShardingValueForIn() {
         try (HintManager hintManager = HintManager.getInstance()) {
@@ -51,7 +51,7 @@ public final class HintManagerTest {
             assertThat(hintManager.getDatabaseShardingValue(shardingKey).getValues().size(), is(3));
         }
     }
-
+    
     @Test
     public void assertAddDatabaseShardingValueForBetween() {
         try (HintManager hintManager = HintManager.getInstance()) {
@@ -64,7 +64,7 @@ public final class HintManagerTest {
             assertThat(hintManager.getDatabaseShardingValue(shardingKey).getValueRange().upperEndpoint(), is((Comparable) 10));
         }
     }
-
+    
     @Test
     public void assertAddTableShardingValueForEquals() {
         try (HintManager hintManager = HintManager.getInstance()) {
@@ -76,7 +76,7 @@ public final class HintManagerTest {
             assertThat(hintManager.getTableShardingValue(shardingKey).getValue(), is((Comparable) 1));
         }
     }
-
+    
     @Test
     public void assertAddTableShardingValueForIn() {
         try (HintManager hintManager = HintManager.getInstance()) {
@@ -88,7 +88,7 @@ public final class HintManagerTest {
             assertThat(hintManager.getTableShardingValue(shardingKey).getValues().size(), is(3));
         }
     }
-
+    
     @Test
     public void assertAddTableShardingValueForBetween() {
         try (HintManager hintManager = HintManager.getInstance()) {

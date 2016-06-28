@@ -35,18 +35,18 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-        AllConstantsTests.class,
-        AllApiTests.class,
-        AllConfigTests.class,
-        AllParserTests.class,
-        AllRouterTests.class,
-        AllMergerTests.class,
-        AllExecutorTests.class,
-        AllJDBCTests.class,
-        AllHintTests.class,
-        AllUtilTests.class,
-        AllMetricsTests.class,
-        AllIntegrateTests.class
-})
+    AllConstantsTests.class, 
+    AllApiTests.class,
+    AllConfigTests.class, 
+    AllParserTests.class, 
+    AllRouterTests.class, 
+    AllMergerTests.class,
+    AllExecutorTests.class, 
+    AllJDBCTests.class, 
+    AllHintTests.class, 
+    AllUtilTests.class, 
+    AllMetricsTests.class, 
+    AllIntegrateTests.class
+    })
 public class AllTests {
 }

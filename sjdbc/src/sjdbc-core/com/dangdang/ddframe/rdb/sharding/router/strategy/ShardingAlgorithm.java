@@ -19,7 +19,7 @@ package com.dangdang.ddframe.rdb.sharding.router.strategy;
 
 /**
  * 分片算法的标识接口.
- *
+ * 
  * @author zhangliang
  */
 public interface ShardingAlgorithm {

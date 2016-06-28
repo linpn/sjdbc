@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * 聚合列对象.
- *
+ * 
  * @author zhangliang
  */
 @Getter
@@ -37,33 +37,33 @@ import java.util.List;
 @RequiredArgsConstructor
 @ToString
 public final class AggregationColumn implements IndexColumn {
-
+    
     private final String expression;
-
+    
     private final AggregationType aggregationType;
-
+    
     private final Optional<String> alias;
-
+    
     private final Optional<String> option;
-
+    
     private final List<AggregationColumn> derivedColumns = new ArrayList<>(2);
-
+    
     @Setter
     private int columnIndex = -1;
-
+    
     @Override
     public Optional<String> getColumnLabel() {
         return alias;
     }
-
+    
     @Override
     public Optional<String> getColumnName() {
         return Optional.of(expression);
     }
-
+    
     /**
      * 聚合函数类型.
-     *
+     * 
      * @author gaohongtao
      */
     public enum AggregationType {

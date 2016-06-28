@@ -31,37 +31,37 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public final class BindingTableRuleTest {
-
+    
     @Test
     public void assertHasLogicTable() {
         assertTrue(createBindingTableRule().hasLogicTable("logicTable"));
     }
-
+    
     @Test
     public void assertNotHasLogicTable() {
         assertFalse(createBindingTableRule().hasLogicTable("newTable"));
     }
-
+    
     @Test
     public void assertGetBindingActualTablesSuccess() {
         assertThat(createBindingTableRule().getBindingActualTable("ds1", "subLogicTable", "table_1"), is("sub_table_1"));
     }
-
+    
     @Test(expected = IllegalStateException.class)
     public void assertGetBindingActualTablesFailureWhenNotFound() {
         createBindingTableRule().getBindingActualTable("no_ds", "subLogicTable", "table_1");
     }
-
+    
     @Test(expected = UnsupportedOperationException.class)
     public void assertGetBindingActualTablesFailureWhenIsDynamicTable() {
         createDynamicBindingTableRule().getBindingActualTable("no_ds", "subLogicTable", "table_1");
     }
-
+    
     @Test
     public void assertGetAllLogicTables() {
         assertThat(createBindingTableRule().getAllLogicTables(), is((Collection<String>) Arrays.asList("logicTable", "subLogicTable")));
     }
-
+    
     @Test
     public void assertGetTableRules() {
         assertThat(createBindingTableRule().getTableRules().size(), is(2));
@@ -70,35 +70,35 @@ public final class BindingTableRuleTest {
         assertThat(createBindingTableRule().getTableRules().get(1).getLogicTable(), is(createSubTableRule().getLogicTable()));
         assertThat(createBindingTableRule().getTableRules().get(1).getActualTables(), is(createSubTableRule().getActualTables()));
     }
-
+    
     private BindingTableRule createBindingTableRule() {
         return new BindingTableRule(Arrays.asList(createTableRule(), createSubTableRule()));
     }
-
+    
     private TableRule createTableRule() {
         return TableRule.builder("logicTable").actualTables(Arrays.asList("ds1.table_0", "ds1.table_1", "ds2.table_0", "ds2.table_1")).dataSourceRule(createDataSourceRule()).build();
     }
-
+    
     private TableRule createSubTableRule() {
         return TableRule.builder("subLogicTable").actualTables(Arrays.asList("ds1.sub_table_0", "ds1.sub_table_1", "ds2.sub_table_0", "ds2.sub_table_1"))
                 .dataSourceRule(createDataSourceRule()).build();
     }
-
+    
     private DataSourceRule createDataSourceRule() {
         Map<String, DataSource> dataSourceMap = new HashMap<>(2);
         dataSourceMap.put("ds1", null);
         dataSourceMap.put("ds2", null);
         return new DataSourceRule(dataSourceMap);
     }
-
+    
     private BindingTableRule createDynamicBindingTableRule() {
         return new BindingTableRule(Arrays.asList(createDynamicTableRule(), createDynamicSubTableRule()));
     }
-
+    
     private TableRule createDynamicTableRule() {
         return TableRule.builder("logicTable").dynamic(true).dataSourceRule(createDataSourceRule()).build();
     }
-
+    
     private TableRule createDynamicSubTableRule() {
         return TableRule.builder("subLogicTable").dynamic(true).dataSourceRule(createDataSourceRule()).build();
     }

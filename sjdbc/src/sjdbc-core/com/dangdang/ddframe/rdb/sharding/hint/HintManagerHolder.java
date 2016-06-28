@@ -31,9 +31,9 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class HintManagerHolder {
-
+    
     private static final ThreadLocal<HintManager> HINT_MANAGER_HOLDER = new ThreadLocal<>();
-
+    
     /**
      * 设置线索分片管理器.
      *
@@ -43,26 +43,25 @@ public final class HintManagerHolder {
         Preconditions.checkState(null == HINT_MANAGER_HOLDER.get(), "HintManagerHolder has previous value, please clear first.");
         HINT_MANAGER_HOLDER.set(hintManager);
     }
-
+    
     /**
      * 判断当前线程是否使用线索分片.
-     *
      * @return 当前线程是否使用线索分片
      */
-    public static boolean isUseHint() {
-        return null != HINT_MANAGER_HOLDER.get();
+    public static boolean isUseShardingHint() {
+        return null != HINT_MANAGER_HOLDER.get() && HINT_MANAGER_HOLDER.get().isShardingHint();
     }
-
+    
     /**
      * 获取分库分片键值.
-     *
+     * 
      * @param shardingKey 分片键
      * @return 分库分片键值
      */
     public static Optional<ShardingValue<?>> getDatabaseShardingValue(final ShardingKey shardingKey) {
-        return isUseHint() ? Optional.<ShardingValue<?>>fromNullable(HINT_MANAGER_HOLDER.get().getDatabaseShardingValue(shardingKey)) : Optional.<ShardingValue<?>>absent();
+        return isUseShardingHint() ? Optional.<ShardingValue<?>>fromNullable(HINT_MANAGER_HOLDER.get().getDatabaseShardingValue(shardingKey)) : Optional.<ShardingValue<?>>absent();
     }
-
+    
     /**
      * 获取分表分片键值.
      *
@@ -70,18 +69,18 @@ public final class HintManagerHolder {
      * @return 分表分片键值
      */
     public static Optional<ShardingValue<?>> getTableShardingValue(final ShardingKey shardingKey) {
-        return isUseHint() ? Optional.<ShardingValue<?>>fromNullable(HINT_MANAGER_HOLDER.get().getTableShardingValue(shardingKey)) : Optional.<ShardingValue<?>>absent();
+        return isUseShardingHint() ? Optional.<ShardingValue<?>>fromNullable(HINT_MANAGER_HOLDER.get().getTableShardingValue(shardingKey)) : Optional.<ShardingValue<?>>absent();
     }
-
+    
     /**
      * 判断是否数据库操作只路由至主库.
-     *
+     * 
      * @return 是否数据库操作只路由至主库
      */
     public static boolean isMasterRouteOnly() {
-        return isUseHint() ? HINT_MANAGER_HOLDER.get().isMasterRouteOnly() : false;
+        return null != HINT_MANAGER_HOLDER.get() && HINT_MANAGER_HOLDER.get().isMasterRouteOnly();
     }
-
+    
     /**
      * 清理线索分片管理器的本地线程持有者.
      */

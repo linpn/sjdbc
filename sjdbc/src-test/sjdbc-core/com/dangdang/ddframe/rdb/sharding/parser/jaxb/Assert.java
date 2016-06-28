@@ -32,36 +32,36 @@ import lombok.Setter;
 @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Assert {
-
+    
     @XmlAttribute
     private String id;
-
+    
     @XmlAttribute
     private String sql;
-
+    
     @XmlAttribute(name = "expected-sql")
     private String expectedSQL;
-
+    
     @XmlElementWrapper(name = "tables")
-    @XmlElement(name = "table")
+    @XmlElement(name = "table") 
     private List<Table> tables;
-
+    
     @XmlElementWrapper(name = "condition-contexts")
-    @XmlElement(name = "condition-context")
+    @XmlElement(name = "condition-context") 
     private List<ConditionContext> conditionContexts;
-
+    
     @XmlElementWrapper(name = "order-by-columns")
-    @XmlElement(name = "order-by-column")
+    @XmlElement(name = "order-by-column") 
     private List<OrderByColumn> orderByColumns;
-
+    
     @XmlElementWrapper(name = "group-by-columns")
-    @XmlElement(name = "group-by-column")
+    @XmlElement(name = "group-by-column") 
     private List<GroupByColumn> groupByColumns;
-
+    
     @XmlElementWrapper(name = "aggregation-columns")
-    @XmlElement(name = "aggregation-column")
+    @XmlElement(name = "aggregation-column") 
     private List<AggregationColumn> aggregationColumns;
-
-    @XmlElement
+    
+    @XmlElement 
     private Limit limit;
 }

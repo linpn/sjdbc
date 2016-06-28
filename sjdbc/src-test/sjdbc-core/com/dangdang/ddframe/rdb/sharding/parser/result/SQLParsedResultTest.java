@@ -41,7 +41,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public final class SQLParsedResultTest {
-
+    
     @Test
     public void assertToString() throws IOException {
         SQLParsedResult actual = new SQLParsedResult();
@@ -60,22 +60,22 @@ public final class SQLParsedResultTest {
                 + "name=Optional.of(id), alias=Optional.of(a), orderByType=DESC), index=Optional.absent(), columnIndex=0)], "
                 + "groupByColumns=[GroupByColumn(super=AbstractSortableColumn(owner=Optional.absent(), name=Optional.of(id), alias=Optional.of(d), orderByType=ASC), columnIndex=0)], "
                 + "aggregationColumns=[AggregationColumn(expression=COUNT(id), aggregationType=COUNT, alias=Optional.of(c), option=Optional.absent(), derivedColumns=[], columnIndex=-1)], "
-                + "limit=Limit(offset=0, rowCount=10), executorEngine=null, columnLabelIndexMap=null, currentOrderByKeys=[]))"));
+                + "limit=Limit(offset=0, rowCount=10)))"));
     }
-
+    
     private void generateRouteContext(final RouteContext routeContext) throws IOException {
         routeContext.getTables().add(new Table("order", Optional.of("o")));
         routeContext.getTables().add(new Table("order_item", Optional.<String>absent()));
         routeContext.setSqlBuilder(generateSqlBuilder());
     }
-
+    
     private SQLBuilder generateSqlBuilder() throws IOException {
         SQLBuilder result = new SQLBuilder();
         result.append("SELECT * FROM ");
         result.appendToken("order");
         return result;
     }
-
+    
     private ConditionContext generateConditionContext() {
         ConditionContext result = new ConditionContext();
         Condition condition = new Condition(new Column("id", "order"), BinaryOperator.IN);
@@ -83,7 +83,7 @@ public final class SQLParsedResultTest {
         result.add(condition);
         return result;
     }
-
+    
     private void generateMergeContext(final MergeContext mergeContext) {
         mergeContext.getAggregationColumns().add(new AggregationColumn("COUNT(id)", AggregationType.COUNT, Optional.of("c"), Optional.<String>absent()));
         mergeContext.getOrderByColumns().add(new OrderByColumn(Optional.<String>absent(), "id", Optional.of("a"), OrderByType.DESC));

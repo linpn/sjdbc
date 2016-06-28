@@ -40,13 +40,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public final class ShardingDataSourceFactoryTest {
-
+    
     @Test
     public void assertCreateDataSourceWithShardingRuleOnly() throws SQLException, NoSuchFieldException, IllegalAccessException {
         ShardingRule shardingRule = createShardingRule();
         assertThat(getShardingRule(ShardingDataSourceFactory.createDataSource(shardingRule)), is(shardingRule));
     }
-
+    
     @Test
     public void assertCreateDataSourceWithShardingRuleAndProperties() throws SQLException, NoSuchFieldException, IllegalAccessException {
         ShardingRule shardingRule = createShardingRule();
@@ -55,7 +55,7 @@ public final class ShardingDataSourceFactoryTest {
         assertThat(getShardingRule(dataSource), is(shardingRule));
         assertThat(getShardingProperties(dataSource), is(props));
     }
-
+    
     private ShardingRule createShardingRule() throws SQLException {
         DataSource dataSource = mock(DataSource.class);
         Connection connection = mock(Connection.class);
@@ -75,7 +75,7 @@ public final class ShardingDataSourceFactoryTest {
         field.setAccessible(true);
         return ((ShardingContext) field.get(dataSource)).getShardingRule();
     }
-
+    
     private Properties getShardingProperties(final DataSource dataSource) throws NoSuchFieldException, IllegalAccessException {
         Field shardingPropertiesField = dataSource.getClass().getDeclaredField("shardingProperties");
         shardingPropertiesField.setAccessible(true);

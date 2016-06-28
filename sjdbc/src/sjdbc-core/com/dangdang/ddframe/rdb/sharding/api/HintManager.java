@@ -39,17 +39,20 @@ import java.util.Map;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class HintManager implements AutoCloseable {
-
+    
     private final Map<ShardingKey, ShardingValue<?>> databaseShardingValues = new HashMap<>();
-
+    
     private final Map<ShardingKey, ShardingValue<?>> tableShardingValues = new HashMap<>();
-
+    
+    @Getter
+    private boolean shardingHint;
+    
     @Getter
     private boolean masterRouteOnly;
-
+    
     /**
      * 获取线索分片管理器实例.
-     *
+     * 
      * @return 线索分片管理器实例
      */
     public static HintManager getInstance() {
@@ -57,57 +60,59 @@ public final class HintManager implements AutoCloseable {
         HintManagerHolder.setHintManager(result);
         return result;
     }
-
+    
     /**
      * 添加分库分片值.
-     * <p>
+     * 
      * <p>分片操作符为等号.</p>
      *
-     * @param logicTable     逻辑表名称
+     * @param logicTable 逻辑表名称
      * @param shardingColumn 分片键
-     * @param value          分片值
+     * @param value 分片值
      */
     public void addDatabaseShardingValue(final String logicTable, final String shardingColumn, final Comparable<?> value) {
         addDatabaseShardingValue(logicTable, shardingColumn, Condition.BinaryOperator.EQUAL, value);
     }
-
+    
     /**
      * 添加分库分片值.
      *
-     * @param logicTable     逻辑表名称
+     * @param logicTable 逻辑表名称
      * @param shardingColumn 分片键
      * @param binaryOperator 分片操作符
-     * @param values         分片值
+     * @param values 分片值
      */
     public void addDatabaseShardingValue(final String logicTable, final String shardingColumn, final Condition.BinaryOperator binaryOperator, final Comparable<?>... values) {
+        shardingHint = true;
         databaseShardingValues.put(new ShardingKey(logicTable, shardingColumn), getShardingValue(logicTable, shardingColumn, binaryOperator, values));
     }
-
+    
     /**
      * 添加分表分片值.
-     * <p>
+     * 
      * <p>分片操作符为等号.</p>
      *
-     * @param logicTable     逻辑表名称
+     * @param logicTable 逻辑表名称
      * @param shardingColumn 分片键
-     * @param value          分片值
+     * @param value 分片值
      */
     public void addTableShardingValue(final String logicTable, final String shardingColumn, final Comparable<?> value) {
         addTableShardingValue(logicTable, shardingColumn, Condition.BinaryOperator.EQUAL, value);
     }
-
+    
     /**
      * 添加分表分片值.
      *
-     * @param logicTable     逻辑表名称
+     * @param logicTable 逻辑表名称
      * @param shardingColumn 分片键
      * @param binaryOperator 分片操作符
-     * @param values         分片值
+     * @param values 分片值
      */
     public void addTableShardingValue(final String logicTable, final String shardingColumn, final Condition.BinaryOperator binaryOperator, final Comparable<?>... values) {
+        shardingHint = true;
         tableShardingValues.put(new ShardingKey(logicTable, shardingColumn), getShardingValue(logicTable, shardingColumn, binaryOperator, values));
     }
-
+    
     @SuppressWarnings("unchecked")
     private ShardingValue getShardingValue(final String logicTable, final String shardingColumn, final Condition.BinaryOperator binaryOperator, final Comparable<?>[] values) {
         Preconditions.checkArgument(null != values && values.length > 0);
@@ -122,34 +127,34 @@ public final class HintManager implements AutoCloseable {
                 throw new UnsupportedOperationException(binaryOperator.getExpression());
         }
     }
-
+    
     /**
      * 获取分库分片键值.
-     *
+     * 
      * @param shardingKey 分片键
      * @return 分库分片键值
      */
     public ShardingValue<?> getDatabaseShardingValue(final ShardingKey shardingKey) {
         return databaseShardingValues.get(shardingKey);
     }
-
+    
     /**
      * 获取分表分片键值.
-     *
+     * 
      * @param shardingKey 分片键
      * @return 分表分片键值
      */
     public ShardingValue<?> getTableShardingValue(final ShardingKey shardingKey) {
         return tableShardingValues.get(shardingKey);
     }
-
+    
     /**
      * 设置数据库操作只路由至主库.
      */
     public void setMasterRouteOnly() {
         masterRouteOnly = true;
     }
-
+    
     @Override
     public void close() {
         HintManagerHolder.clear();

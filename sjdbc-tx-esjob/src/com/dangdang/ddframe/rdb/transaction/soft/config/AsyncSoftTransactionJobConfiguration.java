@@ -28,31 +28,31 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AsyncSoftTransactionJobConfiguration {
-
+    
     /**
      * 作业名称.
      */
     private String name = "bestEffortsDeliveryJob";
-
+    
     /**
      * 触发作业的cron表达式.
      */
     private String cron = "0/5 * * * * ?";
-
+    
     /**
      * 每次作业获取的事务日志最大数量.
      */
     private int transactionLogFetchDataCount = 100;
-
+    
     /**
      * 事务送达的最大尝试次数.
      */
     private int maxDeliveryTryTimes = 3;
-
+    
     /**
      * 执行事务的延迟毫秒数.
-     * <p>
+     *
      * <p>早于此间隔时间的入库事务才会被作业执行.</p>
      */
-    private long maxDeliveryTryDelayMillis = 60 * 1000L;
+    private long maxDeliveryTryDelayMillis = 60  * 1000L;
 }

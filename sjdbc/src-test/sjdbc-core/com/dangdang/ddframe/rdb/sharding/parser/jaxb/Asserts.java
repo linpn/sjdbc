@@ -28,7 +28,7 @@ import lombok.Getter;
 @XmlRootElement(name = "asserts")
 @Getter
 public final class Asserts {
-
+    
     @XmlElement(name = "assert")
     private List<Assert> asserts = new ArrayList<>();
 }

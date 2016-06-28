@@ -22,16 +22,16 @@ import lombok.Setter;
 
 /**
  * 策略配置.
- *
+ * 
  * @author gaohongtao
  */
 @Getter
 @Setter
 public class StrategyConfig {
-
+    
     private String shardingColumns;
-
+    
     private String algorithmClassName;
-
+    
     private String algorithmExpression;
 }

@@ -21,7 +21,7 @@ import com.dangdang.ddframe.rdb.sharding.router.strategy.MultipleKeysShardingAlg
 
 /**
  * 多片键分库算法接口.
- *
+ * 
  * @author zhangliang
  */
 public interface MultipleKeysDatabaseShardingAlgorithm extends MultipleKeysShardingAlgorithm, DatabaseShardingAlgorithm {

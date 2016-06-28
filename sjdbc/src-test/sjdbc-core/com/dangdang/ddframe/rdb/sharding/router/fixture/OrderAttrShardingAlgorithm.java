@@ -24,7 +24,7 @@ import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.table.SingleKeyTableShardingAlgorithm;
 
 public final class OrderAttrShardingAlgorithm implements SingleKeyTableShardingAlgorithm<Integer> {
-
+    
     @Override
     public String doEqualSharding(final Collection<String> tables, final ShardingValue<Integer> shardingValue) {
         String suffix = shardingValue.getValue() % 2 == 0 ? "_a" : "_b";
@@ -35,7 +35,7 @@ public final class OrderAttrShardingAlgorithm implements SingleKeyTableShardingA
         }
         return null;
     }
-
+    
     @Override
     public Collection<String> doInSharding(final Collection<String> tables, final ShardingValue<Integer> shardingValue) {
         Collection<String> result = new HashSet<>(tables.size());
@@ -49,7 +49,7 @@ public final class OrderAttrShardingAlgorithm implements SingleKeyTableShardingA
         }
         return result;
     }
-
+    
     @Override
     public Collection<String> doBetweenSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         throw new UnsupportedOperationException();

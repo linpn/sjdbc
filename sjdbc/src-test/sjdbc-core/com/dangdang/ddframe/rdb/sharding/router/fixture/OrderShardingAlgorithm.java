@@ -25,7 +25,7 @@ import com.dangdang.ddframe.rdb.sharding.api.strategy.database.SingleKeyDatabase
 import com.dangdang.ddframe.rdb.sharding.api.strategy.table.SingleKeyTableShardingAlgorithm;
 
 public final class OrderShardingAlgorithm implements SingleKeyDatabaseShardingAlgorithm<Integer>, SingleKeyTableShardingAlgorithm<Integer> {
-
+    
     @Override
     public String doEqualSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         for (String each : availableTargetNames) {
@@ -35,7 +35,7 @@ public final class OrderShardingAlgorithm implements SingleKeyDatabaseShardingAl
         }
         return null;
     }
-
+    
     @Override
     public Collection<String> doInSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         Collection<String> result = new HashSet<>(2);
@@ -48,7 +48,7 @@ public final class OrderShardingAlgorithm implements SingleKeyDatabaseShardingAl
         }
         return result;
     }
-
+    
     @Override
     public Collection<String> doBetweenSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         Collection<String> result = new HashSet<>(2);

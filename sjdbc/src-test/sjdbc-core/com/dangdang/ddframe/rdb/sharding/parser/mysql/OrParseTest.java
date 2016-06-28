@@ -35,21 +35,21 @@ import com.dangdang.ddframe.rdb.sharding.parser.result.router.Table;
 
 @RunWith(Parameterized.class)
 public final class OrParseTest extends AbstractBaseParseTest {
-
-    public OrParseTest(final String testCaseName, final String sql, final String expectedSQL,
-                       final Collection<Table> expectedTables, final Collection<ConditionContext> expectedConditionContext, final MergeContext expectedMergeContext) {
+    
+    public OrParseTest(final String testCaseName, final String sql, final String expectedSQL, 
+            final Collection<Table> expectedTables, final Collection<ConditionContext> expectedConditionContext, final MergeContext expectedMergeContext) {
         super(testCaseName, sql, expectedSQL, expectedTables, expectedConditionContext, expectedMergeContext);
     }
-
+    
     @Parameters(name = "{0}")
     public static Collection<Object[]> dataParameters() {
         return AbstractBaseParseTest.dataParameters("com/dangdang/ddframe/rdb/sharding/parser/mysql/or/");
     }
-
+    
     // TODO 归并字段，整合进mySQL测试
     @Test
     public void assertParse() {
-        assertSQLParsedResult(SQLParserFactory.create(DatabaseType.MySQL, getSql(), Collections.emptyList(),
+        assertSQLParsedResult(SQLParserFactory.create(DatabaseType.MySQL, getSql(), Collections.emptyList(), 
                 Arrays.asList("id", "user_id", "name", "age", "days", "fee", "travel_date", "long")).parse());
     }
 }

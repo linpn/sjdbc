@@ -27,12 +27,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        SQLParsedResultTest.class,
-        MySQLStatementTest.class,
-        MySQLPreparedStatementForOneParameterTest.class,
-        MySQLPreparedStatementForTowParametersTest.class,
-        OrParseTest.class,
+        SQLParsedResultTest.class, 
+        MySQLStatementTest.class, 
+        MySQLPreparedStatementForOneParameterTest.class, 
+        MySQLPreparedStatementForTowParametersTest.class, 
+        OrParseTest.class, 
         UnsupportedParseTest.class
-})
+    })
 public class AllParserTests {
 }

@@ -21,22 +21,22 @@ import lombok.Getter;
 
 /**
  * 事件触发类型.
- *
+ * 
  * @author zhangliang
  */
 @Getter
 public enum EventExecutionType {
-
+    
     /**
      * 执行前.
      */
-    BEFORE_EXECUTE,
-
+    BEFORE_EXECUTE, 
+    
     /**
      * 执行成功.
      */
-    EXECUTE_SUCCESS,
-
+    EXECUTE_SUCCESS, 
+    
     /**
      * 执行失败.
      */

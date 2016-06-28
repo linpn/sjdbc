@@ -37,43 +37,43 @@ import static com.dangdang.ddframe.rdb.transaction.soft.constants.TransactionLog
 
 /**
  * 柔性事务配置对象.
- *
+ * 
  * @author zhangliang
  */
 @RequiredArgsConstructor
 @Getter
 @Setter
 public class SoftTransactionConfiguration {
-
+    
     /**
      * 事务管理器管理的数据源.
      */
     @Getter(AccessLevel.NONE)
     private final DataSource targetDataSource;
-
+    
     /**
      * 同步的事务送达的最大尝试次数.
      */
     private int syncMaxDeliveryTryTimes = 3;
-
+    
     /**
      * 事务日志存储类型.
      */
     private TransactionLogDataSourceType storageType = RDB;
-
+    
     /**
      * 存储事务日志的数据源.
      */
     private DataSource transactionLogDataSource;
-
+    
     /**
      * 内嵌的最大努力送达型异步作业配置对象.
      */
     private Optional<NestedBestEffortsDeliveryJobConfiguration> bestEffortsDeliveryJobConfiguration = Optional.absent();
-
+    
     /**
      * 获取事务管理器管理的数据库连接.
-     *
+     * 
      * @param dataSourceName 数据源名称
      * @return 事务管理器管理的数据库连接
      */

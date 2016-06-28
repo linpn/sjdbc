@@ -55,29 +55,29 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 public abstract class AbstractBaseParseTest {
-
+    
     @Getter(AccessLevel.PROTECTED)
     private final String testCaseName;
-
+    
     @Getter(AccessLevel.PROTECTED)
     private final String sql;
-
+    
     private final String expectedSQL;
-
+    
     private final Iterator<Table> expectedTables;
-
+    
     private final Iterator<ConditionContext> expectedConditionContexts;
-
+    
     private final Iterator<OrderByColumn> orderByColumns;
-
+    
     private final Iterator<GroupByColumn> groupByColumns;
-
+    
     private final Iterator<AggregationColumn> aggregationColumns;
-
+    
     private final Limit limit;
-
+    
     protected AbstractBaseParseTest(final String testCaseName, final String sql, final String expectedSQL,
-                                    final Collection<Table> expectedTables, final Collection<ConditionContext> expectedConditionContext, final MergeContext expectedMergeContext) {
+                                 final Collection<Table> expectedTables, final Collection<ConditionContext> expectedConditionContext, final MergeContext expectedMergeContext) {
         this.testCaseName = testCaseName;
         this.sql = sql;
         this.expectedSQL = expectedSQL;
@@ -88,7 +88,7 @@ public abstract class AbstractBaseParseTest {
         this.aggregationColumns = expectedMergeContext.getAggregationColumns().iterator();
         this.limit = expectedMergeContext.getLimit();
     }
-
+    
     protected static Collection<Object[]> dataParameters(final String path) {
         Collection<Object[]> result = new ArrayList<>();
         for (File each : new File(AbstractBaseParseTest.class.getClassLoader().getResource(path).getPath()).listFiles()) {
@@ -96,7 +96,7 @@ public abstract class AbstractBaseParseTest {
         }
         return result;
     }
-
+    
     private static Collection<Object[]> dataParameters(final File file) {
         Asserts asserts = loadAsserts(file);
         Object[][] result = new Object[asserts.getAsserts().size()][6];
@@ -105,7 +105,7 @@ public abstract class AbstractBaseParseTest {
         }
         return Arrays.asList(result);
     }
-
+    
     private static Asserts loadAsserts(final File file) {
         try {
             return (Asserts) JAXBContext.newInstance(Asserts.class).createUnmarshaller().unmarshal(file);
@@ -113,14 +113,14 @@ public abstract class AbstractBaseParseTest {
             throw new RuntimeException(ex);
         }
     }
-
+    
     private static Object[] getDataParameter(final Assert assertObj) {
         Object[] result = new Object[6];
         result[0] = assertObj.getId();
         result[1] = assertObj.getSql();
         result[2] = assertObj.getExpectedSQL();
         result[3] = Lists.transform(assertObj.getTables(), new Function<com.dangdang.ddframe.rdb.sharding.parser.jaxb.Table, Table>() {
-
+            
             @Override
             public Table apply(final com.dangdang.ddframe.rdb.sharding.parser.jaxb.Table input) {
                 return new Table(input.getName(), input.getAlias());
@@ -130,7 +130,7 @@ public abstract class AbstractBaseParseTest {
             result[4] = Collections.<ConditionContext>emptyList();
         } else {
             result[4] = Lists.transform(assertObj.getConditionContexts(), new Function<com.dangdang.ddframe.rdb.sharding.parser.jaxb.ConditionContext, ConditionContext>() {
-
+                
                 @Override
                 public ConditionContext apply(final com.dangdang.ddframe.rdb.sharding.parser.jaxb.ConditionContext input) {
                     ConditionContext result = new ConditionContext();
@@ -140,7 +140,7 @@ public abstract class AbstractBaseParseTest {
                     for (com.dangdang.ddframe.rdb.sharding.parser.jaxb.Condition each : input.getConditions()) {
                         Condition condition = new Condition(new Column(each.getColumnName(), each.getTableName()), BinaryOperator.valueOf(each.getOperator().toUpperCase()));
                         condition.getValues().addAll(Lists.transform(each.getValues(), new Function<Value, Comparable<?>>() {
-
+                            
                             @Override
                             public Comparable<?> apply(final Value input) {
                                 return input.getValueWithType();
@@ -155,18 +155,18 @@ public abstract class AbstractBaseParseTest {
         MergeContext mergeContext = new MergeContext();
         if (null != assertObj.getOrderByColumns()) {
             mergeContext.getOrderByColumns().addAll(Lists.transform(assertObj.getOrderByColumns(), new Function<com.dangdang.ddframe.rdb.sharding.parser.jaxb.OrderByColumn, OrderByColumn>() {
-
+                
                 @Override
                 public OrderByColumn apply(final com.dangdang.ddframe.rdb.sharding.parser.jaxb.OrderByColumn input) {
-                    return Strings.isNullOrEmpty(input.getName()) ? new OrderByColumn(input.getIndex(), OrderByType.valueOf(input.getOrderByType().toUpperCase()))
-                            : new OrderByColumn(Optional.fromNullable(input.getOwner()), input.getName(),
-                            Optional.fromNullable(input.getAlias()), OrderByType.valueOf(input.getOrderByType().toUpperCase()));
+                    return Strings.isNullOrEmpty(input.getName()) ? new OrderByColumn(input.getIndex(), OrderByType.valueOf(input.getOrderByType().toUpperCase())) 
+                            : new OrderByColumn(Optional.fromNullable(input.getOwner()), input.getName(), 
+                                    Optional.fromNullable(input.getAlias()), OrderByType.valueOf(input.getOrderByType().toUpperCase()));
                 }
             }));
         }
         if (null != assertObj.getGroupByColumns()) {
             mergeContext.getGroupByColumns().addAll(Lists.transform(assertObj.getGroupByColumns(), new Function<com.dangdang.ddframe.rdb.sharding.parser.jaxb.GroupByColumn, GroupByColumn>() {
-
+                
                 @Override
                 public GroupByColumn apply(final com.dangdang.ddframe.rdb.sharding.parser.jaxb.GroupByColumn input) {
                     return new GroupByColumn(
@@ -175,23 +175,23 @@ public abstract class AbstractBaseParseTest {
             }));
         }
         if (null != assertObj.getAggregationColumns()) {
-            mergeContext.getAggregationColumns().addAll(Lists.transform(assertObj.getAggregationColumns(),
+            mergeContext.getAggregationColumns().addAll(Lists.transform(assertObj.getAggregationColumns(), 
                     new Function<com.dangdang.ddframe.rdb.sharding.parser.jaxb.AggregationColumn, AggregationColumn>() {
-
+                        
                         @Override
                         public AggregationColumn apply(final com.dangdang.ddframe.rdb.sharding.parser.jaxb.AggregationColumn input) {
-                            AggregationColumn result = new AggregationColumn(input.getExpression(),
+                            AggregationColumn result = new AggregationColumn(input.getExpression(), 
                                     AggregationType.valueOf(input.getAggregationType().toUpperCase()), Optional.fromNullable(input.getAlias()), Optional.fromNullable(input.getOption()));
                             if (null != input.getIndex()) {
                                 result.setColumnIndex(input.getIndex());
                             }
                             for (com.dangdang.ddframe.rdb.sharding.parser.jaxb.AggregationColumn each : input.getDerivedColumns()) {
-                                result.getDerivedColumns().add(new AggregationColumn(each.getExpression(),
+                                result.getDerivedColumns().add(new AggregationColumn(each.getExpression(), 
                                         AggregationType.valueOf(each.getAggregationType().toUpperCase()), Optional.fromNullable(each.getAlias()), Optional.fromNullable(each.getOption())));
                             }
                             return result;
                         }
-                    }));
+                }));
         }
         if (null != assertObj.getLimit()) {
             mergeContext.setLimit(new Limit(assertObj.getLimit().getOffset(), assertObj.getLimit().getRowCount()));
@@ -199,13 +199,13 @@ public abstract class AbstractBaseParseTest {
         result[5] = mergeContext;
         return result;
     }
-
+    
     protected final void assertSQLParsedResult(final SQLParsedResult actual) {
         assertRouteContext(actual);
         assertConditionContexts(actual);
         assertMergeContext(actual);
     }
-
+    
     private void assertRouteContext(final SQLParsedResult actual) {
         assertThat(actual.getRouteContext().getSqlBuilder().toString(), is(expectedSQL));
         for (Table each : actual.getRouteContext().getTables()) {
@@ -213,14 +213,14 @@ public abstract class AbstractBaseParseTest {
         }
         assertFalse(expectedTables.hasNext());
     }
-
+    
     private void assertConditionContexts(final SQLParsedResult actual) {
         for (ConditionContext each : actual.getConditionContexts()) {
             assertThat(each, is(new ReflectionEquals(expectedConditionContexts.next())));
         }
         assertFalse(expectedConditionContexts.hasNext());
     }
-
+    
     private void assertMergeContext(final SQLParsedResult actual) {
         for (OrderByColumn each : actual.getMergeContext().getOrderByColumns()) {
             assertThat(each, new ReflectionEquals(orderByColumns.next()));

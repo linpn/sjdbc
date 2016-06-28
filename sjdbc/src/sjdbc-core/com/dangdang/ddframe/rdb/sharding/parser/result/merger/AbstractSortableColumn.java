@@ -24,19 +24,19 @@ import lombok.ToString;
 
 /**
  * 可排序列.
- *
+ * 
  * @author gaohongtao.
  */
 @ToString
 @Getter
 @RequiredArgsConstructor
 public abstract class AbstractSortableColumn {
-
+    
     private final Optional<String> owner;
-
+    
     private final Optional<String> name;
-
+    
     private final Optional<String> alias;
-
+    
     private final OrderByColumn.OrderByType orderByType;
 }

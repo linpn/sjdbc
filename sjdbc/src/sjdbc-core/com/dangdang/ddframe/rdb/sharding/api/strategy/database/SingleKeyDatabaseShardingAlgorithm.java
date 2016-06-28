@@ -21,7 +21,7 @@ import com.dangdang.ddframe.rdb.sharding.router.strategy.SingleKeyShardingAlgori
 
 /**
  * 单分片键的分库算法接口.
- *
+ * 
  * @author zhangliang
  */
 public interface SingleKeyDatabaseShardingAlgorithm<T extends Comparable<?>> extends SingleKeyShardingAlgorithm<T>, DatabaseShardingAlgorithm {

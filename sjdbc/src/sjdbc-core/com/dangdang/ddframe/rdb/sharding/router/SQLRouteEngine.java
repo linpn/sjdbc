@@ -39,23 +39,24 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 /**
  * SQL路由引擎.
- *
+ * 
  * @author gaohongtao
  * @author zhangiang
  */
 @RequiredArgsConstructor
 @Slf4j
 public final class SQLRouteEngine {
-
+    
     private final ShardingRule shardingRule;
-
+    
     private final DatabaseType databaseType;
-
+    
     /**
      * SQL路由.
      *
@@ -63,23 +64,35 @@ public final class SQLRouteEngine {
      * @return 路由结果
      * @throws SQLParserException SQL解析失败异常
      */
+    public SQLRouteResult route(final String logicSql) throws SQLParserException {
+        return route(logicSql, Collections.emptyList());
+    }
+    
+    /**
+     * SQL路由.
+     * 
+     * @param logicSql 逻辑SQL
+     * @param parameters 参数列表
+     * @return 路由结果
+     * @throws SQLParserException SQL解析失败异常
+     */
     public SQLRouteResult route(final String logicSql, final List<Object> parameters) throws SQLParserException {
         return routeSQL(parseSQL(logicSql, parameters));
     }
-
+    
     private SQLParsedResult parseSQL(final String logicSql, final List<Object> parameters) {
         Context context = MetricsContext.start("Parse SQL");
         SQLParsedResult result = SQLParserFactory.create(databaseType, logicSql, parameters, shardingRule.getAllShardingColumns()).parse();
         MetricsContext.stop(context);
         return result;
     }
-
+    
     private SQLRouteResult routeSQL(final SQLParsedResult parsedResult) {
         Context context = MetricsContext.start("Route SQL");
         SQLRouteResult result = new SQLRouteResult(parsedResult.getRouteContext().getSqlStatementType(), parsedResult.getMergeContext());
         for (ConditionContext each : parsedResult.getConditionContexts()) {
             result.getExecutionUnits().addAll(routeSQL(each, Sets.newLinkedHashSet(Collections2.transform(parsedResult.getRouteContext().getTables(), new Function<Table, String>() {
-
+                
                 @Override
                 public String apply(final Table input) {
                     return input.getName();
@@ -91,7 +104,7 @@ public final class SQLRouteEngine {
         log.debug("merge context:{}", result.getMergeContext());
         return result;
     }
-
+    
     private Collection<SQLExecutionUnit> routeSQL(final ConditionContext conditionContext, final Set<String> logicTables, final SQLBuilder sqlBuilder, final SQLStatementType type) {
         RoutingResult result;
         if (1 == logicTables.size()) {

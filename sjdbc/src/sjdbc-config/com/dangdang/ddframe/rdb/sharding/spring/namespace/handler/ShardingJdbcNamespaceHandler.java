@@ -24,12 +24,12 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 /**
  * Spring命名空间处理器.
- *
+ * 
  * @author caohao
  * @author zhangliang
  */
 public final class ShardingJdbcNamespaceHandler extends NamespaceHandlerSupport {
-
+    
     @Override
     public void init() {
         registerBeanDefinitionParser("strategy", new ShardingJdbcStrategyBeanDefinitionParser());

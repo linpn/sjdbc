@@ -28,13 +28,13 @@ import lombok.Setter;
 @Setter
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Value {
-
+    
     @XmlAttribute
     private String value;
-
+    
     @XmlAttribute
     private String type;
-
+    
     public Comparable<?> getValueWithType() {
         if (boolean.class.getName().equals(type) || Boolean.class.getName().equals(type)) {
             return Boolean.valueOf(value);

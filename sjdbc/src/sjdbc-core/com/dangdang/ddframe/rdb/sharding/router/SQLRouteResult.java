@@ -27,16 +27,16 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * SQL路由结果.
- *
+ * 
  * @author gaohongtao
  */
 @RequiredArgsConstructor
 @Getter
 public final class SQLRouteResult {
-
+    
     private final SQLStatementType sqlStatementType;
-
+    
     private final MergeContext mergeContext;
-
+    
     private final Set<SQLExecutionUnit> executionUnits = new HashSet<>();
 }

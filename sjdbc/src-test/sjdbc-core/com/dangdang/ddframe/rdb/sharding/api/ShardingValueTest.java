@@ -27,34 +27,34 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class ShardingValueTest {
-
+    
     @Test
     public void assertGetTypeWithSingleValue() {
         assertThat(new ShardingValue<>("logicTableName", "columnName", "value").getType(), is(ShardingValueType.SINGLE));
     }
-
+    
     @Test
     public void assertGetTypeWithMultipleValue() {
         assertThat(new ShardingValue<>("logicTableName", "columnName", Collections.singletonList("value")).getType(), is(ShardingValueType.LIST));
     }
-
+    
     @Test
     public void assertGetTypeWithRangeValue() {
         assertThat(new ShardingValue<>("logicTableName", "columnName", Range.closed(10, 20)).getType(), is(ShardingValueType.RANGE));
     }
-
+    
     @Test
     public void assertToStringWithSingleValue() {
         assertThat(new ShardingValue<>("logicTableName", "columnName", "value").toString(), is(
                 "ShardingValue(logicTableName=logicTableName, columnName=columnName, value=value, values=[], valueRange=null)"));
     }
-
+    
     @Test
     public void assertToStringWithMultipleValue() {
         assertThat(new ShardingValue<>("logicTableName", "columnName", Collections.singletonList("value")).toString(), is(
                 "ShardingValue(logicTableName=logicTableName, columnName=columnName, value=null, values=[value], valueRange=null)"));
     }
-
+    
     @Test
     public void assertToStringWithRangeValue() {
         assertThat(new ShardingValue<>("logicTableName", "columnName", Range.closed(10, 20)).toString(), is(

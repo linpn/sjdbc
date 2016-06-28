@@ -23,15 +23,15 @@ import lombok.ToString;
 
 /**
  * 分页对象.
- *
+ * 
  * @author gaohongtao
  */
 @RequiredArgsConstructor
 @Getter
 @ToString
 public class Limit {
-
+    
     private final int offset;
-
+    
     private final int rowCount;
 }

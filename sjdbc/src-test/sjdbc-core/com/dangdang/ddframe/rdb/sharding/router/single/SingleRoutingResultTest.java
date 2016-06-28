@@ -23,7 +23,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 public final class SingleRoutingResultTest {
-
+    
     @Test
     public void assertToString() {
         SingleRoutingResult actual = new SingleRoutingResult();

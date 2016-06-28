@@ -23,15 +23,15 @@ package com.dangdang.ddframe.rdb.transaction.soft.exception;
  * @author caohao
  */
 public class TransactionCompensationException extends RuntimeException {
-
+    
     public TransactionCompensationException(final String errorMessage, final Object... args) {
         super(String.format(errorMessage, args));
     }
-
+    
     public TransactionCompensationException(final String message, final Exception cause) {
         super(message, cause);
     }
-
+    
     public TransactionCompensationException(final Exception cause) {
         super(cause);
     }

@@ -37,25 +37,25 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 不包含OR语句的SQL构建器解析.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 @RequiredArgsConstructor
 @Slf4j
 public final class SQLParseEngine {
-
+    
     private final SQLStatement sqlStatement;
-
+    
     private final List<Object> parameters;
-
+    
     private final SQLASTOutputVisitor visitor;
-
+    
     private final Collection<String> shardingColumns;
-
+    
     /**
      *  解析SQL.
-     *
+     * 
      * @return SQL解析结果
      */
     public SQLParsedResult parse() {
@@ -77,7 +77,7 @@ public final class SQLParseEngine {
         result.getRouteContext().setSqlStatementType(getType());
         return result;
     }
-
+    
     private SQLStatementType getType() {
         if (sqlStatement instanceof SQLSelectStatement) {
             return SQLStatementType.SELECT;

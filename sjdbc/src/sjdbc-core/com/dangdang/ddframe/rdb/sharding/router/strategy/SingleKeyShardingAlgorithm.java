@@ -23,35 +23,36 @@ import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 
 /**
  * 单片键分片法接口.
- *
- * @param <T> 片键类型
+ * 
  * @author zhangliang
+ * 
+ * @param <T> 片键类型
  */
 public interface SingleKeyShardingAlgorithm<T extends Comparable<?>> extends ShardingAlgorithm {
-
+    
     /**
      * 根据分片值和SQL的=运算符计算分片结果名称集合.
-     *
+     * 
      * @param availableTargetNames 所有的可用目标名称集合, 一般是数据源或表名称
-     * @param shardingValue        分片值
+     * @param shardingValue 分片值
      * @return 分片后指向的目标名称, 一般是数据源或表名称
      */
     String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<T> shardingValue);
-
+    
     /**
      * 根据分片值和SQL的IN运算符计算分片结果名称集合.
-     *
+     * 
      * @param availableTargetNames 所有的可用目标名称集合, 一般是数据源或表名称
-     * @param shardingValue        分片值
+     * @param shardingValue 分片值
      * @return 分片后指向的目标名称集合, 一般是数据源或表名称
      */
     Collection<String> doInSharding(Collection<String> availableTargetNames, ShardingValue<T> shardingValue);
-
+    
     /**
      * 根据分片值和SQL的BETWEEN运算符计算分片结果名称集合.
-     *
+     * 
      * @param availableTargetNames 所有的可用目标名称集合, 一般是数据源或表名称
-     * @param shardingValue        分片值
+     * @param shardingValue 分片值
      * @return 分片后指向的目标名称集合, 一般是数据源或表名称
      */
     Collection<String> doBetweenSharding(Collection<String> availableTargetNames, ShardingValue<T> shardingValue);

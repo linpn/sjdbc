@@ -29,7 +29,7 @@ import java.util.Properties;
  * @author caohao
  */
 public class SpringShardingDataSource extends ShardingDataSource {
-
+    
     public SpringShardingDataSource(final ShardingRuleConfig shardingRuleConfig, final Properties props) {
         super(new ShardingRuleBuilder(shardingRuleConfig).build(), props);
     }

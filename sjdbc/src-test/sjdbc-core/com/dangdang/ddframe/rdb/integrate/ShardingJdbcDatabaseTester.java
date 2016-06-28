@@ -24,15 +24,15 @@ import org.dbunit.ext.h2.H2DataTypeFactory;
 import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 
 public final class ShardingJdbcDatabaseTester extends JdbcDatabaseTester {
-
+    
     private String driverClass;
-
+    
     public ShardingJdbcDatabaseTester(final String driverClass, final String connectionUrl, final String username,
-                                      final String password) throws ClassNotFoundException {
+            final String password) throws ClassNotFoundException {
         super(driverClass, connectionUrl, username, password, null);
         this.driverClass = driverClass;
     }
-
+    
     @Override
     public IDatabaseConnection getConnection() throws Exception {
         IDatabaseConnection result = super.getConnection();

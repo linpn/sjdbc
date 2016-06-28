@@ -32,25 +32,25 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 混合多库表路由类.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 @RequiredArgsConstructor
 @Slf4j
 public class MixedTablesRouter {
-
+    
     private final ShardingRule shardingRule;
-
+    
     private final Collection<String> logicTables;
-
+    
     private final ConditionContext conditionContext;
-
+    
     private final SQLStatementType sqlStatementType;
-
+    
     /**
      * 路由.
-     *
+     * 
      * @return 路由结果
      */
     // TODO 支持多bindingTable rule

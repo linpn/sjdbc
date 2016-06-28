@@ -35,17 +35,17 @@ import com.dangdang.ddframe.rdb.sharding.parser.result.router.Table;
 
 @RunWith(Parameterized.class)
 public final class MySQLStatementTest extends AbstractBaseParseTest {
-
-    public MySQLStatementTest(final String testCaseName, final String sql, final String expectedSQL,
-                              final Collection<Table> expectedTables, final Collection<ConditionContext> expectedConditionContext, final MergeContext expectedMergeContext) {
+    
+    public MySQLStatementTest(final String testCaseName, final String sql, final String expectedSQL, 
+            final Collection<Table> expectedTables, final Collection<ConditionContext> expectedConditionContext, final MergeContext expectedMergeContext) {
         super(testCaseName, sql, expectedSQL, expectedTables, expectedConditionContext, expectedMergeContext);
     }
-
+    
     @Parameters(name = "{0}")
     public static Collection<Object[]> dataParameters() {
         return AbstractBaseParseTest.dataParameters("com/dangdang/ddframe/rdb/sharding/parser/mysql/statement/");
     }
-
+    
     @Test
     public void assertParse() {
         assertSQLParsedResult(SQLParserFactory.create(DatabaseType.MySQL, getSql(), Collections.emptyList(), Arrays.asList("user_id", "order_id", "state")).parse());

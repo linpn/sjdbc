@@ -28,27 +28,27 @@ import java.util.Collections;
 
 /**
  * 分片策略.
- *
+ * 
  * @author zhangliang
  */
 @RequiredArgsConstructor
 public class ShardingStrategy {
-
+    
     @Getter
     private final Collection<String> shardingColumns;
-
+    
     private final ShardingAlgorithm shardingAlgorithm;
-
+    
     public ShardingStrategy(final String shardingColumn, final ShardingAlgorithm shardingAlgorithm) {
         this(Collections.singletonList(shardingColumn), shardingAlgorithm);
     }
-
+    
     /**
      * 计算静态分片.
      *
-     * @param sqlStatementType     SQL语句的类型
+     * @param sqlStatementType SQL语句的类型
      * @param availableTargetNames 所有的可用分片资源集合
-     * @param shardingValues       分片值集合
+     * @param shardingValues 分片值集合
      * @return 分库后指向的数据源名称集合
      */
     public Collection<String> doStaticSharding(final SQLStatementType sqlStatementType, final Collection<String> availableTargetNames, final Collection<ShardingValue<?>> shardingValues) {
@@ -58,7 +58,7 @@ public class ShardingStrategy {
         }
         return doSharding(shardingValues, availableTargetNames);
     }
-
+    
     /**
      * 计算动态分片.
      *
@@ -70,8 +70,8 @@ public class ShardingStrategy {
         Collection<String> availableTargetNames = Collections.emptyList();
         return doSharding(shardingValues, availableTargetNames);
     }
-
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private Collection<String> doSharding(final Collection<ShardingValue<?>> shardingValues, final Collection<String> availableTargetNames) {
         if (shardingAlgorithm instanceof SingleKeyShardingAlgorithm) {
             SingleKeyShardingAlgorithm<?> singleKeyShardingAlgorithm = (SingleKeyShardingAlgorithm<?>) shardingAlgorithm;
@@ -92,7 +92,7 @@ public class ShardingStrategy {
         }
         throw new UnsupportedOperationException(shardingAlgorithm.getClass().getName());
     }
-
+    
     private boolean isInsertMultiple(final SQLStatementType sqlStatementType, final Collection<String> availableTargetNames) {
         return SQLStatementType.INSERT.equals(sqlStatementType) && availableTargetNames.size() > 1;
     }

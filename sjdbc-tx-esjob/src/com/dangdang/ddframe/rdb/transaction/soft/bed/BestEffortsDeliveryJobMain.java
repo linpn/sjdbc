@@ -24,20 +24,20 @@ import java.io.InputStreamReader;
 
 /**
  * 最大努力送达型异步作业启动入口.
- *
+ * 
  * @author zhangliang
  * @author caohao
  */
 public final class BestEffortsDeliveryJobMain {
-
+    
     /**
      * 启动入口.
-     *
+     * 
      * @param args 启动参数
      */
     // CHECKSTYLE:OFF
     public static void main(final String[] args) throws Exception {
-        // CHECKSTYLE:ON
+    // CHECKSTYLE:ON
         try (InputStreamReader inputStreamReader = new InputStreamReader(BestEffortsDeliveryJobMain.class.getResourceAsStream("/conf/config.yaml"), "UTF-8")) {
             BestEffortsDeliveryConfiguration config = new Yaml(new Constructor(BestEffortsDeliveryConfiguration.class)).loadAs(inputStreamReader, BestEffortsDeliveryConfiguration.class);
             new BestEffortsDeliveryJobFactory(config).init();

@@ -32,30 +32,30 @@ import java.util.List;
 
 /**
  * 基于Spring命名空间的读写分离数据源解析器.
- *
+ * 
  * @author zhangliang
  */
 public class MasterSlaveDataSourceBeanDefinitionParser extends AbstractBeanDefinitionParser {
-
+    
     @Override
     //CHECKSTYLE:OFF
     protected AbstractBeanDefinition parseInternal(final Element element, final ParserContext parserContext) {
-        //CHECKSTYLE:ON
+    //CHECKSTYLE:ON
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(MasterSlaveDataSource.class);
         factory.addConstructorArgValue(parseId(element));
         factory.addConstructorArgReference(parseMasterDataSourceRef(element));
         factory.addConstructorArgValue(parseSlaveDataSources(element, parserContext));
         return factory.getBeanDefinition();
     }
-
+    
     private String parseId(final Element element) {
         return element.getAttribute(ID_ATTRIBUTE);
     }
-
+    
     private String parseMasterDataSourceRef(final Element element) {
         return element.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.MASTER_DATA_SOURCE_REF_ATTRIBUTE);
     }
-
+    
     private List<BeanDefinition> parseSlaveDataSources(final Element element, final ParserContext parserContext) {
         List<String> slaveDataSources = Splitter.on(",").trimResults().splitToList(element.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.SLAVE_DATA_SOURCES_REF_ATTRIBUTE));
         List<BeanDefinition> result = new ManagedList<>(slaveDataSources.size());

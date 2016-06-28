@@ -26,11 +26,11 @@ import java.util.List;
  * @author zhangliang
  */
 public interface SlaveLoadBalanceStrategy {
-
+    
     /**
      * 根据负载均衡策略获取从库数据源.
-     *
-     * @param name             读写分离数据源名称
+     * 
+     * @param name 读写分离数据源名称
      * @param slaveDataSources 从库数据源列表
      * @return 选中的从库数据源
      */

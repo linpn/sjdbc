@@ -33,42 +33,42 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractShardingNullableDBUnitTest extends AbstractDBUnitTest {
-
+    
     private final String dataSourceName = "dataSource_%s";
-
+    
     @Override
     protected List<String> getSchemaFiles() {
         return Arrays.asList(
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_0.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_1.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_2.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_3.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_4.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_5.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_6.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_7.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_8.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/nullable/nullable_9.sql");
+                "integrate/schema/nullable/nullable_0.sql",
+                "integrate/schema/nullable/nullable_1.sql",
+                "integrate/schema/nullable/nullable_2.sql",
+                "integrate/schema/nullable/nullable_3.sql",
+                "integrate/schema/nullable/nullable_4.sql",
+                "integrate/schema/nullable/nullable_5.sql",
+                "integrate/schema/nullable/nullable_6.sql",
+                "integrate/schema/nullable/nullable_7.sql",
+                "integrate/schema/nullable/nullable_8.sql",
+                "integrate/schema/nullable/nullable_9.sql");
     }
-
+    
     @Override
     protected List<String> getDataSetFiles() {
         return Arrays.asList(
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_0.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_1.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_2.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_3.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_4.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_5.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_6.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_7.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_8.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/nullable/init/nullable_9.xml");
+                "integrate/dataset/nullable/init/nullable_0.xml",
+                "integrate/dataset/nullable/init/nullable_1.xml",
+                "integrate/dataset/nullable/init/nullable_2.xml",
+                "integrate/dataset/nullable/init/nullable_3.xml",
+                "integrate/dataset/nullable/init/nullable_4.xml",
+                "integrate/dataset/nullable/init/nullable_5.xml",
+                "integrate/dataset/nullable/init/nullable_6.xml",
+                "integrate/dataset/nullable/init/nullable_7.xml",
+                "integrate/dataset/nullable/init/nullable_8.xml",
+                "integrate/dataset/nullable/init/nullable_9.xml");
     }
-
+    
     protected final ShardingDataSource getShardingDataSource() {
         DataSourceRule dataSourceRule = new DataSourceRule(createDataSourceMap(dataSourceName));
-
+        
         TableRule orderTableRule = TableRule.builder("t_order").dataSourceRule(dataSourceRule).build();
         ShardingRule shardingRule = ShardingRule.builder().dataSourceRule(dataSourceRule).tableRules(Collections.singletonList(orderTableRule))
                 .bindingTableRules(Collections.singletonList(new BindingTableRule(Collections.singletonList(orderTableRule))))

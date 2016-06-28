@@ -27,19 +27,19 @@ import com.dangdang.ddframe.rdb.integrate.db.AbstractShardingDataBasesOnlyDBUnit
 import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource;
 
 public final class UnsupportedOperationDataSourceTest extends AbstractShardingDataBasesOnlyDBUnitTest {
-
+    
     private ShardingDataSource shardingDataSource;
-
+    
     @Before
     public void init() throws SQLException {
         shardingDataSource = getShardingDataSource();
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertGetLoginTimeout() throws SQLException {
         shardingDataSource.getLoginTimeout();
     }
-
+    
     @Test(expected = SQLFeatureNotSupportedException.class)
     public void assertSetLoginTimeout() throws SQLException {
         shardingDataSource.setLoginTimeout(0);

@@ -22,12 +22,12 @@ import lombok.Setter;
 
 /**
  * 绑定表配置.
- *
+ * 
  * @author gaohongtao
  */
 @Getter
 @Setter
 public class BindingTableRuleConfig {
-
+    
     private String tableNames;
 }

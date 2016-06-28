@@ -27,18 +27,18 @@ import lombok.Getter;
 
 /**
  * 存在外层条件的节点.
- *
+ * 
  * @author gaohongtao
  */
 @Getter
 public class CompositeOrASTNode extends AbstractOrASTNode {
-
+    
     private final List<Condition> outConditions = new ArrayList<>();
-
+    
     public void addOutConditions(final ConditionContext outConditions) {
         this.outConditions.addAll(outConditions.getAllConditions());
     }
-
+    
     @Override
     public void createOrASTAsRootNode() {
         for (AbstractOrASTNode each : getSubNodes()) {

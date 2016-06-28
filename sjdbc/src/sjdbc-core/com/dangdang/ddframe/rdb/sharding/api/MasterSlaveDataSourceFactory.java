@@ -26,18 +26,18 @@ import javax.sql.DataSource;
 
 /**
  * 读写分离数据源工厂.
- *
- * @author zhangliang
+ * 
+ * @author zhangliang 
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MasterSlaveDataSourceFactory {
-
+    
     /**
      * 创建读写分离数据源.
-     *
-     * @param name                  读写分离数据源名称
-     * @param masterDataSource      主节点数据源
-     * @param slaveDataSource       从节点数据源
+     * 
+     * @param name 读写分离数据源名称
+     * @param masterDataSource 主节点数据源
+     * @param slaveDataSource 从节点数据源
      * @param otherSlaveDataSources 其他从节点数据源
      * @return 读写分离数据源
      */

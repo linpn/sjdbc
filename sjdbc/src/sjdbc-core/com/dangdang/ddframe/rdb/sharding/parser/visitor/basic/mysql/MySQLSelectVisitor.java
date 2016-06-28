@@ -44,19 +44,19 @@ import java.util.List;
 
 /**
  * MySQL的SELECT语句访问器.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 public class MySQLSelectVisitor extends AbstractMySQLVisitor {
-
+    
     @Override
     protected void printSelectList(final List<SQLSelectItem> selectList) {
         super.printSelectList(selectList);
         // TODO 提炼成print，或者是否不应该由token的方式替换？
         getSQLBuilder().appendToken(getParseContext().getAutoGenTokenKey(), false);
     }
-
+    
     @Override
     public boolean visit(final MySqlSelectQueryBlock x) {
         stepInQuery();
@@ -66,10 +66,10 @@ public class MySQLSelectVisitor extends AbstractMySQLVisitor {
         }
         return super.visit(x);
     }
-
+    
     /**
      * 解析 {@code SELECT item1,item2 FROM }中的item.
-     *
+     * 
      * @param x SELECT item 表达式
      * @return true表示继续遍历AST, false表示终止遍历AST
      */
@@ -90,7 +90,7 @@ public class MySQLSelectVisitor extends AbstractMySQLVisitor {
         }
         return super.visit(x);
     }
-
+    
     @Override
     public boolean visit(final SQLAggregateExpr x) {
         if (!(x.getParent() instanceof SQLSelectItem)) {
@@ -105,7 +105,7 @@ public class MySQLSelectVisitor extends AbstractMySQLVisitor {
         StringBuilder expression = new StringBuilder();
         x.accept(new MySqlOutputVisitor(expression));
         // TODO index获取不准，考虑使用别名替换
-        AggregationColumn column = new AggregationColumn(expression.toString(), aggregationType, Optional.fromNullable(((SQLSelectItem) x.getParent()).getAlias()),
+        AggregationColumn column = new AggregationColumn(expression.toString(), aggregationType, Optional.fromNullable(((SQLSelectItem) x.getParent()).getAlias()), 
                 null == x.getOption() ? Optional.<String>absent() : Optional.of(x.getOption().toString()), getParseContext().getItemIndex());
         getParseContext().getParsedResult().getMergeContext().getAggregationColumns().add(column);
         if (AggregationType.AVG.equals(aggregationType)) {
@@ -114,7 +114,7 @@ public class MySQLSelectVisitor extends AbstractMySQLVisitor {
         }
         return super.visit(x);
     }
-
+    
     public boolean visit(final SQLOrderBy x) {
         for (SQLSelectOrderByItem each : x.getItems()) {
             SQLExpr expr = each.getExpr();
@@ -126,16 +126,16 @@ public class MySQLSelectVisitor extends AbstractMySQLVisitor {
             } else if (expr instanceof SQLPropertyExpr) {
                 SQLPropertyExpr sqlPropertyExpr = (SQLPropertyExpr) expr;
                 getParseContext().addOrderByColumn(Optional.of(sqlPropertyExpr.getOwner().toString()), sqlPropertyExpr.getName(), orderByType);
-
+                
             }
         }
         return super.visit(x);
     }
-
+    
     /**
      * 将GROUP BY列放入parseResult.
      * 直接返回false,防止重复解析GROUP BY表达式.
-     *
+     * 
      * @param x GROUP BY 表达式
      * @return false 停止遍历AST
      */
@@ -151,10 +151,10 @@ public class MySQLSelectVisitor extends AbstractMySQLVisitor {
         }
         return super.visit(x);
     }
-
+    
     /**
      * LIMIT 解析.
-     *
+     * 
      * @param x LIMIT表达式
      * @return false 停止遍历AST
      */
@@ -184,7 +184,7 @@ public class MySQLSelectVisitor extends AbstractMySQLVisitor {
         getParseContext().getParsedResult().getMergeContext().setLimit(new Limit(offset, rowCount));
         return false;
     }
-
+    
     @Override
     public void endVisit(final MySqlSelectQueryBlock x) {
         StringBuilder derivedSelectItems = new StringBuilder();
@@ -201,7 +201,7 @@ public class MySQLSelectVisitor extends AbstractMySQLVisitor {
         super.endVisit(x);
         stepOutQuery();
     }
-
+    
     private void appendSortableColumn(final StringBuilder derivedSelectItems, final List<? extends AbstractSortableColumn> sortableColumns) {
         for (AbstractSortableColumn each : sortableColumns) {
             if (!each.getAlias().isPresent()) {

@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * SQL最小执行单元.
- *
+ * 
  * @author gaohongtao
  */
 @Getter
@@ -32,11 +32,11 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @EqualsAndHashCode
 public class SQLExecutionUnit {
-
+    
     private final String dataSource;
-
+    
     private final String sql;
-
+    
     public SQLExecutionUnit(final String dataSource, final String sql) {
         this.dataSource = dataSource;
         this.sql = sql;

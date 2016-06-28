@@ -27,31 +27,31 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public final class NoneDatabaseShardingAlgorithmTest {
-
+    
     private final NoneDatabaseShardingAlgorithm noneDatabaseShardingAlgorithm = new NoneDatabaseShardingAlgorithm();
-
+    
     private final Collection<String> targets = Collections.singletonList("ds");
-
+    
     @Test
     public void assertDoSharding() {
         assertThat(noneDatabaseShardingAlgorithm.doSharding(targets, null), is(targets));
     }
-
+    
     @Test
     public void assertDoEqualShardingForTargetsEmpty() {
         assertNull(noneDatabaseShardingAlgorithm.doEqualSharding(Collections.<String>emptyList(), null));
     }
-
+    
     @Test
     public void assertDoEqualSharding() {
         assertThat(noneDatabaseShardingAlgorithm.doEqualSharding(targets, null), is("ds"));
     }
-
+    
     @Test
     public void assertDoInSharding() {
         assertThat(noneDatabaseShardingAlgorithm.doInSharding(targets, null), is(targets));
     }
-
+    
     @Test
     public void assertDoBetweenSharding() {
         assertThat(noneDatabaseShardingAlgorithm.doBetweenSharding(targets, null), is(targets));

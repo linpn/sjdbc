@@ -22,15 +22,15 @@ import lombok.NoArgsConstructor;
 
 /**
  * 分库分表策略解析标签.
- *
+ * 
  * @author caohao
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ShardingJdbcStrategyBeanDefinitionParserTag {
-
+    
     public static final String SHARDING_COLUMNS_ATTRIBUTE = "sharding-columns";
-
+    
     public static final String ALGORITHM_CLASS_ATTRIBUTE = "algorithm-class";
-
+    
     public static final String ALGORITHM_EXPRESSION_ATTRIBUTE = "algorithm-expression";
 }

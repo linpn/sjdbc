@@ -25,21 +25,21 @@ import lombok.ToString;
 
 /**
  * 单表路由表单元.
- *
+ * 
  * @author gaohongtao
  */
 @RequiredArgsConstructor
 @Getter
 @ToString
 public class SingleRoutingTableFactor {
-
+    
     private final String logicTable;
-
+    
     private final String actualTable;
-
+    
     /**
      * 构建SQL.
-     *
+     * 
      * @param builder SQL构建器
      */
     public void buildSQL(final SQLBuilder builder) {

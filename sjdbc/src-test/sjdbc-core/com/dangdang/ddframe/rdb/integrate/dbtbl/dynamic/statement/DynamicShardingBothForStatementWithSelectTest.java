@@ -26,15 +26,15 @@ import org.junit.Test;
 import java.sql.SQLException;
 
 public final class DynamicShardingBothForStatementWithSelectTest extends AbstractShardingBothForStatementWithSelectTest {
-
+    
     @Override
     protected ShardingDataSource getShardingDataSource() {
         return DynamicShardingBothHelper.getShardingDataSource(createDataSourceMap("dataSource_%s"));
     }
-
+    
     @Test(expected = UnsupportedOperationException.class)
     public void assertSelectWithBindingTable() throws SQLException, DatabaseUnitException {
         String sql = "SELECT i.* FROM `t_order` o JOIN `t_order_item` i ON o.user_id = i.user_id AND o.order_id = i.order_id WHERE o.`user_id` IN (%s, %s) AND o.`order_id` BETWEEN %s AND %s";
-        assertDataSet("com/dangdang/ddframe/rdb/integrate/dataset/dbtbl/expect/select/SelectLimitWithBindingTable.xml", getShardingDataSource().getConnection(), "t_order_item", String.format(sql, 10, 19, 1000, 1909));
+        assertDataSet("integrate/dataset/dbtbl/expect/select/SelectLimitWithBindingTable.xml", getShardingDataSource().getConnection(), "t_order_item", String.format(sql, 10, 19, 1000, 1909));
     }
 }

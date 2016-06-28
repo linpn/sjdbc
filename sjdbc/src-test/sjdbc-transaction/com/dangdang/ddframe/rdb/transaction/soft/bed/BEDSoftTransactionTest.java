@@ -27,13 +27,13 @@ import java.sql.SQLException;
 
 @RunWith(MockitoJUnitRunner.class)
 public final class BEDSoftTransactionTest {
-
+    
     @Mock
     private BEDSoftTransaction transaction;
-
+    
     @Mock
     private Connection connection;
-
+    
     @Test
     public void assertNoneShardingConnectionTransaction() throws SQLException {
         try {

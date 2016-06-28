@@ -25,12 +25,12 @@ import lombok.NoArgsConstructor;
 
 /**
  * 事务日志存储器工厂.
- *
+ * 
  * @author zhangliang
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TransactionLogStorageFactory {
-
+    
     /**
      * 创建事务日志存储器.
      *

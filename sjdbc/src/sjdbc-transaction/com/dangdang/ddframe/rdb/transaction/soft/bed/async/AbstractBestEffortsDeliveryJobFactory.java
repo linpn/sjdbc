@@ -29,14 +29,14 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 最大努力送达型异步作业的抽象工厂.
- *
+ * 
  * @author zhangliang
  */
 @RequiredArgsConstructor
 public abstract class AbstractBestEffortsDeliveryJobFactory<T extends AbstractBestEffortsDeliveryJobConfiguration> {
-
+    
     private final SoftTransactionConfiguration transactionConfig;
-
+    
     /**
      * 初始化作业.
      */
@@ -50,9 +50,9 @@ public abstract class AbstractBestEffortsDeliveryJobFactory<T extends AbstractBe
         jobScheduler.setField("transactionLogStorage", TransactionLogStorageFactory.createTransactionLogStorage(transactionConfig.buildTransactionLogDataSource()));
         jobScheduler.init();
     }
-
+    
     protected abstract ZookeeperConfiguration createZookeeperConfiguration(final T config);
-
+    
     private JobConfiguration createBedJobConfiguration(final T bedJobConfig) {
         JobConfiguration result = new JobConfiguration(bedJobConfig.getJobName(), NestedBestEffortsDeliveryJob.class, 1, bedJobConfig.getCron());
         result.setFetchDataCount(bedJobConfig.getTransactionLogFetchDataCount());

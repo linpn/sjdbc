@@ -37,7 +37,7 @@ import java.sql.SQLException;
 
 /**
  * 柔性事务管理器.
- *
+ * 
  * @author zhangliang
  * @author caohao
  */
@@ -50,7 +50,7 @@ public final class SoftTransactionManager {
 
     @Getter
     private final SoftTransactionConfiguration transactionConfig;
-
+    
     /**
      * 初始化事务管理器.
      */
@@ -64,7 +64,7 @@ public final class SoftTransactionManager {
             new NestedBestEffortsDeliveryJobFactory(transactionConfig).init();
         }
     }
-
+    
     private void createTable() throws SQLException {
         String dbSchema = "CREATE TABLE IF NOT EXISTS `transaction_log` ("
                 + "`id` VARCHAR(40) NOT NULL, "
@@ -81,23 +81,23 @@ public final class SoftTransactionManager {
             preparedStatement.executeUpdate();
         }
     }
-
+    
     /**
      * 获取柔性事务管理器.
-     *
+     * 
      * @param type 柔性事务类型
      * @return 柔性事务
      */
     public AbstractSoftTransaction getTransaction(final SoftTransactionType type) {
         AbstractSoftTransaction result;
         switch (type) {
-            case BestEffortsDelivery:
+            case BestEffortsDelivery: 
                 result = new BEDSoftTransaction();
                 break;
             case TryConfirmCancel:
                 result = new TCCSoftTransaction();
                 break;
-            default:
+            default: 
                 throw new UnsupportedOperationException(type.toString());
         }
         // TODO 目前使用不支持嵌套事务，以后这里需要可配置
@@ -108,10 +108,10 @@ public final class SoftTransactionManager {
         ExecutorDataMap.getDataMap().put(TRANSACTION_CONFIG, transactionConfig);
         return result;
     }
-
+    
     /**
      * 获取当前线程的柔性事务配置.
-     *
+     * 
      * @return 当前线程的柔性事务配置
      */
     public static Optional<SoftTransactionConfiguration> getCurrentTransactionConfiguration() {
@@ -120,10 +120,10 @@ public final class SoftTransactionManager {
                 ? Optional.<SoftTransactionConfiguration>absent()
                 : Optional.of((SoftTransactionConfiguration) transactionConfig);
     }
-
+    
     /**
      * 获取当前的柔性事务.
-     *
+     * 
      * @return 当前的柔性事务
      */
     public static Optional<AbstractSoftTransaction> getCurrentTransaction() {
@@ -132,7 +132,7 @@ public final class SoftTransactionManager {
                 ? Optional.<AbstractSoftTransaction>absent()
                 : Optional.of((AbstractSoftTransaction) transaction);
     }
-
+    
     /**
      * 关闭当前的柔性事务管理器.
      */

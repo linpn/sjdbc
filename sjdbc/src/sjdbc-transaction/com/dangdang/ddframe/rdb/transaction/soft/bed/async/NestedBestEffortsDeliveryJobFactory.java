@@ -23,18 +23,18 @@ import com.dangdang.ddframe.reg.zookeeper.ZookeeperConfiguration;
 
 /**
  * 内嵌的最大努力送达型异步作业工厂.
- *
+ * 
  * @author zhangliang
  */
 public final class NestedBestEffortsDeliveryJobFactory extends AbstractBestEffortsDeliveryJobFactory<NestedBestEffortsDeliveryJobConfiguration> {
-
+    
     public NestedBestEffortsDeliveryJobFactory(final SoftTransactionConfiguration transactionConfig) {
         super(transactionConfig);
     }
-
+    
     @Override
     protected ZookeeperConfiguration createZookeeperConfiguration(final NestedBestEffortsDeliveryJobConfiguration config) {
-        ZookeeperConfiguration result = new ZookeeperConfiguration(String.format("localhost:%s", config.getZookeeperPort()),
+        ZookeeperConfiguration result = new ZookeeperConfiguration(String.format("localhost:%s", config.getZookeeperPort()), 
                 config.getJobNamespace(), config.getZookeeperBaseSleepTimeMilliseconds(), config.getZookeeperMaxSleepTimeMilliseconds(), config.getZookeeperMaxRetries());
         result.setNestedPort(config.getZookeeperPort());
         result.setNestedDataDir(config.getZookeeperDataDir());

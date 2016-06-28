@@ -22,20 +22,20 @@ import lombok.Setter;
 
 /**
  * 表规则配置.
- *
+ * 
  * @author gaohongtao
  */
 @Getter
 @Setter
 public class TableRuleConfig {
-
+    
     private boolean dynamic;
-
+    
     private String actualTables;
-
+    
     private String dataSourceNames;
-
+    
     private StrategyConfig databaseStrategy;
-
+    
     private StrategyConfig tableStrategy;
 }

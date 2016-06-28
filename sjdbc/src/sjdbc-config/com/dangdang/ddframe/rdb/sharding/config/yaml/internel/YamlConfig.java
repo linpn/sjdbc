@@ -31,6 +31,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class YamlConfig extends ShardingRuleConfig {
-
+    
     private Properties props = new Properties();
 }

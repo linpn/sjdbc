@@ -28,24 +28,24 @@ import lombok.ToString;
 
 /**
  * Binding表路由数据源.
- *
+ * 
  * @author zhangliang
  */
 @Getter
 @ToString(callSuper = true)
 final class BindingRoutingDataSource extends SingleRoutingDataSource {
-
+    
     BindingRoutingDataSource(final SingleRoutingDataSource routingDataSource) {
         super(routingDataSource.getDataSource());
         getRoutingTableFactors().addAll(Lists.transform(routingDataSource.getRoutingTableFactors(), new Function<SingleRoutingTableFactor, BindingRoutingTableFactor>() {
-
+            
             @Override
             public BindingRoutingTableFactor apply(final SingleRoutingTableFactor input) {
                 return new BindingRoutingTableFactor(input.getLogicTable(), input.getActualTable());
             }
         }));
     }
-
+    
     void bind(final BindingTableRule bindingTableRule, final String bindingLogicTable) {
         for (SingleRoutingTableFactor each : getRoutingTableFactors()) {
             ((BindingRoutingTableFactor) each).getBindingRoutingTableFactors().add(

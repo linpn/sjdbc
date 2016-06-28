@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class SQLUtilTest {
-
+    
     @Test
     public void testGetExactlyValue() throws Exception {
         assertThat(SQLUtil.getExactlyValue("`xxx`"), is("xxx"));

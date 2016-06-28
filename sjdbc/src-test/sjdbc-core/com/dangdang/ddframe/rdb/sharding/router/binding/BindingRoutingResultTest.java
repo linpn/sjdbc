@@ -27,7 +27,7 @@ import com.dangdang.ddframe.rdb.sharding.router.single.SingleRoutingResult;
 import com.dangdang.ddframe.rdb.sharding.router.single.SingleRoutingTableFactor;
 
 public final class BindingRoutingResultTest {
-
+    
     @Test
     public void assertToString() {
         SingleRoutingResult singleRoutingResult = new SingleRoutingResult();

@@ -25,23 +25,23 @@ import com.google.common.base.Optional;
 
 /**
  * OR表达式解析类.
- *
+ * 
  * @author gaohongtao
  */
 public final class OrParser {
-
+    
     private final SQLStatement sqlStatement;
-
+    
     private final OrVisitor orVisitor;
-
+    
     public OrParser(final SQLStatement sqlStatement, final SQLASTOutputVisitor dependencyVisitor) {
         this.sqlStatement = sqlStatement;
         orVisitor = new OrVisitor(dependencyVisitor);
     }
-
+    
     /**
      *  解析SQL.
-     *
+     * 
      * @return SQL解析结果
      */
     public SQLParsedResult parse() {

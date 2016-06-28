@@ -25,12 +25,12 @@ import com.google.common.base.Optional;
  * @author gaohongtao
  */
 public interface IndexColumn {
-
+    
     void setColumnIndex(int index);
-
+    
     int getColumnIndex();
-
+    
     Optional<String> getColumnLabel();
-
+    
     Optional<String> getColumnName();
 }

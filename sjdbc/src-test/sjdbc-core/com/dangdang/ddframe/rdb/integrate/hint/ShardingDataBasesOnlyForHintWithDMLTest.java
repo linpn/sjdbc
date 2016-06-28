@@ -31,14 +31,14 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class ShardingDataBasesOnlyForHintWithDMLTest extends AbstractShardingDataBasesOnlyHintDBUnitTest {
-
+    
     private ShardingDataSource shardingDataSource;
-
+    
     @Before
     public void init() throws SQLException {
         shardingDataSource = getShardingDataSource();
     }
-
+    
     @Test
     public void assertInsertWithAllPlaceholders() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` VALUES (?, ?, ?)";
@@ -54,7 +54,7 @@ public final class ShardingDataBasesOnlyForHintWithDMLTest extends AbstractShard
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertInsertWithoutPlaceholder() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` VALUES (%s, %s, 'insert')";
@@ -67,7 +67,7 @@ public final class ShardingDataBasesOnlyForHintWithDMLTest extends AbstractShard
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertInsertWithPlaceholdersForShardingKeys() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` VALUES (%s, %s, ?)";
@@ -81,7 +81,7 @@ public final class ShardingDataBasesOnlyForHintWithDMLTest extends AbstractShard
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertInsertWithPlaceholdersForNotShardingKeys() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` VALUES (%s, %s, ?)";
@@ -95,7 +95,7 @@ public final class ShardingDataBasesOnlyForHintWithDMLTest extends AbstractShard
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertUpdateWithoutAlias() throws SQLException, DatabaseUnitException {
         String sql = "UPDATE `t_order` SET `status` = ? WHERE `order_id` = ? AND `user_id` = ?";
@@ -113,7 +113,7 @@ public final class ShardingDataBasesOnlyForHintWithDMLTest extends AbstractShard
         }
         assertDataSet("update", "updated");
     }
-
+    
     @Test
     public void assertUpdateWithAlias() throws SQLException, DatabaseUnitException {
         String sql = "UPDATE `t_order` AS o SET o.`status` = ? WHERE o.`order_id` = ? AND o.`user_id` = ?";
@@ -131,7 +131,7 @@ public final class ShardingDataBasesOnlyForHintWithDMLTest extends AbstractShard
         }
         assertDataSet("update", "updated");
     }
-
+    
     @Test
     public void assertDeleteWithoutAlias() throws SQLException, DatabaseUnitException {
         String sql = "DELETE `t_order` WHERE `order_id` = ? AND `user_id` = ? AND `status` = ?";
@@ -149,10 +149,10 @@ public final class ShardingDataBasesOnlyForHintWithDMLTest extends AbstractShard
         }
         assertDataSet("delete", "init");
     }
-
+    
     private void assertDataSet(final String expectedDataSetPattern, final String status) throws SQLException, DatabaseUnitException {
         for (int i = 0; i < 10; i++) {
-            assertDataSet(String.format("com/dangdang/ddframe/rdb/integrate/dataset/db/expect/%s/db_%s.xml", expectedDataSetPattern, i),
+            assertDataSet(String.format("integrate/dataset/db/expect/%s/db_%s.xml", expectedDataSetPattern, i),
                     shardingDataSource.getConnection().getConnection(String.format("dataSource_db_%s", i), SQLStatementType.SELECT), "t_order", "SELECT * FROM `t_order` WHERE `status`=?", status);
         }
     }

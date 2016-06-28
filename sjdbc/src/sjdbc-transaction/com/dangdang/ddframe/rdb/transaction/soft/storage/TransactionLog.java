@@ -26,27 +26,27 @@ import java.util.List;
 
 /**
  * 事务日志.
- *
+ * 
  * @author zhangliang
  */
 @AllArgsConstructor
 @Getter
 public final class TransactionLog {
-
+    
     private final String id;
-
+    
     private final String transactionId;
-
+    
     private final SoftTransactionType transactionType;
-
+    
     private final String dataSource;
-
+    
     private final String sql;
-
+    
     private final List<Object> parameters;
 
     private final long creationTime;
-
+    
     @Setter
     private int asyncDeliveryTryTimes;
 }

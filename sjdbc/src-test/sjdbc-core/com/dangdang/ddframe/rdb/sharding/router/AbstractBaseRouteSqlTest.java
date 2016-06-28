@@ -49,10 +49,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public abstract class AbstractBaseRouteSqlTest {
-
+    
     @Getter(AccessLevel.PROTECTED)
     private ShardingRule shardingRule;
-
+    
     @Before
     public void setRouteRuleContext() {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
@@ -68,26 +68,26 @@ public abstract class AbstractBaseRouteSqlTest {
                 .databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new OrderShardingAlgorithm()))
                 .tableShardingStrategy(new TableShardingStrategy("order_id", new OrderShardingAlgorithm())).build();
     }
-
+    
     protected void assertSingleTarget(final String originSql, final String targetDataSource, final String targetSQL) throws SQLParserException {
         assertSingleTarget(originSql, Collections.emptyList(), targetDataSource, targetSQL);
     }
-
+    
     protected void assertSingleTarget(final String originSql, final List<Object> parameters, final String targetDataSource, final String targetSQL) throws SQLParserException {
         assertMultipleTargets(originSql, parameters, 1, Collections.singletonList(targetDataSource), Collections.singletonList(targetSQL));
     }
-
-    protected void assertMultipleTargets(final String originSql, final int expectedSize,
-                                         final Collection<String> targetDataSources, final Collection<String> targetSQLs) throws SQLParserException {
+    
+    protected void assertMultipleTargets(final String originSql, final int expectedSize, 
+            final Collection<String> targetDataSources, final Collection<String> targetSQLs) throws SQLParserException {
         assertMultipleTargets(originSql, Collections.emptyList(), expectedSize, targetDataSources, targetSQLs);
     }
-
-    protected void assertMultipleTargets(final String originSql, final List<Object> parameters, final int expectedSize,
-                                         final Collection<String> targetDataSources, final Collection<String> targetSQLs) throws SQLParserException {
+    
+    protected void assertMultipleTargets(final String originSql, final List<Object> parameters, final int expectedSize, 
+            final Collection<String> targetDataSources, final Collection<String> targetSQLs) throws SQLParserException {
         SQLRouteResult actual = new SQLRouteEngine(getShardingRule(), DatabaseType.MySQL).route(originSql, parameters);
         assertThat(actual.getExecutionUnits().size(), is(expectedSize));
         Set<String> actualDataSources = new HashSet<>(Collections2.transform(actual.getExecutionUnits(), new Function<SQLExecutionUnit, String>() {
-
+            
             @Override
             public String apply(final SQLExecutionUnit input) {
                 return input.getDataSource();
@@ -95,7 +95,7 @@ public abstract class AbstractBaseRouteSqlTest {
         }));
         assertThat(actualDataSources, hasItems(targetDataSources.toArray(new String[targetDataSources.size()])));
         Collection<String> actualSQLs = Collections2.transform(actual.getExecutionUnits(), new Function<SQLExecutionUnit, String>() {
-
+            
             @Override
             public String apply(final SQLExecutionUnit input) {
                 return input.getSql();

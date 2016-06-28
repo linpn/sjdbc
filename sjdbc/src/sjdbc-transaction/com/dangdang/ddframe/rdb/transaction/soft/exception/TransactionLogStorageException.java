@@ -23,15 +23,15 @@ package com.dangdang.ddframe.rdb.transaction.soft.exception;
  * @author caohao
  */
 public class TransactionLogStorageException extends RuntimeException {
-
+    
     public TransactionLogStorageException(final String errorMessage, final Object... args) {
         super(String.format(errorMessage, args));
     }
-
+    
     public TransactionLogStorageException(final String message, final Exception cause) {
         super(message, cause);
     }
-
+    
     public TransactionLogStorageException(final Exception cause) {
         super(cause);
     }

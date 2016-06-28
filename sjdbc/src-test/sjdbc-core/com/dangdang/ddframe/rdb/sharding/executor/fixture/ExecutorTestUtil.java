@@ -29,7 +29,7 @@ import java.util.Properties;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ExecutorTestUtil {
-
+    
     public static ShardingProperties createShardingProperties() {
         Properties prop = new Properties();
         prop.setProperty(ShardingPropertiesConstant.METRICS_ENABLE.getKey(), Boolean.TRUE.toString());
@@ -37,9 +37,9 @@ public final class ExecutorTestUtil {
         MetricsContext.init(result);
         return result;
     }
-
+    
     public static void clear() throws NoSuchFieldException, IllegalAccessException {
-        Field field = ExecutorExceptionHandler.class.getDeclaredField("isExceptionThrown");
+        Field field = ExecutorExceptionHandler.class.getDeclaredField("IS_EXCEPTION_THROWN");
         field.setAccessible(true);
         ((ThreadLocal) field.get(ExecutorExceptionHandler.class)).remove();
     }

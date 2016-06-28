@@ -19,10 +19,10 @@ package com.dangdang.ddframe.rdb.sharding.parser.result.router;
 
 /**
  * SQL语句类型.
- *
+ * 
  * @author gaohongtao
  */
 public enum SQLStatementType {
-
+    
     INSERT, DELETE, UPDATE, SELECT
 }

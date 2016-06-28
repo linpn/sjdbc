@@ -30,22 +30,22 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 度量上下文持有者.
- * <p>
+ * 
  * <p>
  * 多个ShardingDataSource使用静态度量上下文会造成数据污染, 所以将度量上下文对象绑定到ThreadLocal中.
  * </p>
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MetricsContext {
-
+    
     private static final ThreadLocal<MetricRegistry> HOLDER = new ThreadLocal<>();
-
+    
     /**
      * 初始化度量上下文持有者.
-     *
+     * 
      * @param shardingProperties Sharding-JDBC的配置属性
      */
     public static void init(final ShardingProperties shardingProperties) {
@@ -65,17 +65,18 @@ public final class MetricsContext {
                 .build().start(period, TimeUnit.MILLISECONDS);
         HOLDER.set(metricRegistry);
     }
-
+    
     /**
      * 开始计时.
      *
      * @param name 度量目标名称
+     *
      * @return 计时上下文
      */
     public static Timer.Context start(final String name) {
         return null == HOLDER.get() ? null : HOLDER.get().timer(MetricRegistry.name(name)).time();
     }
-
+    
     /**
      * 停止计时.
      *
@@ -86,7 +87,7 @@ public final class MetricsContext {
             context.stop();
         }
     }
-
+    
     /**
      * 清理数据.
      */

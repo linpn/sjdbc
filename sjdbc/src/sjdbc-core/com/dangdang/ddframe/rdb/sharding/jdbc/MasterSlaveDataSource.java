@@ -37,23 +37,23 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public final class MasterSlaveDataSource extends AbstractDataSourceAdapter {
-
-    private static final ThreadLocal<Boolean> WAS_UPDATED = new ThreadLocal<Boolean>() {
-
+    
+    private static final ThreadLocal<Boolean> DML_FLAG = new ThreadLocal<Boolean>() {
+        
         @Override
         protected Boolean initialValue() {
             return false;
         }
     };
-
+    
     private final String name;
-
+    
     private final DataSource masterDataSource;
-
+    
     private final List<DataSource> slaveDataSources;
-
+    
     private final SlaveLoadBalanceStrategy slaveLoadBalanceStrategy = new RoundRobinSlaveLoadBalanceStrategy();
-
+    
     /**
      * 获取主或从节点的数据源名称.
      *
@@ -61,13 +61,13 @@ public final class MasterSlaveDataSource extends AbstractDataSourceAdapter {
      * @return 主或从节点的数据源
      */
     public DataSource getDataSource(final SQLStatementType sqlStatementType) {
-        if (SQLStatementType.SELECT != sqlStatementType || WAS_UPDATED.get() || HintManagerHolder.isMasterRouteOnly()) {
-            WAS_UPDATED.set(true);
+        if (SQLStatementType.SELECT != sqlStatementType || DML_FLAG.get() || HintManagerHolder.isMasterRouteOnly()) {
+            DML_FLAG.set(true);
             return masterDataSource;
         }
         return slaveLoadBalanceStrategy.getDataSource(name, slaveDataSources);
     }
-
+    
     String getDatabaseProductName() throws SQLException {
         String result;
         try (Connection masterConnection = masterDataSource.getConnection()) {
@@ -76,15 +76,22 @@ public final class MasterSlaveDataSource extends AbstractDataSourceAdapter {
         for (DataSource each : slaveDataSources) {
             String slaveDatabaseProductName;
             try (Connection slaveConnection = each.getConnection()) {
-                slaveDatabaseProductName = slaveConnection.getMetaData().getDatabaseProductName();
+                slaveDatabaseProductName = slaveConnection.getMetaData().getDatabaseProductName();    
             }
             Preconditions.checkState(result.equals(slaveDatabaseProductName), String.format("Database type inconsistent with '%s' and '%s'", result, slaveDatabaseProductName));
         }
         return result;
     }
-
+    
     @Override
     public Connection getConnection() throws SQLException {
         throw new UnsupportedOperationException("Master slave data source cannot support get connection directly.");
+    }
+    
+    /**
+     * 重置更新标记.
+     */
+    public static void resetDMLFlag() {
+        DML_FLAG.remove();
     }
 }

@@ -30,14 +30,14 @@ import lombok.RequiredArgsConstructor;
 /**
  * 最大努力送达型异步作业工厂.
  *
- * @author zhangliang
+ * @author zhangliang 
  * @author caohao
  */
 @RequiredArgsConstructor
 public final class BestEffortsDeliveryJobFactory {
-
+    
     private final BestEffortsDeliveryConfiguration bedConfig;
-
+    
     /**
      * 初始化作业.
      */
@@ -49,13 +49,13 @@ public final class BestEffortsDeliveryJobFactory {
         jobScheduler.setField("transactionLogStorage", TransactionLogStorageFactory.createTransactionLogStorage(new RdbTransactionLogDataSource(bedConfig.getDefaultTransactionLogDataSource())));
         jobScheduler.init();
     }
-
+    
     public ZookeeperConfiguration createZookeeperConfiguration(final BestEffortsDeliveryConfiguration bedConfig) {
         AsyncSoftTransactionZookeeperConfiguration zkConfig = bedConfig.getZkConfig();
         return new ZookeeperConfiguration(zkConfig.getConnectionString(), zkConfig.getNamespace(), zkConfig.getBaseSleepTimeMilliseconds(),
-                zkConfig.getMaxSleepTimeMilliseconds(), zkConfig.getMaxRetries());
+            zkConfig.getMaxSleepTimeMilliseconds(), zkConfig.getMaxRetries());
     }
-
+    
     private JobConfiguration createBedJobConfiguration(final BestEffortsDeliveryConfiguration bedJobConfig) {
         JobConfiguration result = new JobConfiguration(bedJobConfig.getJobConfig().getName(), BestEffortsDeliveryJob.class, 1, bedJobConfig.getJobConfig().getCron());
         result.setFetchDataCount(bedJobConfig.getJobConfig().getTransactionLogFetchDataCount());

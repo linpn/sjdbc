@@ -26,7 +26,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class CartesianResultTest {
-
+    
     @Test
     public void assertToString() {
         CartesianResult actual = new CartesianResult();

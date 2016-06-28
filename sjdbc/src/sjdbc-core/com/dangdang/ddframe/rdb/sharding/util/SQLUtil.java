@@ -23,15 +23,15 @@ import lombok.AllArgsConstructor;
 
 /**
  * SQL工具类.
- *
+ * 
  * @author gaohongtao
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SQLUtil {
-
+    
     /**
      * 去掉SQL表达式的特殊字符.
-     *
+     * 
      * @param value SQL表达式
      * @return 去掉SQL特殊字符的表达式
      */

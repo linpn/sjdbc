@@ -25,33 +25,33 @@ import lombok.ToString;
 
 /**
  * 排序列对象.
- *
+ * 
  * @author zhangliang
  */
 @Getter
 @ToString(callSuper = true)
 public final class OrderByColumn extends AbstractSortableColumn implements IndexColumn {
-
+    
     private final Optional<Integer> index;
-
+    
     private int columnIndex;
-
+    
     public OrderByColumn(final Optional<String> owner, final String name, final Optional<String> alias, final OrderByType orderByType) {
         super(owner, Optional.of(name), alias, orderByType);
-        index = Optional.absent();
+        index =  Optional.absent();
     }
-
+    
     public OrderByColumn(final String name, final OrderByType orderByType) {
         super(Optional.<String>absent(), Optional.of(name), Optional.<String>absent(), orderByType);
-        index = Optional.absent();
+        index =  Optional.absent();
     }
-
+    
     public OrderByColumn(final int index, final OrderByType orderByType) {
         super(Optional.<String>absent(), Optional.<String>absent(), Optional.<String>absent(), orderByType);
         this.index = Optional.of(index);
         columnIndex = index;
     }
-
+    
     @Override
     public void setColumnIndex(final int index) {
         if (this.index.isPresent()) {
@@ -59,29 +59,29 @@ public final class OrderByColumn extends AbstractSortableColumn implements Index
         }
         columnIndex = index;
     }
-
+        
     @Override
     public Optional<String> getColumnLabel() {
         return getAlias();
     }
-
+    
     @Override
     public Optional<String> getColumnName() {
         return getName();
     }
-
+    
     /**
      * 排序类型.
-     *
+     * 
      * @author gaohongtao, zhangliang
      */
     public enum OrderByType {
-        ASC,
+        ASC, 
         DESC;
-
+        
         /**
          * 适配Druid的枚举类型.
-         *
+         * 
          * @param sqlOrderingSpecification Druid的枚举类型
          * @return 排序类型
          */
@@ -89,7 +89,7 @@ public final class OrderByColumn extends AbstractSortableColumn implements Index
             return OrderByType.valueOf(sqlOrderingSpecification.name());
         }
     }
-
+    
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -99,12 +99,12 @@ public final class OrderByColumn extends AbstractSortableColumn implements Index
             return false;
         }
         OrderByColumn that = (OrderByColumn) o;
-        return getOrderByType() == that.getOrderByType() && (columnIndex == that.columnIndex
+        return getOrderByType() == that.getOrderByType() && (columnIndex == that.columnIndex 
                 || index.isPresent() && that.index.isPresent() && index.get().equals(that.index.get())
                 || getName().isPresent() && that.getName().isPresent() && getName().get().equals(that.getName().get())
                 || getAlias().isPresent() && that.getAlias().isPresent() && getAlias().get().equals(that.getAlias().get()));
     }
-
+    
     @Override
     public int hashCode() {
         return Objects.hashCode(getOrderByType(), columnIndex);

@@ -28,24 +28,24 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * 结果集处理工具类.
- *
+ * 结果集工具类.
+ * 
  * @author gaohongtao
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ResultSetUtil {
-
+    
     /**
      * 根据返回值类型返回特定类型的结果.
-     *
-     * @param value       原始结果
+     * 
+     * @param value 原始结果
      * @param convertType 返回值类型
      * @return 特定类型的返回结果
      */
     public static Object convertValue(final Object value, final Class<?> convertType) {
         if (null == value) {
             return convertNullValue(convertType);
-        }
+        } 
         if (value.getClass() == convertType) {
             return value;
         }
@@ -59,9 +59,9 @@ public final class ResultSetUtil {
             return value.toString();
         } else {
             return value;
-        }
+        }    
     }
-
+    
     private static Object convertNullValue(final Class<?> convertType) {
         switch (convertType.getName()) {
             case "byte":
@@ -80,7 +80,7 @@ public final class ResultSetUtil {
                 return null;
         }
     }
-
+    
     private static Object convertNumberValue(final Object value, final Class<?> convertType) {
         Number number = (Number) value;
         switch (convertType.getName()) {
@@ -106,7 +106,7 @@ public final class ResultSetUtil {
                 throw new ShardingJdbcException("Unsupported data type:%s", convertType);
         }
     }
-
+    
     private static Object convertDateValue(final Object value, final Class<?> convertType) {
         Date date = (Date) value;
         switch (convertType.getName()) {
@@ -120,16 +120,16 @@ public final class ResultSetUtil {
                 throw new ShardingJdbcException("Unsupported Date type:%s", convertType);
         }
     }
-
+    
     /**
      * 根据排序类型比较大小.
-     *
-     * @param thisValue   待比较的值
-     * @param otherValue  待比较的值
+     * 
+     * @param thisValue 待比较的值
+     * @param otherValue 待比较的值
      * @param orderByType 排序类型
      * @return 负数，零和正数分别表示小于，等于和大于
      */
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static int compareTo(final Comparable thisValue, final Comparable otherValue, final OrderByType orderByType) {
         return OrderByType.ASC == orderByType ? thisValue.compareTo(otherValue) : -thisValue.compareTo(otherValue);
     }

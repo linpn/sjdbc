@@ -22,12 +22,12 @@ import com.google.common.base.Optional;
 
 /**
  * MySQL的DELETE语句访问器.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 public class MySQLDeleteVisitor extends AbstractMySQLVisitor {
-
+    
     @Override
     public boolean visit(final MySqlDeleteStatement x) {
         getParseContext().setCurrentTable(x.getTableName().toString(), Optional.fromNullable(x.getAlias()));

@@ -51,69 +51,69 @@ import java.util.List;
 
 /**
  * 解析过程的上下文对象.
- *
+ * 
  * @author zhangliang
  */
 @Getter
 public final class ParseContext {
-
+    
     private static final String AUTO_GEN_TOKE_KEY_TEMPLATE = "sharding_auto_gen_%d";
-
+    
     private static final String SHARDING_GEN_ALIAS = "sharding_gen_%s";
-
+    
     private final String autoGenTokenKey;
-
+    
     private final SQLParsedResult parsedResult = new SQLParsedResult();
-
+    
     @Setter
     private Collection<String> shardingColumns;
-
+    
     @Setter
     private boolean hasOrCondition;
-
+    
     private final ConditionContext currentConditionContext = new ConditionContext();
-
+    
     private Table currentTable;
-
+    
     private int selectItemsCount;
-
+    
     private final Collection<String> selectItems = new HashSet<>();
-
+    
     private boolean hasAllColumn;
-
+    
     @Setter
     private ParseContext parentParseContext;
-
+    
     private List<ParseContext> subParseContext = new LinkedList<>();
-
+    
     private int itemIndex;
-
+    
     public ParseContext(final int parseContextIndex) {
         autoGenTokenKey = String.format(AUTO_GEN_TOKE_KEY_TEMPLATE, parseContextIndex);
     }
-
+    
     /**
      * 增加查询投射项数量.
      */
     public void increaseItemIndex() {
         itemIndex++;
     }
-
+    
     /**
      * 设置当前正在访问的表.
-     *
+     * 
      * @param currentTableName 表名称
-     * @param currentAlias     表别名
+     * @param currentAlias 表别名
      */
     public void setCurrentTable(final String currentTableName, final Optional<String> currentAlias) {
         Table table = new Table(SQLUtil.getExactlyValue(currentTableName), currentAlias.isPresent() ? Optional.of(SQLUtil.getExactlyValue(currentAlias.get())) : currentAlias);
         parsedResult.getRouteContext().getTables().add(table);
         currentTable = table;
     }
-
+    
     /**
      * 将表对象加入解析上下文.
-     *
+     * 
      * @param x 表名表达式, 来源于FROM, INSERT ,UPDATE, DELETE等语句
      */
     public Table addTable(final SQLExprTableSource x) {
@@ -121,15 +121,15 @@ public final class ParseContext {
         parsedResult.getRouteContext().getTables().add(result);
         return result;
     }
-
+    
     /**
      * 向解析上下文中添加条件对象.
-     *
-     * @param expr          SQL表达式
-     * @param operator      操作符
+     * 
+     * @param expr SQL表达式
+     * @param operator 操作符
      * @param valueExprList 值对象表达式集合
-     * @param databaseType  数据库类型
-     * @param parameters    通过占位符传进来的参数
+     * @param databaseType 数据库类型
+     * @param parameters 通过占位符传进来的参数
      */
     public void addCondition(final SQLExpr expr, final BinaryOperator operator, final List<SQLExpr> valueExprList, final DatabaseType databaseType, final List<Object> parameters) {
         Optional<Column> column = getColumn(expr);
@@ -148,16 +148,16 @@ public final class ParseContext {
         }
         addCondition(column.get(), operator, values);
     }
-
+    
     /**
      * 将条件对象加入解析上下文.
-     *
-     * @param columnName   列名称
-     * @param tableName    表名称
-     * @param operator     操作符
-     * @param valueExpr    值对象表达式
+     * 
+     * @param columnName 列名称
+     * @param tableName 表名称
+     * @param operator 操作符
+     * @param valueExpr 值对象表达式
      * @param databaseType 数据库类型
-     * @param parameters   通过占位符传进来的参数
+     * @param parameters 通过占位符传进来的参数
      */
     public void addCondition(final String columnName, final String tableName, final BinaryOperator operator, final SQLExpr valueExpr, final DatabaseType databaseType, final List<Object> parameters) {
         Column column = createColumn(columnName, tableName);
@@ -169,7 +169,7 @@ public final class ParseContext {
             addCondition(column, operator, Collections.<Comparable<?>>singletonList(value));
         }
     }
-
+    
     private void addCondition(final Column column, final BinaryOperator operator, final List<Comparable<?>> values) {
         Optional<Condition> optionalCondition = currentConditionContext.find(column.getTableName(), column.getColumnName(), operator);
         Condition condition;
@@ -182,7 +182,7 @@ public final class ParseContext {
         }
         condition.getValues().addAll(values);
     }
-
+    
     private Comparable<?> evalExpression(final DatabaseType databaseType, final SQLObject sqlObject, final List<Object> parameters) {
         if (sqlObject instanceof SQLMethodInvokeExpr) {
             // TODO 解析函数中的sharingValue不支持
@@ -198,7 +198,7 @@ public final class ParseContext {
         // TODO 对于NULL目前解析为空字符串,此处待考虑解决方法
         return "";
     }
-
+    
     private Optional<Column> getColumn(final SQLExpr expr) {
         if (expr instanceof SQLPropertyExpr) {
             return Optional.fromNullable(getColumnWithQualifiedName((SQLPropertyExpr) expr));
@@ -208,36 +208,36 @@ public final class ParseContext {
         }
         return Optional.absent();
     }
-
+    
     private Column getColumnWithQualifiedName(final SQLPropertyExpr expr) {
         Optional<Table> table = findTable(((SQLIdentifierExpr) expr.getOwner()).getName());
         return expr.getOwner() instanceof SQLIdentifierExpr && table.isPresent() ? createColumn(expr.getName(), table.get().getName()) : null;
     }
-
+    
     private Column getColumnWithoutAlias(final SQLIdentifierExpr expr) {
         return null != currentTable ? createColumn(expr.getName(), currentTable.getName()) : null;
     }
-
+    
     private Column createColumn(final String columnName, final String tableName) {
         return new Column(SQLUtil.getExactlyValue(columnName), SQLUtil.getExactlyValue(tableName));
     }
-
+    
     private Optional<Table> findTable(final String tableNameOrAlias) {
         Optional<Table> tableFromName = findTableFromName(tableNameOrAlias);
         return tableFromName.isPresent() ? tableFromName : findTableFromAlias(tableNameOrAlias);
     }
-
+    
     /**
      * 判断SQL表达式是否为二元操作且带有别名.
-     *
-     * @param x                待判断的SQL表达式
+     * 
+     * @param x 待判断的SQL表达式
      * @param tableOrAliasName 表名称或别名
      * @return 是否为二元操作且带有别名
      */
     public boolean isBinaryOperateWithAlias(final SQLPropertyExpr x, final String tableOrAliasName) {
         return x.getParent() instanceof SQLBinaryOpExpr && findTableFromAlias(SQLUtil.getExactlyValue(tableOrAliasName)).isPresent();
     }
-
+    
     private Optional<Table> findTableFromName(final String name) {
         for (Table each : parsedResult.getRouteContext().getTables()) {
             if (each.getName().equalsIgnoreCase(SQLUtil.getExactlyValue(name))) {
@@ -246,7 +246,7 @@ public final class ParseContext {
         }
         return Optional.absent();
     }
-
+    
     private Optional<Table> findTableFromAlias(final String alias) {
         for (Table each : parsedResult.getRouteContext().getTables()) {
             if (each.getAlias().isPresent() && each.getAlias().get().equalsIgnoreCase(SQLUtil.getExactlyValue(alias))) {
@@ -255,31 +255,31 @@ public final class ParseContext {
         }
         return Optional.absent();
     }
-
+    
     /**
      * 将求平均值函数的补列加入解析上下文.
-     *
+     * 
      * @param avgColumn 求平均值的列
      */
     public void addDerivedColumnsForAvgColumn(final AggregationColumn avgColumn) {
         addDerivedColumnForAvgColumn(avgColumn, getDerivedCountColumn(avgColumn));
         addDerivedColumnForAvgColumn(avgColumn, getDerivedSumColumn(avgColumn));
     }
-
+    
     private void addDerivedColumnForAvgColumn(final AggregationColumn avgColumn, final AggregationColumn derivedColumn) {
         avgColumn.getDerivedColumns().add(derivedColumn);
         parsedResult.getMergeContext().getAggregationColumns().add(derivedColumn);
     }
-
+    
     private AggregationColumn getDerivedCountColumn(final AggregationColumn avgColumn) {
         String expression = avgColumn.getExpression().replaceFirst(AggregationType.AVG.toString(), AggregationType.COUNT.toString());
         return new AggregationColumn(expression, AggregationType.COUNT, Optional.of(generateDerivedColumnAlias()), avgColumn.getOption());
     }
-
+    
     private String generateDerivedColumnAlias() {
         return String.format(SHARDING_GEN_ALIAS, ++selectItemsCount);
     }
-
+    
     private AggregationColumn getDerivedSumColumn(final AggregationColumn avgColumn) {
         String expression = avgColumn.getExpression().replaceFirst(AggregationType.AVG.toString(), AggregationType.SUM.toString());
         if (avgColumn.getOption().isPresent()) {
@@ -287,53 +287,53 @@ public final class ParseContext {
         }
         return new AggregationColumn(expression, AggregationType.SUM, Optional.of(generateDerivedColumnAlias()), Optional.<String>absent());
     }
-
+    
     /**
      * 将排序列加入解析上下文.
-     *
-     * @param index       列顺序索引
+     * 
+     * @param index 列顺序索引
      * @param orderByType 排序类型
      */
     public void addOrderByColumn(final int index, final OrderByType orderByType) {
         parsedResult.getMergeContext().getOrderByColumns().add(new OrderByColumn(index, orderByType));
     }
-
+    
     /**
      * 将排序列加入解析上下文.
-     *
-     * @param owner       列拥有者
-     * @param name        列名称
+     * 
+     * @param owner 列拥有者
+     * @param name 列名称
      * @param orderByType 排序类型
      */
     public void addOrderByColumn(final Optional<String> owner, final String name, final OrderByType orderByType) {
         String rawName = SQLUtil.getExactlyValue(name);
         parsedResult.getMergeContext().getOrderByColumns().add(new OrderByColumn(owner, rawName, getAlias(rawName), orderByType));
     }
-
+    
     private Optional<String> getAlias(final String name) {
         if (containsSelectItem(name)) {
             return Optional.absent();
         }
         return Optional.of(generateDerivedColumnAlias());
     }
-
+    
     private boolean containsSelectItem(final String selectItem) {
         return hasAllColumn || selectItems.contains(selectItem);
     }
-
+    
     /**
      * 将分组列加入解析上下文.
-     *
-     * @param owner       列拥有者
-     * @param name        列名称
+     * 
+     * @param owner 列拥有者
+     * @param name 列名称
      * @param orderByType 排序类型
      */
     public void addGroupByColumns(final Optional<String> owner, final String name, final OrderByType orderByType) {
         String rawName = SQLUtil.getExactlyValue(name);
         parsedResult.getMergeContext().getGroupByColumns().add(new GroupByColumn(owner, rawName, getAlias(rawName), orderByType));
     }
-
-
+    
+    
     /**
      * 将当前解析的条件对象归并入解析结果.
      */
@@ -350,18 +350,18 @@ public final class ParseContext {
         parsedResult.getRouteContext().getTables().addAll(target.get().getRouteContext().getTables());
         parsedResult.getConditionContexts().addAll(target.get().getConditionContexts());
     }
-
+    
     private Optional<SQLParsedResult> findValidParseResult() {
         for (ParseContext each : subParseContext) {
             each.mergeCurrentConditionContext();
             if (each.getParsedResult().getRouteContext().getTables().isEmpty()) {
                 continue;
             }
-            return Optional.of(each.getParsedResult());
+            return Optional.of(each.getParsedResult()); 
         }
         return Optional.absent();
     }
-
+    
     /**
      * 注册SELECT语句中声明的列名称或别名.
      *

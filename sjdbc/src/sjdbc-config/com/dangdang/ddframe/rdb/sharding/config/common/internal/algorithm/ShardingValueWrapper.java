@@ -27,71 +27,50 @@ import java.util.Date;
 
 /**
  * 将进入闭包的值提供类型转换方法.
- *
+ * 
  * @author gaohongtao
  */
 public class ShardingValueWrapper {
-
+    
     private final Comparable<?> value;
-
+    
     public ShardingValueWrapper(final Comparable<?> value) {
-        Preconditions.checkArgument(value instanceof Number || value instanceof Date || value instanceof String,
+        Preconditions.checkArgument(value instanceof Number || value instanceof Date || value instanceof String, 
                 String.format("Value must be type of Number, Data or String, your value type is '%s'", value.getClass().getName()));
         this.value = value;
     }
-
-    /**
-     * 字符串格式化, 使用了String.format的方法
-     *
-     * @param format String.format的参数格式
-     * @return 返回String.format的结果
-     */
-    public String format(final String format) {
-        return format(format, value);
-    }
-
-    /**
-     * 字符串格式化, 使用了String.format的方法
-     *
-     * @param format String.format的参数格式
-     * @param value  要格式化的值
-     * @return 返回String.format的结果
-     */
-    public String format(final String format, Object value) {
-        return String.format(format, value);
-    }
-
+    
     /**
      * 获取long值.
-     *
+     * 
      * @return long型返回值
      */
     public long longValue() {
         return numberValue().longValue();
     }
-
+    
     /**
      * 获取double值.
-     *
+     * 
      * @return double型返回值
      */
     public double doubleValue() {
         return numberValue().doubleValue();
     }
-
-    /**
-     * 将字符串转换为时间.
-     *
-     * @return 时间类型的值
-     * @throws ParseException
-     */
-    public Date dateValue() throws ParseException {
-        return dateValue(null);
+    
+    private Number numberValue() {
+        if (value instanceof Number) {
+            return (Number) value;
+        }
+        if (value instanceof Date) {
+            return ((Date) value).getTime();
+        }
+        return new BigDecimal(value.toString());
     }
-
+    
     /**
      * 将字符串转换为时间.
-     *
+     * 
      * @param format 时间格式化格式
      * @return 时间类型的值
      * @throws ParseException
@@ -106,14 +85,24 @@ public class ShardingValueWrapper {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(format));
         return new SimpleDateFormat(format).parse(value.toString());
     }
-
+    
+    /**
+     * 将字符串转换为时间.
+     * 
+     * @return 时间类型的值
+     * @throws ParseException
+     */
+    public Date dateValue() throws ParseException {
+        return dateValue(null);
+    }
+    
     /**
      * 将时间类型的值转换为字符串.
-     *
+     * 
      * @param format 时间格式化格式
      * @return 代表时间的字符串
      */
-    public String dateString(final String format) {
+    public String toString(final String format) {
         if (value instanceof Date) {
             return new SimpleDateFormat(format).format(((Date) value).getTime());
         }
@@ -122,19 +111,9 @@ public class ShardingValueWrapper {
         }
         return toString();
     }
-
+    
     @Override
     public String toString() {
         return value.toString();
-    }
-
-    private Number numberValue() {
-        if (value instanceof Number) {
-            return (Number) value;
-        }
-        if (value instanceof Date) {
-            return ((Date) value).getTime();
-        }
-        return new BigDecimal(value.toString());
     }
 }

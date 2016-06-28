@@ -27,27 +27,27 @@ import java.util.Properties;
 
 /**
  * 分片数据源工厂.
- *
- * @author zhangliang
+ * 
+ * @author zhangliang 
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ShardingDataSourceFactory {
-
+    
     /**
      * 创建分片数据源.
-     *
+     * 
      * @param shardingRule 分片规则
      * @return 分片数据源
      */
     public static DataSource createDataSource(final ShardingRule shardingRule) {
         return new ShardingDataSource(shardingRule);
     }
-
+    
     /**
      * 创建分片数据源.
-     *
+     * 
      * @param shardingRule 分片规则
-     * @param props        属性配置
+     * @param props 属性配置
      * @return 分片数据源
      */
     public static DataSource createDataSource(final ShardingRule shardingRule, final Properties props) {

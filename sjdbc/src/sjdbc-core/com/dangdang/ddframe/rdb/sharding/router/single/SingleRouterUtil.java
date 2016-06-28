@@ -28,15 +28,15 @@ import lombok.AllArgsConstructor;
 
 /**
  * 路由工具类.
- *
+ * 
  * @author gaohongtao
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SingleRouterUtil {
-
+    
     /**
      * 将条件对象转换为分片值对象.
-     *
+     * 
      * @param condition 条件对象
      * @return 分片值对象
      */
@@ -50,11 +50,11 @@ public class SingleRouterUtil {
                 }
                 return new ShardingValue<>(condition.getColumn().getTableName(), condition.getColumn().getColumnName(), conditionValues);
             case BETWEEN:
-                return new ShardingValue<>(condition.getColumn().getTableName(), condition.getColumn().getColumnName(),
+                return new ShardingValue<>(condition.getColumn().getTableName(), condition.getColumn().getColumnName(), 
                         Range.range(conditionValues.get(0), BoundType.CLOSED, conditionValues.get(1), BoundType.CLOSED));
             default:
                 throw new UnsupportedOperationException(condition.getOperator().getExpression());
         }
     }
-
+    
 }

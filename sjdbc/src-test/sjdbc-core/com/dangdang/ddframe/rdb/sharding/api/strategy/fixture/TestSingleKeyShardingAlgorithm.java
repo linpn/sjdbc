@@ -26,17 +26,17 @@ import com.dangdang.ddframe.rdb.sharding.api.strategy.database.DatabaseShardingA
 import com.dangdang.ddframe.rdb.sharding.api.strategy.table.TableShardingAlgorithm;
 
 public final class TestSingleKeyShardingAlgorithm implements SingleKeyShardingAlgorithm<String>, DatabaseShardingAlgorithm, TableShardingAlgorithm {
-
+    
     @Override
     public String doEqualSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
         return shardingValue.getValue();
     }
-
+    
     @Override
     public Collection<String> doInSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
         return shardingValue.getValues();
     }
-
+    
     @Override
     public Collection<String> doBetweenSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
         Collection<String> result = new ArrayList<>();

@@ -34,14 +34,14 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public final class ShardingForNullableWithAggregateTest extends AbstractShardingNullableDBUnitTest {
-
+    
     private ShardingDataSource shardingDataSource;
-
+    
     @Before
     public void init() throws SQLException {
         shardingDataSource = getShardingDataSource();
     }
-
+    
     @Test
     public void assertSelectCount() throws SQLException, DatabaseUnitException {
         String sql = "SELECT COUNT(`user_id`) FROM `t_order`";
@@ -56,7 +56,7 @@ public final class ShardingForNullableWithAggregateTest extends AbstractSharding
             assertThat(rs.next(), is(false));
         }
     }
-
+    
     @Test
     public void assertSelectSum() throws SQLException, DatabaseUnitException {
         String sql = "SELECT SUM(`user_id`) FROM `t_order`";
@@ -71,7 +71,7 @@ public final class ShardingForNullableWithAggregateTest extends AbstractSharding
             assertThat(rs.next(), is(false));
         }
     }
-
+    
     @Test
     public void assertSelectMax() throws SQLException, DatabaseUnitException {
         String sql = "SELECT MAX(`user_id`) FROM `t_order`";
@@ -86,7 +86,7 @@ public final class ShardingForNullableWithAggregateTest extends AbstractSharding
             assertThat(rs.next(), is(false));
         }
     }
-
+    
     @Test
     public void assertSelectMin() throws SQLException, DatabaseUnitException {
         String sql = "SELECT MIN(`user_id`) FROM `t_order`";
@@ -101,7 +101,7 @@ public final class ShardingForNullableWithAggregateTest extends AbstractSharding
             assertThat(rs.next(), is(false));
         }
     }
-
+    
     @Test
     public void assertSelectAvg() throws SQLException, DatabaseUnitException {
         String sql = "SELECT AVG(`user_id`) FROM `t_order`";
@@ -116,5 +116,5 @@ public final class ShardingForNullableWithAggregateTest extends AbstractSharding
             assertThat(rs.next(), is(false));
         }
     }
-
+    
 }

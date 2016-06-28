@@ -27,12 +27,12 @@ import org.w3c.dom.Element;
 
 /**
  * 基于Spring命名空间的ShardingJdbc的分库分表策略定义.
- *
+ * 
  * @author caohao
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ShardingJdbcStrategyBeanDefinition {
-
+    
     static AbstractBeanDefinition getBeanDefinitionByElement(final Element element) {
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(StrategyConfig.class);
         factory.addPropertyValue("shardingColumns", element.getAttribute(ShardingJdbcStrategyBeanDefinitionParserTag.SHARDING_COLUMNS_ATTRIBUTE));

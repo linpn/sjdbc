@@ -28,20 +28,20 @@ import lombok.ToString;
 
 /**
  * 笛卡尔积表路由组.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 @ToString
 @Getter
 final class CartesianTableReference {
-
+    
     private final List<SingleRoutingTableFactor> routingTableFactors;
-
+    
     CartesianTableReference(final List<SingleRoutingTableFactor> routingTableFactors) {
         this.routingTableFactors = new ArrayList<>(routingTableFactors);
     }
-
+    
     void buildSQL(final SQLBuilder builder) {
         for (SingleRoutingTableFactor each : routingTableFactors) {
             each.buildSQL(builder);

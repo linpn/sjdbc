@@ -28,47 +28,47 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 public final class MetricsContextTest {
-
+    
     @After
     public void tearDown() {
         MetricsContext.clear();
     }
-
+    
     @Test
     public void assertStartWhenMetricsDisable() {
         initDisabledMetrics();
         assertNull(MetricsContext.start("name"));
     }
-
+    
     @Test
     public void assertStartWhenMetricsEnable() {
         initEnabledMetrics();
         assertNotNull(MetricsContext.start("name"));
     }
-
+    
     @Test
     public void assertStopWhenMetricsDisable() {
         initDisabledMetrics();
         MetricsContext.stop(null);
     }
-
+    
     @Test
     public void assertStopWhenMetricsEnable() {
         initEnabledMetrics();
         MetricsContext.stop(MetricsContext.start("name"));
     }
-
+    
     @Test
     public void assertClear() {
         initEnabledMetrics();
         MetricsContext.clear();
         assertNull(MetricsContext.start("name"));
     }
-
+    
     private void initDisabledMetrics() {
         MetricsContext.init(new ShardingProperties(new Properties()));
     }
-
+    
     private void initEnabledMetrics() {
         Properties props = new Properties();
         props.setProperty(ShardingPropertiesConstant.METRICS_ENABLE.getKey(), Boolean.TRUE.toString());

@@ -29,19 +29,19 @@ import lombok.ToString;
 
 /**
  * Binding表路由表单元.
- *
+ * 
  * @author zhangliang
  */
 @ToString(callSuper = true)
 final class BindingRoutingTableFactor extends SingleRoutingTableFactor {
-
+    
     @Getter(AccessLevel.PACKAGE)
     private final Collection<BindingRoutingTableFactor> bindingRoutingTableFactors = new ArrayList<>();
-
+    
     BindingRoutingTableFactor(final String logicTable, final String actualTable) {
         super(logicTable, actualTable);
     }
-
+    
     @Override
     public void buildSQL(final SQLBuilder builder) {
         super.buildSQL(builder);

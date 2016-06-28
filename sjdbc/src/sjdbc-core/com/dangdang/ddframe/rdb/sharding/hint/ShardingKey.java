@@ -30,9 +30,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 public final class ShardingKey {
-
+    
     private final String logicTable;
-
+    
     @Getter
     private final String shardingColumn;
 }

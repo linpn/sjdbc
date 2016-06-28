@@ -45,13 +45,13 @@ import org.junit.Before;
 import static org.dbunit.Assertion.assertEquals;
 
 public abstract class AbstractDBUnitTest {
-
+    
     protected static final DatabaseType CURRENT_DB_TYPE = DatabaseType.H2;
-
+    
     private static final Map<String, DataSource> DATA_SOURCES = new HashMap<>();
-
+    
     private final DataBaseEnvironment dbEnv = new DataBaseEnvironment(CURRENT_DB_TYPE);
-
+    
     @Before
     public void createSchema() throws SQLException {
         for (String each : getSchemaFiles()) {
@@ -60,7 +60,7 @@ public abstract class AbstractDBUnitTest {
             conn.close();
         }
     }
-
+    
     @Before
     public final void importDataSet() throws Exception {
         for (String each : getDataSetFiles()) {
@@ -72,11 +72,11 @@ public abstract class AbstractDBUnitTest {
             databaseTester.onSetup();
         }
     }
-
+    
     protected abstract List<String> getSchemaFiles();
-
+    
     protected abstract List<String> getDataSetFiles();
-
+    
     protected final Map<String, DataSource> createDataSourceMap(final String dataSourceNamePattern) {
         Map<String, DataSource> result = new HashMap<>(getDataSetFiles().size());
         for (String each : getDataSetFiles()) {
@@ -84,7 +84,7 @@ public abstract class AbstractDBUnitTest {
         }
         return result;
     }
-
+    
     private DataSource createDataSource(final String dataSetFile) {
         if (DATA_SOURCES.containsKey(dataSetFile)) {
             return DATA_SOURCES.get(dataSetFile);
@@ -98,7 +98,7 @@ public abstract class AbstractDBUnitTest {
         DATA_SOURCES.put(dataSetFile, result);
         return result;
     }
-
+    
     private String getFileName(final String dataSetFile) {
         String fileName = new File(dataSetFile).getName();
         if (-1 == fileName.lastIndexOf(".")) {
@@ -106,8 +106,8 @@ public abstract class AbstractDBUnitTest {
         }
         return fileName.substring(0, fileName.lastIndexOf("."));
     }
-
-    protected void assertDataSet(final String expectedDataSetFile, final Connection connection, final String actualTableName, final String sql, final Object... params)
+    
+    protected void assertDataSet(final String expectedDataSetFile, final Connection connection, final String actualTableName, final String sql, final Object... params) 
             throws SQLException, DatabaseUnitException {
         try (
                 Connection conn = connection;
@@ -121,7 +121,7 @@ public abstract class AbstractDBUnitTest {
             assertEquals(expectedDataSet.getTable(actualTableName), actualTable);
         }
     }
-
+    
     protected void assertDataSet(final String expectedDataSetFile, final Connection connection, final String actualTableName, final String sql)
             throws SQLException, DatabaseUnitException {
         try (Connection conn = connection) {
@@ -130,14 +130,14 @@ public abstract class AbstractDBUnitTest {
             assertEquals(expectedDataSet.getTable(actualTableName), actualTable);
         }
     }
-
+    
     private IDatabaseConnection getConnection(final Connection connection) throws DatabaseUnitException {
         switch (dbEnv.getDatabaseType()) {
-            case H2:
+            case H2: 
                 return new H2Connection(connection, "PUBLIC");
-            case MySQL:
+            case MySQL: 
                 return new MySqlConnection(connection, "PUBLIC");
-            default:
+            default: 
                 throw new UnsupportedOperationException(dbEnv.getDatabaseType().name());
         }
     }

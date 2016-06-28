@@ -38,7 +38,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public final class ShardingDataSourceTest {
-
+    
     @Test
     public void assertGetConnection() throws SQLException {
         Connection connection = mockConnection();
@@ -46,7 +46,7 @@ public final class ShardingDataSourceTest {
         when(dataSource.getConnection()).thenReturn(connection);
         assertThat(createShardingDataSource(dataSource).getConnection().getConnection("ds", SQLStatementType.SELECT), is(connection));
     }
-
+    
     private Connection mockConnection() throws SQLException {
         Connection result = mock(Connection.class);
         DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
@@ -54,7 +54,7 @@ public final class ShardingDataSourceTest {
         when(databaseMetaData.getDatabaseProductName()).thenReturn("H2");
         return result;
     }
-
+    
     private ShardingDataSource createShardingDataSource(final DataSource dataSource) {
         Map<String, DataSource> dataSourceMap = new HashMap<>(1);
         dataSourceMap.put("ds", dataSource);

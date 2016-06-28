@@ -23,26 +23,26 @@ import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 
 /**
  * 无需分库的分片算法.
- *
+ * 
  * @author zhangliang
  */
 public final class NoneDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingAlgorithm<String>, MultipleKeysDatabaseShardingAlgorithm {
-
+    
     @Override
     public Collection<String> doSharding(final Collection<String> availableTargetNames, final Collection<ShardingValue<?>> shardingValues) {
         return availableTargetNames;
     }
-
+    
     @Override
     public String doEqualSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
         return availableTargetNames.isEmpty() ? null : availableTargetNames.iterator().next();
     }
-
+    
     @Override
     public Collection<String> doInSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
         return availableTargetNames;
     }
-
+    
     @Override
     public Collection<String> doBetweenSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
         return availableTargetNames;

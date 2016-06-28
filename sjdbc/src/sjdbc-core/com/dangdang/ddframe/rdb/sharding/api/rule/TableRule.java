@@ -32,28 +32,28 @@ import java.util.List;
 
 /**
  * 表规则配置对象.
- *
+ * 
  * @author zhangliang
  */
 @Getter
 @ToString
 public final class TableRule {
-
+    
     private final String logicTable;
-
+    
     private final boolean dynamic;
-
+    
     private final List<DataNode> actualTables;
-
+    
     private final DatabaseShardingStrategy databaseShardingStrategy;
-
+    
     private final TableShardingStrategy tableShardingStrategy;
-
+    
     /**
      * 全属性构造器.
-     * <p>
+     *
      * <p>用于Spring非命名空间的配置.</p>
-     * <p>
+     *
      * <p>未来将改为private权限, 不在对外公开, 不建议使用非Spring命名空间的配置.</p>
      *
      * @deprecated 未来将改为private权限, 不在对外公开, 不建议使用非Spring命名空间的配置.
@@ -76,17 +76,17 @@ public final class TableRule {
             this.actualTables = generateDataNodes(actualTables, dataSourceRule, dataSourceNames);
         }
     }
-
+    
     /**
      * 获取表规则配置对象构建器.
      *
-     * @param logicTable 逻辑表名称
+     * @param logicTable 逻辑表名称 
      * @return 表规则配置对象构建器
      */
     public static TableRuleBuilder builder(final String logicTable) {
         return new TableRuleBuilder(logicTable);
     }
-
+    
     private List<DataNode> generateDataNodes(final DataSourceRule dataSourceRule) {
         Collection<String> dataSourceNames = dataSourceRule.getDataSourceNames();
         List<DataNode> result = new ArrayList<>(dataSourceNames.size());
@@ -95,7 +95,7 @@ public final class TableRule {
         }
         return result;
     }
-
+    
     private List<DataNode> generateDataNodes(final List<String> actualTables, final DataSourceRule dataSourceRule, final Collection<String> actualDataSourceNames) {
         Collection<String> dataSourceNames = getDataSourceNames(dataSourceRule, actualDataSourceNames);
         List<DataNode> result = new ArrayList<>(actualTables.size() * (dataSourceNames.isEmpty() ? 1 : dataSourceNames.size()));
@@ -110,7 +110,7 @@ public final class TableRule {
         }
         return result;
     }
-
+    
     private Collection<String> getDataSourceNames(final DataSourceRule dataSourceRule, final Collection<String> actualDataSourceNames) {
         if (null == dataSourceRule) {
             return Collections.emptyList();
@@ -120,18 +120,18 @@ public final class TableRule {
         }
         return actualDataSourceNames;
     }
-
+    
     /**
      * 根据数据源名称过滤获取真实数据单元.
      *
      * @param targetDataSources 数据源名称集合
-     * @param targetTables      真实表名称集合
+     * @param targetTables 真实表名称集合
      * @return 真实数据单元
      */
     public Collection<DataNode> getActualDataNodes(final Collection<String> targetDataSources, final Collection<String> targetTables) {
         return dynamic ? getDynamicDataNodes(targetDataSources, targetTables) : getStaticDataNodes(targetDataSources, targetTables);
     }
-
+    
     private Collection<DataNode> getDynamicDataNodes(final Collection<String> targetDataSources, final Collection<String> targetTables) {
         Collection<DataNode> result = new LinkedHashSet<>(targetDataSources.size() * targetTables.size());
         for (String targetDataSource : targetDataSources) {
@@ -141,7 +141,7 @@ public final class TableRule {
         }
         return result;
     }
-
+    
     private Collection<DataNode> getStaticDataNodes(final Collection<String> targetDataSources, final Collection<String> targetTables) {
         Collection<DataNode> result = new LinkedHashSet<>(actualTables.size());
         for (DataNode each : actualTables) {
@@ -151,8 +151,8 @@ public final class TableRule {
         }
         return result;
     }
-
-
+    
+    
     /**
      * 获取真实数据源.
      *
@@ -165,7 +165,7 @@ public final class TableRule {
         }
         return result;
     }
-
+    
     /**
      * 根据数据源名称过滤获取真实表名称.
      *
@@ -181,7 +181,7 @@ public final class TableRule {
         }
         return result;
     }
-
+    
     int findActualTableIndex(final String dataSourceName, final String actualTableName) {
         int result = 0;
         for (DataNode each : actualTables) {
@@ -192,27 +192,27 @@ public final class TableRule {
         }
         return -1;
     }
-
+    
     /**
      * 表规则配置对象构建器.
      */
     @RequiredArgsConstructor
     public static class TableRuleBuilder {
-
+        
         private final String logicTable;
-
+        
         private boolean dynamic;
-
+        
         private List<String> actualTables;
-
+        
         private DataSourceRule dataSourceRule;
-
+        
         private Collection<String> dataSourceNames;
-
+        
         private DatabaseShardingStrategy databaseShardingStrategy;
-
+        
         private TableShardingStrategy tableShardingStrategy;
-
+        
         /**
          * 构建是否为动态表.
          *
@@ -223,7 +223,7 @@ public final class TableRule {
             this.dynamic = dynamic;
             return this;
         }
-
+        
         /**
          * 构建真实表集合.
          *
@@ -234,7 +234,7 @@ public final class TableRule {
             this.actualTables = actualTables;
             return this;
         }
-
+        
         /**
          * 构建数据源分片规则.
          *
@@ -245,7 +245,7 @@ public final class TableRule {
             this.dataSourceRule = dataSourceRule;
             return this;
         }
-
+        
         /**
          * 构建数据源分片规则.
          *
@@ -256,7 +256,7 @@ public final class TableRule {
             this.dataSourceNames = dataSourceNames;
             return this;
         }
-
+        
         /**
          * 构建数据库分片策略.
          *
@@ -267,7 +267,7 @@ public final class TableRule {
             this.databaseShardingStrategy = databaseShardingStrategy;
             return this;
         }
-
+        
         /**
          * 构建表分片策略.
          *
@@ -278,7 +278,7 @@ public final class TableRule {
             this.tableShardingStrategy = tableShardingStrategy;
             return this;
         }
-
+        
         /**
          * 构建表规则配置对象.
          *

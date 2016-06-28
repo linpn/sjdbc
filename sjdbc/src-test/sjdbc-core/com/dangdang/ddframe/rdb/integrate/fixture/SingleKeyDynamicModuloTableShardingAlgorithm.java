@@ -27,14 +27,14 @@ import java.util.LinkedHashSet;
 
 @RequiredArgsConstructor
 public final class SingleKeyDynamicModuloTableShardingAlgorithm implements SingleKeyTableShardingAlgorithm<Integer> {
-
+    
     private final String tablePrefix;
-
+    
     @Override
     public String doEqualSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         return tablePrefix + shardingValue.getValue() % 10;
     }
-
+    
     @Override
     public Collection<String> doInSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(shardingValue.getValues().size());
@@ -43,7 +43,7 @@ public final class SingleKeyDynamicModuloTableShardingAlgorithm implements Singl
         }
         return result;
     }
-
+    
     @Override
     public Collection<String> doBetweenSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());

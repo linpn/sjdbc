@@ -28,10 +28,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class Table {
-
+    
     @XmlAttribute
     private String name;
-
+    
     @XmlAttribute
     private String alias;
 }

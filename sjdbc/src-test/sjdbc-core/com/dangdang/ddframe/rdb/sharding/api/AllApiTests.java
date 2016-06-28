@@ -36,24 +36,24 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        ShardingDataSourceFactoryTest.class,
-        ShardingPropertiesTest.class,
-        ShardingPropertiesConstantTest.class,
-        ShardingValueTest.class,
-        DataSourceRuleTest.class,
-        ShardingRuleTest.class,
-        TableRuleTest.class,
-        DataNodeTest.class,
-        DynamicDataNodeTest.class,
-        BindingTableRuleTest.class,
-        ShardingStrategyTest.class,
-        DatabaseShardingStrategyTest.class,
-        NoneDatabaseShardingAlgorithmTest.class,
-        TableShardingStrategyTest.class,
-        NoneTableShardingAlgorithmTest.class,
-        HintManagerTest.class,
-        MasterSlaveDataSourceFactoryTest.class,
-        RoundRobinSlaveLoadBalanceStrategyTest.class
-})
+    ShardingDataSourceFactoryTest.class, 
+    ShardingPropertiesTest.class, 
+    ShardingPropertiesConstantTest.class, 
+    ShardingValueTest.class, 
+    DataSourceRuleTest.class, 
+    ShardingRuleTest.class, 
+    TableRuleTest.class, 
+    DataNodeTest.class, 
+    DynamicDataNodeTest.class, 
+    BindingTableRuleTest.class, 
+    ShardingStrategyTest.class, 
+    DatabaseShardingStrategyTest.class, 
+    NoneDatabaseShardingAlgorithmTest.class, 
+    TableShardingStrategyTest.class, 
+    NoneTableShardingAlgorithmTest.class, 
+    HintManagerTest.class, 
+    MasterSlaveDataSourceFactoryTest.class, 
+    RoundRobinSlaveLoadBalanceStrategyTest.class
+    })
 public class AllApiTests {
 }

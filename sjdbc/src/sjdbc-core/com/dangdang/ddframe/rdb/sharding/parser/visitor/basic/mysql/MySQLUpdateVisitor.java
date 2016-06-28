@@ -22,12 +22,12 @@ import com.google.common.base.Optional;
 
 /**
  * MySQL的UPDATE语句访问器.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 public class MySQLUpdateVisitor extends AbstractMySQLVisitor {
-
+    
     @Override
     public boolean visit(final MySqlUpdateStatement x) {
         getParseContext().setCurrentTable(x.getTableName().toString(), Optional.<String>absent());

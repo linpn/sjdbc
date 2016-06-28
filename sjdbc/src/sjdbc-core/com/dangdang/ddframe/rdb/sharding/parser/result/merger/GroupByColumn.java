@@ -25,25 +25,25 @@ import lombok.ToString;
 
 /**
  * 分组列对象.
- *
+ * 
  * @author zhangliang
  */
 @Getter
 @ToString(callSuper = true)
 public final class GroupByColumn extends AbstractSortableColumn implements IndexColumn {
-
+    
     @Setter
     private int columnIndex;
-
+    
     public GroupByColumn(final Optional<String> owner, final String name, final Optional<String> alias, final OrderByType orderByType) {
         super(owner, Optional.of(name), alias, orderByType);
     }
-
+    
     @Override
     public Optional<String> getColumnLabel() {
         return getAlias();
     }
-
+    
     @Override
     public Optional<String> getColumnName() {
         return getName();

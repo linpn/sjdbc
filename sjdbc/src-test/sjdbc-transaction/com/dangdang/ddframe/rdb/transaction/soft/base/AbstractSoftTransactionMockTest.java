@@ -32,9 +32,9 @@ import static org.mockito.Mockito.when;
 
 @Getter(AccessLevel.PROTECTED)
 public abstract class AbstractSoftTransactionMockTest {
-
+    
     private SoftTransactionManager softTransactionManager;
-
+    
     @Before
     public void setUp() throws Exception {
         SoftTransactionConfiguration softTransactionConfiguration = mock(SoftTransactionConfiguration.class);

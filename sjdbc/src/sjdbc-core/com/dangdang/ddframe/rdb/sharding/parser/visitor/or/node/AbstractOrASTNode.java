@@ -30,42 +30,42 @@ import lombok.Getter;
 
 /**
  * 抽象的OR语法树节点.
- *
+ * 
  * @author gaohongtao
  */
 @Getter(AccessLevel.PROTECTED)
 public abstract class AbstractOrASTNode {
-
+    
     private final List<AbstractOrASTNode> subNodes = new ArrayList<>();
-
+    
     private final List<List<Condition>> nestedConditions = new ArrayList<>();
-
+    
     public final void addSubNode(final AbstractOrASTNode node) {
         subNodes.add(node);
     }
-
+    
     protected final void addNestedConditions(final ConditionContext conditionContext) {
         nestedConditions.add(Lists.newArrayList(conditionContext.getAllConditions()));
     }
-
+    
     /**
      * 使用该节点作为根节点生成抽象语法树.
-     * <p>
+     * 
      * <p>
      * 使用深度优先后续的方式生成语法树.
      * 其中后续遍历是由于DRUID进行SQL语法解析时产生的行为.
      * </p>
      */
     public abstract void createOrASTAsRootNode();
-
+    
     /**
      * 获取解析结果需要的条件.
-     *
+     * 
      * @return 解析后的条件
      */
     public final List<ConditionContext> getCondition() {
         return Lists.transform(nestedConditions, new Function<List<Condition>, ConditionContext>() {
-
+            
             @Override
             public ConditionContext apply(final List<Condition> input) {
                 ConditionContext result = new ConditionContext();
@@ -76,7 +76,7 @@ public abstract class AbstractOrASTNode {
             }
         });
     }
-
+    
     /**
      * 多个子节点之间做笛卡尔积.
      */
@@ -91,7 +91,7 @@ public abstract class AbstractOrASTNode {
         }
         nestedConditions.addAll(result);
     }
-
+    
     private List<List<Condition>> cartesianNestedConditions(final List<List<Condition>> oneNestedConditions, final List<List<Condition>> anotherNestedConditions) {
         List<List<Condition>> result = new ArrayList<>();
         for (List<Condition> oneNestedCondition : oneNestedConditions) {

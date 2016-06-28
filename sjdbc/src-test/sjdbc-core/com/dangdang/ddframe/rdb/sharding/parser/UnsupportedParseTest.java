@@ -24,25 +24,25 @@ import com.dangdang.ddframe.rdb.sharding.exception.SQLParserException;
 import org.junit.Test;
 
 public final class UnsupportedParseTest {
-
+    
     @Test(expected = SQLParserException.class)
     public void assertCreate() throws SQLParserException {
         SQLParserFactory.create(DatabaseType.MySQL, "CREATE TABLE `order` (id BIGINT(10))", Collections.emptyList(), Collections.<String>emptyList());
     }
-
+    
     @Test(expected = SQLParserException.class)
     public void assertDrop() throws SQLParserException {
         SQLParserFactory.create(DatabaseType.MySQL, "DROP TABLE `order`", Collections.emptyList(), Collections.<String>emptyList());
     }
-
+    
     @Test(expected = SQLParserException.class)
     public void assertTruncate() throws SQLParserException {
         SQLParserFactory.create(DatabaseType.MySQL, "TRUNCATE `order`", Collections.emptyList(), Collections.<String>emptyList());
     }
-
+    
     @Test(expected = SQLParserException.class)
     public void assertAlter() throws SQLParserException {
         SQLParserFactory.create(DatabaseType.MySQL, "ALTER TABLE `order` ADD COLUMN `other` VARCHAR(45)", Collections.emptyList(), Collections.<String>emptyList());
     }
-
+    
 }

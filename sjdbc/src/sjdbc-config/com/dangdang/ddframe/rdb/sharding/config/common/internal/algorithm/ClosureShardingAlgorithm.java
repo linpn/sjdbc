@@ -36,13 +36,13 @@ import java.util.Set;
 
 /**
  * 基于闭包的数据源划分算法.
- *
+ * 
  * @author gaohongtao
  */
 public class ClosureShardingAlgorithm implements MultipleKeysShardingAlgorithm {
-
+    
     private final Closure<?> closureTemplate;
-
+    
     public ClosureShardingAlgorithm(final String expression, final String logRoot) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(expression));
         Preconditions.checkArgument(!Strings.isNullOrEmpty(logRoot));
@@ -50,7 +50,7 @@ public class ClosureShardingAlgorithm implements MultipleKeysShardingAlgorithm {
         binding.setVariable("log", LoggerFactory.getLogger(Joiner.on(".").join("com.dangdang.ddframe.rdb.sharding.configFile", logRoot.trim())));
         closureTemplate = (Closure) new GroovyShell(binding).evaluate(Joiner.on("").join("{it -> \"", expression.trim(), "\"}"));
     }
-
+    
     @Override
     public Collection<String> doSharding(final Collection<String> availableTargetNames, final Collection<ShardingValue<?>> shardingValues) {
         List<Set<Comparable>> valuesDim = new ArrayList<>();
@@ -77,7 +77,7 @@ public class ClosureShardingAlgorithm implements MultipleKeysShardingAlgorithm {
         }
         return result;
     }
-
+    
     private Closure<?> cloneClosure(final List<String> columnNames, final List<Comparable> values) {
         Closure<?> result = closureTemplate.rehydrate(new Expando(), null, null);
         result.setResolveStrategy(Closure.DELEGATE_ONLY);

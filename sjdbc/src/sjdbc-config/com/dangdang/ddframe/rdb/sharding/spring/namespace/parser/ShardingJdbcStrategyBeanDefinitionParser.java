@@ -24,12 +24,11 @@ import org.w3c.dom.Element;
 
 /**
  * 基于Spring命名空间的分库分表策略解析器.
- * ®
- *
+ *®
  * @author caohao
  */
 public class ShardingJdbcStrategyBeanDefinitionParser extends AbstractBeanDefinitionParser {
-
+    
     @Override
     protected AbstractBeanDefinition parseInternal(final Element element, final ParserContext parserContext) {
         return ShardingJdbcStrategyBeanDefinition.getBeanDefinitionByElement(element);

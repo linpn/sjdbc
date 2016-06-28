@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * 分库分表数据单元.
- *
+ * 
  * @author zhangliang
  */
 @RequiredArgsConstructor
@@ -35,22 +35,22 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class DataNode {
-
+    
     private static final String DELIMITER = ".";
-
+    
     private final String dataSourceName;
-
+    
     private final String tableName;
-
+    
     public DataNode(final String dataNode) {
         List<String> segments = Splitter.on(DELIMITER).splitToList(dataNode);
         dataSourceName = segments.get(0);
         tableName = segments.get(1);
     }
-
+    
     /**
      * 判断字符串是否为合法的分库分表数据单元字符串.
-     *
+     * 
      * @param dataNodeStr 待判断的字符串
      * @return 是否为合法的分库分表数据单元字符串
      */

@@ -23,7 +23,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public final class DynamicDataNodeTest {
-
+    
     @Test
     public void assertGetTableName() {
         assertThat(new DynamicDataNode("ds").getTableName(), is("SHARDING_JDBC DYNAMIC_TABLE_PLACEHOLDER"));

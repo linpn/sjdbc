@@ -21,11 +21,11 @@ import com.dangdang.ddframe.rdb.sharding.api.strategy.table.MultipleKeysTableSha
 
 /**
  * 分表闭包算法.
- *
+ * 
  * @author gaohongtao
  */
 public class ClosureTableShardingAlgorithm extends ClosureShardingAlgorithm implements MultipleKeysTableShardingAlgorithm {
-
+    
     public ClosureTableShardingAlgorithm(final String expression, final String logRoot) {
         super(expression, logRoot);
     }

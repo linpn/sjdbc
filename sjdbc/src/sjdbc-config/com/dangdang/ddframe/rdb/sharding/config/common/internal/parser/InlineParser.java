@@ -33,26 +33,26 @@ import java.util.Set;
 
 /**
  * 行内配置解析器.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 @RequiredArgsConstructor
 public final class InlineParser {
-
+    
     private static final char SPLITTER = ',';
-
+    
     private final String inlineExpression;
-
+    
     /**
      * 分隔行内配置.
-     *
+     * 
      * @return 分隔后的配置集合
      */
     public List<String> split() {
         return Splitter.on(SPLITTER).trimResults().splitToList(inlineExpression);
     }
-
+    
     /**
      * 分隔并求inline表达式值.
      *
@@ -61,7 +61,7 @@ public final class InlineParser {
     public List<String> evaluate() {
         final GroovyShell shell = new GroovyShell();
         return flattenSegments(Lists.transform(splitWithInlineExpression(), new Function<String, Object>() {
-
+            
             @Override
             public Object apply(final String input) {
                 StringBuilder expression = new StringBuilder(input);
@@ -75,7 +75,7 @@ public final class InlineParser {
             }
         }));
     }
-
+    
     List<String> splitWithInlineExpression() {
         List<String> result = new ArrayList<>();
         StringBuilder segment = new StringBuilder();
@@ -113,7 +113,7 @@ public final class InlineParser {
         }
         return result;
     }
-
+    
     private List<String> flattenSegments(final List<Object> segments) {
         List<String> result = new ArrayList<>();
         for (Object each : segments) {
@@ -125,7 +125,7 @@ public final class InlineParser {
         }
         return result;
     }
-
+    
     private List<String> assemblyCartesianSegments(final GString segment) {
         Set<List<String>> cartesianValues = getCartesianValues(segment);
         List<String> result = new ArrayList<>(cartesianValues.size());
@@ -134,7 +134,7 @@ public final class InlineParser {
         }
         return result;
     }
-
+    
     private String assemblySegment(final List<String> cartesianValue, final GString segment) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < segment.getStrings().length; i++) {
@@ -145,7 +145,7 @@ public final class InlineParser {
         }
         return result.toString();
     }
-
+    
     @SuppressWarnings("unchecked")
     private Set<List<String>> getCartesianValues(final GString segment) {
         List<Set<String>> result = new ArrayList<>(segment.getValues().length);
@@ -155,7 +155,7 @@ public final class InlineParser {
             }
             if (each instanceof Collection) {
                 result.add(Sets.newHashSet(Collections2.transform((Collection<Object>) each, new Function<Object, String>() {
-
+                    
                     @Override
                     public String apply(final Object input) {
                         return input.toString();

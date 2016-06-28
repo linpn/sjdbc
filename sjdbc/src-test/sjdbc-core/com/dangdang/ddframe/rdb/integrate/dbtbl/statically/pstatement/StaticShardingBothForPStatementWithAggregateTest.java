@@ -22,7 +22,7 @@ import com.dangdang.ddframe.rdb.integrate.dbtbl.statically.StaticShardingBothHel
 import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource;
 
 public final class StaticShardingBothForPStatementWithAggregateTest extends AbstractShardingBothForPStatementWithAggregateTest {
-
+    
     @Override
     protected ShardingDataSource getShardingDataSource() {
         return StaticShardingBothHelper.getShardingDataSource(createDataSourceMap("dataSource_%s"));

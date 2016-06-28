@@ -23,14 +23,14 @@ import com.dangdang.ddframe.rdb.sharding.parser.result.router.SQLBuilder;
 
 /**
  *  路由结果接口.
- *
+ * 
  * @author zhangliang
  */
 public interface RoutingResult {
-
+    
     /**
      * 获取SQL执行单元集合.
-     *
+     * 
      * @param sqlBuilder SQL构建器
      * @return SQL执行单元集合
      */

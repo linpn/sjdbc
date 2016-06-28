@@ -26,14 +26,14 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        SelectSingleTableTest.class,
-        SelectBindingTableTest.class,
-        SelectMixedTablesTest.class,
-        DMLTest.class,
-        SingleRoutingResultTest.class,
+        SelectSingleTableTest.class, 
+        SelectBindingTableTest.class, 
+        SelectMixedTablesTest.class, 
+        DMLTest.class, 
+        SingleRoutingResultTest.class, 
         BindingRoutingResultTest.class,
         CartesianResultTest.class,
         SingleRouterUtilTest.class
-})
+    })
 public class AllRouterTests {
 }

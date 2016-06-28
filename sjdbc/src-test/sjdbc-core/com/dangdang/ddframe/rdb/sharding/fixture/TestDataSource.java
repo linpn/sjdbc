@@ -27,9 +27,9 @@ import java.sql.SQLException;
 @RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public final class TestDataSource extends AbstractDataSourceAdapter {
-
+    
     private final String name;
-
+    
     @Override
     public Connection getConnection() throws SQLException {
         return null;

@@ -21,7 +21,7 @@ import com.dangdang.ddframe.rdb.sharding.router.strategy.ShardingAlgorithm;
 
 /**
  * 分表算法接口.
- *
+ * 
  * @author zhangliang
  */
 public interface TableShardingAlgorithm extends ShardingAlgorithm {

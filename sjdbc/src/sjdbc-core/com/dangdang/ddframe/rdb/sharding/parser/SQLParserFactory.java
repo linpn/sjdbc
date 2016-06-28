@@ -41,20 +41,20 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * SQL解析器工厂.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
 public final class SQLParserFactory {
-
+    
     /**
      * 创建解析器引擎对象.
-     *
-     * @param databaseType    数据库类型
-     * @param sql             SQL语句
-     * @param parameters      SQL中参数的值
+     * 
+     * @param databaseType 数据库类型
+     * @param sql SQL语句
+     * @param parameters SQL中参数的值
      * @param shardingColumns 分片列名称集合
      * @return 解析器引擎对象
      * @throws SQLParserException SQL解析异常
@@ -65,23 +65,23 @@ public final class SQLParserFactory {
         log.trace("Get {} SQL Statement", sqlStatement.getClass().getName());
         return new SQLParseEngine(sqlStatement, parameters, getSQLVisitor(databaseType, sqlStatement), shardingColumns);
     }
-
+    
     private static SQLStatementParser getSQLStatementParser(final DatabaseType databaseType, final String sql) {
         switch (databaseType) {
-            case H2:
-            case MySQL:
+            case H2: 
+            case MySQL: 
                 return new MySqlStatementParser(sql);
-            case Oracle:
+            case Oracle: 
                 return new OracleStatementParser(sql);
-            case SQLServer:
+            case SQLServer: 
                 return new SQLServerStatementParser(sql);
-            case DB2:
+            case DB2: 
                 return new DB2StatementParser(sql);
-            default:
+            default: 
                 throw new UnsupportedOperationException(String.format("Cannot support database type [%s]", databaseType));
         }
     }
-
+    
     private static SQLASTOutputVisitor getSQLVisitor(final DatabaseType databaseType, final SQLStatement sqlStatement) {
         if (sqlStatement instanceof SQLSelectStatement) {
             return VisitorLogProxy.enhance(SQLVisitorRegistry.getSelectVistor(databaseType));

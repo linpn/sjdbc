@@ -24,7 +24,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public final class DatabaseTypeTest {
-
+    
     @Test
     public void assertValueFromSuccess() {
         assertThat(DatabaseType.valueFrom("H2"), is(DatabaseType.H2));
@@ -33,7 +33,7 @@ public final class DatabaseTypeTest {
         assertThat(DatabaseType.valueFrom("SQLServer"), is(DatabaseType.SQLServer));
         assertThat(DatabaseType.valueFrom("DB2"), is(DatabaseType.DB2));
     }
-
+    
     @Test(expected = DatabaseTypeUnsupportedException.class)
     public void assertValueFromFailure() {
         DatabaseType.valueFrom("unknown");

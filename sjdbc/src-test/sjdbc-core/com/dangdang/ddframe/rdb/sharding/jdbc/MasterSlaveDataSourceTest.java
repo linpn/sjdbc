@@ -20,13 +20,13 @@ package com.dangdang.ddframe.rdb.sharding.jdbc;
 import com.dangdang.ddframe.rdb.sharding.api.HintManager;
 import com.dangdang.ddframe.rdb.sharding.api.MasterSlaveDataSourceFactory;
 import com.dangdang.ddframe.rdb.sharding.fixture.TestDataSource;
+import com.dangdang.ddframe.rdb.sharding.hint.HintManagerHolder;
 import com.dangdang.ddframe.rdb.sharding.parser.result.router.SQLStatementType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -39,37 +39,36 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public final class MasterSlaveDataSourceTest {
-
+    
     private DataSource masterDataSource = new TestDataSource("test_ds_master");
-
+    
     private DataSource slaveDataSource = new TestDataSource("test_ds_slave");
-
+    
     private MasterSlaveDataSource masterSlaveDataSource = new MasterSlaveDataSource("test_ds", masterDataSource, Collections.singletonList(slaveDataSource));
-
+    
     @Before
     @After
-    public void reset() throws NoSuchFieldException, IllegalAccessException {
-        Field field = MasterSlaveDataSource.class.getDeclaredField("WAS_UPDATED");
-        field.setAccessible(true);
-        ((ThreadLocal) field.get(MasterSlaveDataSource.class)).remove();
+    public void reset() {
+        HintManagerHolder.clear();
+        MasterSlaveDataSource.resetDMLFlag();
     }
-
+    
     @Test
     public void assertGetDataSourceForDML() {
         assertThat(masterSlaveDataSource.getDataSource(SQLStatementType.INSERT), is(masterDataSource));
     }
-
+    
     @Test
     public void assertGetDataSourceForDQL() {
         assertThat(masterSlaveDataSource.getDataSource(SQLStatementType.SELECT), is(slaveDataSource));
     }
-
+    
     @Test
     public void assertGetDataSourceForDMLAndDQL() {
         assertThat(masterSlaveDataSource.getDataSource(SQLStatementType.INSERT), is(masterDataSource));
         assertThat(masterSlaveDataSource.getDataSource(SQLStatementType.SELECT), is(masterDataSource));
     }
-
+    
     @Test
     public void assertGetDataSourceForHintToMasterOnly() {
         HintManager hintManager = HintManager.getInstance();
@@ -77,7 +76,7 @@ public final class MasterSlaveDataSourceTest {
         assertThat(masterSlaveDataSource.getDataSource(SQLStatementType.SELECT), is(masterDataSource));
         hintManager.close();
     }
-
+    
     @Test(expected = IllegalStateException.class)
     public void assertGetDatabaseProductNameWhenDataBaseProductNameDifferent() throws SQLException {
         DataSource masterDataSource = mock(DataSource.class);
@@ -93,7 +92,7 @@ public final class MasterSlaveDataSourceTest {
             verify(slaveConnection).close();
         }
     }
-
+    
     @Test
     public void assertGetDatabaseProductName() throws SQLException {
         DataSource masterDataSource = mock(DataSource.class);
@@ -110,7 +109,7 @@ public final class MasterSlaveDataSourceTest {
         verify(slaveConnection1).close();
         verify(slaveConnection2).close();
     }
-
+    
     private Connection mockConnection(final String dataBaseProductName) throws SQLException {
         Connection result = mock(Connection.class);
         DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
@@ -118,9 +117,17 @@ public final class MasterSlaveDataSourceTest {
         when(databaseMetaData.getDatabaseProductName()).thenReturn(dataBaseProductName);
         return result;
     }
-
+    
     @Test(expected = UnsupportedOperationException.class)
     public void assertGetConnection() throws SQLException {
         masterSlaveDataSource.getConnection();
+    }
+    
+    @Test
+    public void assertResetDMLFlag() {
+        assertThat(masterSlaveDataSource.getDataSource(SQLStatementType.INSERT), is(masterDataSource));
+        assertThat(masterSlaveDataSource.getDataSource(SQLStatementType.SELECT), is(masterDataSource));
+        MasterSlaveDataSource.resetDMLFlag();
+        assertThat(masterSlaveDataSource.getDataSource(SQLStatementType.SELECT), is(slaveDataSource));
     }
 }

@@ -25,16 +25,16 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 数据源运行期上下文.
- *
+ * 
  * @author gaohongtao
  */
 @RequiredArgsConstructor
 @Getter
 public final class ShardingContext {
-
+    
     private final ShardingRule shardingRule;
-
+    
     private final SQLRouteEngine sqlRouteEngine;
-
+    
     private final ExecutorEngine executorEngine;
 }

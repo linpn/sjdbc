@@ -33,19 +33,19 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractShardingTablesOnlyDBUnitTest extends AbstractDBUnitTest {
-
+    
     private final String dataSourceName = "dataSource_%s";
-
+    
     @Override
     protected List<String> getSchemaFiles() {
-        return Collections.singletonList("com/dangdang/ddframe/rdb/integrate/schema/tbl/db_single.sql");
+        return Collections.singletonList("integrate/schema/tbl/db_single.sql");
     }
-
+    
     @Override
     protected List<String> getDataSetFiles() {
-        return Collections.singletonList("com/dangdang/ddframe/rdb/integrate/dataset/tbl/init/db_single.xml");
+        return Collections.singletonList("integrate/dataset/tbl/init/db_single.xml");
     }
-
+    
     protected final ShardingDataSource getShardingDataSource() {
         DataSourceRule dataSourceRule = new DataSourceRule(createDataSourceMap(dataSourceName));
         TableRule orderTableRule = TableRule.builder("t_order").actualTables(Arrays.asList(

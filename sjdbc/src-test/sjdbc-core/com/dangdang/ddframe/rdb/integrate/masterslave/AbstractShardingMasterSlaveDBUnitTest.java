@@ -26,13 +26,13 @@ import com.dangdang.ddframe.rdb.sharding.api.rule.ShardingRule;
 import com.dangdang.ddframe.rdb.sharding.api.rule.TableRule;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.database.DatabaseShardingStrategy;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.table.TableShardingStrategy;
+import com.dangdang.ddframe.rdb.sharding.hint.HintManagerHolder;
 import com.dangdang.ddframe.rdb.sharding.jdbc.MasterSlaveDataSource;
 import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource;
 import org.junit.After;
 import org.junit.Before;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,79 +40,88 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractShardingMasterSlaveDBUnitTest extends AbstractDBUnitTest {
-
+    
     private final String dataSourceName = "dataSource_%s";
-
+    
     @Before
     @After
     public void reset() throws NoSuchFieldException, IllegalAccessException {
-        Field field = MasterSlaveDataSource.class.getDeclaredField("WAS_UPDATED");
-        field.setAccessible(true);
-        ((ThreadLocal) field.get(MasterSlaveDataSource.class)).remove();
+        HintManagerHolder.clear();
+        MasterSlaveDataSource.resetDMLFlag();
     }
-
+    
     @Override
     protected List<String> getSchemaFiles() {
         return Arrays.asList(
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_0.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_1.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_2.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_3.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_4.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_5.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_6.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_7.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_8.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/master_9.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_0.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_1.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_2.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_3.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_4.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_5.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_6.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_7.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_8.sql",
-                "com/dangdang/ddframe/rdb/integrate/schema/masterslave/slave_9.sql");
+                "integrate/schema/masterslave/master_0.sql",
+                "integrate/schema/masterslave/master_1.sql",
+                "integrate/schema/masterslave/master_2.sql",
+                "integrate/schema/masterslave/master_3.sql",
+                "integrate/schema/masterslave/master_4.sql",
+                "integrate/schema/masterslave/master_5.sql",
+                "integrate/schema/masterslave/master_6.sql",
+                "integrate/schema/masterslave/master_7.sql",
+                "integrate/schema/masterslave/master_8.sql",
+                "integrate/schema/masterslave/master_9.sql",
+                "integrate/schema/masterslave/slave_0.sql",
+                "integrate/schema/masterslave/slave_1.sql",
+                "integrate/schema/masterslave/slave_2.sql",
+                "integrate/schema/masterslave/slave_3.sql",
+                "integrate/schema/masterslave/slave_4.sql",
+                "integrate/schema/masterslave/slave_5.sql",
+                "integrate/schema/masterslave/slave_6.sql",
+                "integrate/schema/masterslave/slave_7.sql",
+                "integrate/schema/masterslave/slave_8.sql",
+                "integrate/schema/masterslave/slave_9.sql");
     }
-
+    
     @Override
     protected List<String> getDataSetFiles() {
         return Arrays.asList(
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_0.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_1.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_2.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_3.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_4.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_5.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_6.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_7.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_8.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/master_9.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_0.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_1.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_2.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_3.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_4.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_5.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_6.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_7.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_8.xml",
-                "com/dangdang/ddframe/rdb/integrate/dataset/masterslave/init/slave_9.xml");
+                "integrate/dataset/masterslave/init/master_0.xml",
+                "integrate/dataset/masterslave/init/master_1.xml",
+                "integrate/dataset/masterslave/init/master_2.xml",
+                "integrate/dataset/masterslave/init/master_3.xml",
+                "integrate/dataset/masterslave/init/master_4.xml",
+                "integrate/dataset/masterslave/init/master_5.xml",
+                "integrate/dataset/masterslave/init/master_6.xml",
+                "integrate/dataset/masterslave/init/master_7.xml",
+                "integrate/dataset/masterslave/init/master_8.xml",
+                "integrate/dataset/masterslave/init/master_9.xml",
+                "integrate/dataset/masterslave/init/slave_0.xml",
+                "integrate/dataset/masterslave/init/slave_1.xml",
+                "integrate/dataset/masterslave/init/slave_2.xml",
+                "integrate/dataset/masterslave/init/slave_3.xml",
+                "integrate/dataset/masterslave/init/slave_4.xml",
+                "integrate/dataset/masterslave/init/slave_5.xml",
+                "integrate/dataset/masterslave/init/slave_6.xml",
+                "integrate/dataset/masterslave/init/slave_7.xml",
+                "integrate/dataset/masterslave/init/slave_8.xml",
+                "integrate/dataset/masterslave/init/slave_9.xml");
     }
-
+    
     protected final ShardingDataSource getShardingDataSource() {
         Map<String, DataSource> masterSlaveDataSourceMap = createDataSourceMap(dataSourceName);
-        MasterSlaveDataSource masterSlaveDs0 = new MasterSlaveDataSource("ms_0", masterSlaveDataSourceMap.get("dataSource_master_0"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_0")));
-        MasterSlaveDataSource masterSlaveDs1 = new MasterSlaveDataSource("ms_1", masterSlaveDataSourceMap.get("dataSource_master_1"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_1")));
-        MasterSlaveDataSource masterSlaveDs2 = new MasterSlaveDataSource("ms_2", masterSlaveDataSourceMap.get("dataSource_master_2"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_2")));
-        MasterSlaveDataSource masterSlaveDs3 = new MasterSlaveDataSource("ms_3", masterSlaveDataSourceMap.get("dataSource_master_3"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_3")));
-        MasterSlaveDataSource masterSlaveDs4 = new MasterSlaveDataSource("ms_4", masterSlaveDataSourceMap.get("dataSource_master_4"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_4")));
-        MasterSlaveDataSource masterSlaveDs5 = new MasterSlaveDataSource("ms_5", masterSlaveDataSourceMap.get("dataSource_master_5"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_5")));
-        MasterSlaveDataSource masterSlaveDs6 = new MasterSlaveDataSource("ms_6", masterSlaveDataSourceMap.get("dataSource_master_6"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_6")));
-        MasterSlaveDataSource masterSlaveDs7 = new MasterSlaveDataSource("ms_7", masterSlaveDataSourceMap.get("dataSource_master_7"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_7")));
-        MasterSlaveDataSource masterSlaveDs8 = new MasterSlaveDataSource("ms_8", masterSlaveDataSourceMap.get("dataSource_master_8"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_8")));
-        MasterSlaveDataSource masterSlaveDs9 = new MasterSlaveDataSource("ms_9", masterSlaveDataSourceMap.get("dataSource_master_9"), Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_9")));
+        MasterSlaveDataSource masterSlaveDs0 = new MasterSlaveDataSource("ms_0", masterSlaveDataSourceMap.get("dataSource_master_0"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_0")));
+        MasterSlaveDataSource masterSlaveDs1 = new MasterSlaveDataSource("ms_1", masterSlaveDataSourceMap.get("dataSource_master_1"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_1")));
+        MasterSlaveDataSource masterSlaveDs2 = new MasterSlaveDataSource("ms_2", masterSlaveDataSourceMap.get("dataSource_master_2"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_2")));
+        MasterSlaveDataSource masterSlaveDs3 = new MasterSlaveDataSource("ms_3", masterSlaveDataSourceMap.get("dataSource_master_3"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_3")));
+        MasterSlaveDataSource masterSlaveDs4 = new MasterSlaveDataSource("ms_4", masterSlaveDataSourceMap.get("dataSource_master_4"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_4")));
+        MasterSlaveDataSource masterSlaveDs5 = new MasterSlaveDataSource("ms_5", masterSlaveDataSourceMap.get("dataSource_master_5"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_5")));
+        MasterSlaveDataSource masterSlaveDs6 = new MasterSlaveDataSource("ms_6", masterSlaveDataSourceMap.get("dataSource_master_6"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_6")));
+        MasterSlaveDataSource masterSlaveDs7 = new MasterSlaveDataSource("ms_7", masterSlaveDataSourceMap.get("dataSource_master_7"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_7")));
+        MasterSlaveDataSource masterSlaveDs8 = new MasterSlaveDataSource("ms_8", masterSlaveDataSourceMap.get("dataSource_master_8"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_8")));
+        MasterSlaveDataSource masterSlaveDs9 = new MasterSlaveDataSource("ms_9", masterSlaveDataSourceMap.get("dataSource_master_9"), 
+                Collections.singletonList(masterSlaveDataSourceMap.get("dataSource_slave_9")));
         Map<String, DataSource> dataSourceMap = new HashMap<>(10);
         dataSourceMap.put("ms_0", masterSlaveDs0);
         dataSourceMap.put("ms_1", masterSlaveDs1);

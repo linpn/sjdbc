@@ -22,16 +22,16 @@ import org.junit.Test;
 import com.dangdang.ddframe.rdb.sharding.exception.ShardingJdbcException;
 
 public final class JdbcMethodInvocationTest {
-
+    
     @Test
     public void assertInvokeSuccess() throws NoSuchMethodException, SecurityException {
-        JdbcMethodInvocation actual = new JdbcMethodInvocation(String.class.getMethod("length"), new Object[]{});
+        JdbcMethodInvocation actual = new JdbcMethodInvocation(String.class.getMethod("length"), new Object[] {});
         actual.invoke("");
     }
-
+    
     @Test(expected = ShardingJdbcException.class)
     public void assertInvokeFailure() throws NoSuchMethodException, SecurityException {
-        JdbcMethodInvocation actual = new JdbcMethodInvocation(String.class.getDeclaredMethod("indexOfSupplementary", int.class, int.class), new Object[]{1, 1});
+        JdbcMethodInvocation actual = new JdbcMethodInvocation(String.class.getDeclaredMethod("indexOfSupplementary", int.class, int.class), new Object[] {1, 1});
         actual.invoke("");
     }
 }

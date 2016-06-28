@@ -29,22 +29,22 @@ import java.util.List;
 
 /**
  * 笛卡尔积路由数据源.
- *
+ * 
  * @author zhangliang
  */
 @Getter
 @ToString
 final class CartesianDataSource {
-
+    
     private final String dataSource;
-
+    
     private final List<CartesianTableReference> routingTableReferences;
-
+    
     CartesianDataSource(final String dataSource, final CartesianTableReference routingTableReference) {
         this.dataSource = dataSource;
         routingTableReferences = new ArrayList<>(Collections.singletonList(routingTableReference));
     }
-
+    
     Collection<SQLExecutionUnit> getSQLExecutionUnits(final SQLBuilder sqlBuilder) {
         Collection<SQLExecutionUnit> result = new ArrayList<>();
         for (CartesianTableReference each : routingTableReferences) {

@@ -25,22 +25,22 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class DataNodeTest {
-
+    
     @Test
     public void assertIsValidDataNode() {
         assertTrue(DataNode.isValidDataNode("ds_0.tbl_0"));
     }
-
+    
     @Test
     public void assertIsInvalidDataNodeWithoutDelimiter() {
         assertFalse(DataNode.isValidDataNode("ds_0_tbl_0"));
     }
-
+    
     @Test
     public void assertIsInvalidDataNodeWithTwoDelimiters() {
         assertFalse(DataNode.isValidDataNode("ds_0.tbl_0.tbl_1"));
     }
-
+    
     @Test
     public void assertNewDataNode() {
         assertThat(new DataNode("ds_0.tbl_0").getDataSourceName(), is("ds_0"));

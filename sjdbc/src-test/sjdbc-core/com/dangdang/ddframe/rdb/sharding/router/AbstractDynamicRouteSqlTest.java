@@ -26,22 +26,22 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractDynamicRouteSqlTest extends AbstractBaseRouteSqlTest {
-
+    
     protected void assertSingleTarget(final List<ShardingValuePair> shardingValuePairs, final String originSql, final String targetDataSource, final String targetSQL) throws SQLParserException {
         assertSingleTarget(shardingValuePairs, originSql, Collections.emptyList(), targetDataSource, targetSQL);
     }
-
-    protected void assertSingleTarget(final List<ShardingValuePair> shardingValuePairs, final String originSql, final List<Object> parameters, final String targetDataSource, final String targetSQL)
+    
+    protected void assertSingleTarget(final List<ShardingValuePair> shardingValuePairs, final String originSql, final List<Object> parameters, final String targetDataSource, final String targetSQL) 
             throws SQLParserException {
         assertMultipleTargets(shardingValuePairs, originSql, parameters, 1, Collections.singletonList(targetDataSource), Collections.singletonList(targetSQL));
     }
-
+    
     protected void assertMultipleTargets(final List<ShardingValuePair> shardingValuePairs, final String originSql, final int expectedSize,
                                          final Collection<String> targetDataSources, final Collection<String> targetSQLs) throws SQLParserException {
         assertMultipleTargets(shardingValuePairs, originSql, Collections.emptyList(), expectedSize, targetDataSources, targetSQLs);
     }
-
-    private void assertMultipleTargets(final List<ShardingValuePair> shardingValuePairs, final String originSql, final List<Object> parameters, final int expectedSize,
+    
+    private void assertMultipleTargets(final List<ShardingValuePair> shardingValuePairs, final String originSql, final List<Object> parameters, final int expectedSize, 
                                        final Collection<String> targetDataSources, final Collection<String> targetSQLs) throws SQLParserException {
         try (HintManager hintManager = HintManager.getInstance()) {
             for (ShardingValuePair each : shardingValuePairs) {
@@ -51,19 +51,19 @@ public abstract class AbstractDynamicRouteSqlTest extends AbstractBaseRouteSqlTe
             assertMultipleTargets(originSql, parameters, expectedSize, targetDataSources, targetSQLs);
         }
     }
-
+    
     protected static class ShardingValuePair {
-
+    
         private final String logicTable;
-
+    
         private final Condition.BinaryOperator binaryOperator;
-
+    
         private final Integer[] shardingValue;
-
+        
         protected ShardingValuePair(final String logicTable, final Integer... shardingValue) {
             this(logicTable, Condition.BinaryOperator.EQUAL, shardingValue);
         }
-
+        
         protected ShardingValuePair(final String logicTable, final Condition.BinaryOperator binaryOperator, final Integer... shardingValue) {
             this.logicTable = logicTable;
             this.binaryOperator = binaryOperator;

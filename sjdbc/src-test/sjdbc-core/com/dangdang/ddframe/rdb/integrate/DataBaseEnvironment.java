@@ -25,23 +25,23 @@ import com.dangdang.ddframe.rdb.sharding.constants.DatabaseType;
 import lombok.Getter;
 
 public final class DataBaseEnvironment {
-
+    
     private static final Map<DatabaseType, Class<?>> DRIVER_CLASS_NAME = new HashMap<>(2);
-
+    
     private static final Map<DatabaseType, String> URL = new HashMap<>(2);
-
+    
     private static final Map<DatabaseType, String> USERNAME = new HashMap<>(2);
-
+    
     private static final Map<DatabaseType, String> PASSWORD = new HashMap<>(2);
-
+    
     @Getter
     private final DatabaseType databaseType;
-
+    
     public DataBaseEnvironment(final DatabaseType databaseType) {
         this.databaseType = databaseType;
         fillData();
     }
-
+    
     private void fillData() {
         DRIVER_CLASS_NAME.put(DatabaseType.H2, org.h2.Driver.class);
         DRIVER_CLASS_NAME.put(DatabaseType.MySQL, com.mysql.jdbc.Driver.class);
@@ -52,19 +52,19 @@ public final class DataBaseEnvironment {
         PASSWORD.put(DatabaseType.H2, "");
         PASSWORD.put(DatabaseType.MySQL, "");
     }
-
+    
     public String getDriverClassName() {
         return DRIVER_CLASS_NAME.get(databaseType).getName();
     }
-
+    
     public String getURL(final String dbName) {
         return String.format(URL.get(databaseType), dbName);
     }
-
+    
     public String getUsername() {
         return USERNAME.get(databaseType);
     }
-
+    
     public String getPassword() {
         return PASSWORD.get(databaseType);
     }

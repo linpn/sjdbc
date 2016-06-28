@@ -39,12 +39,12 @@ import static com.dangdang.ddframe.rdb.transaction.soft.constants.SoftTransactio
 
 /**
  * 最大努力送达型事务监听器.
- *
+ * 
  * @author zhangliang
  */
 @Slf4j
 public final class BestEffortsDeliveryListener implements DMLExecutionEventListener {
-
+    
     @Subscribe
     @AllowConcurrentEvents
     public void listen(final DMLExecutionEvent event) {
@@ -56,13 +56,13 @@ public final class BestEffortsDeliveryListener implements DMLExecutionEventListe
         BEDSoftTransaction bedSoftTransaction = (BEDSoftTransaction) SoftTransactionManager.getCurrentTransaction().get();
         switch (event.getEventExecutionType()) {
             case BEFORE_EXECUTE:
-                transactionLogStorage.add(new TransactionLog(event.getId(), bedSoftTransaction.getTransactionId(), bedSoftTransaction.getTransactionType(),
+                transactionLogStorage.add(new TransactionLog(event.getId(), bedSoftTransaction.getTransactionId(), bedSoftTransaction.getTransactionType(), 
                         event.getDataSource(), event.getSql(), event.getParameters(), System.currentTimeMillis(), 0));
                 return;
-            case EXECUTE_SUCCESS:
+            case EXECUTE_SUCCESS: 
                 transactionLogStorage.remove(event.getId());
                 return;
-            case EXECUTE_FAILURE:
+            case EXECUTE_FAILURE: 
                 boolean deliverySuccess = false;
                 for (int i = 0; i < transactionConfig.getSyncMaxDeliveryTryTimes(); i++) {
                     if (deliverySuccess) {
@@ -91,16 +91,16 @@ public final class BestEffortsDeliveryListener implements DMLExecutionEventListe
                     }
                 }
                 return;
-            default:
+            default: 
                 throw new UnsupportedOperationException(event.getEventExecutionType().toString());
         }
     }
-
+    
     private boolean isProcessContinuously() {
         return SoftTransactionManager.getCurrentTransaction().isPresent()
                 && BestEffortsDelivery == SoftTransactionManager.getCurrentTransaction().get().getTransactionType();
     }
-
+    
     private boolean isValidConnection(final Connection conn) {
         try (PreparedStatement preparedStatement = conn.prepareStatement("SELECT 1")) {
             try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -110,7 +110,7 @@ public final class BestEffortsDeliveryListener implements DMLExecutionEventListe
             return false;
         }
     }
-
+    
     private void close(final boolean isNewConnection, final Connection conn, final PreparedStatement preparedStatement) {
         if (null != preparedStatement) {
             try {
@@ -127,7 +127,7 @@ public final class BestEffortsDeliveryListener implements DMLExecutionEventListe
             }
         }
     }
-
+    
     @Override
     public String getName() {
         return getClass().getName();

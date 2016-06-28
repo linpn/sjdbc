@@ -22,7 +22,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-        HintManagerHolderTest.class
+    HintManagerHolderTest.class
 )
 public class AllHintTests {
 }

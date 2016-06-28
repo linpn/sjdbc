@@ -32,14 +32,14 @@ import com.google.common.base.Joiner;
  * @author zhangliang
  */
 public final class ShardingProperties {
-
+    
     private final Properties props;
-
+    
     public ShardingProperties(final Properties props) {
         this.props = props;
         validate();
     }
-
+    
     private void validate() {
         Set<String> propertyNames = props.stringPropertyNames();
         Collection<String> errorMessages = new ArrayList<>(propertyNames.size());
@@ -66,16 +66,16 @@ public final class ShardingProperties {
             throw new IllegalArgumentException(Joiner.on(" ").join(errorMessages));
         }
     }
-
+    
     private String getErrorMessage(final ShardingPropertiesConstant shardingPropertiesConstant, final String invalidValue) {
         return String.format("Value '%s' of '%s' cannot convert to type '%s'.", invalidValue, shardingPropertiesConstant.getKey(), shardingPropertiesConstant.getType().getName());
     }
-
+    
     /**
      * 获取配置项属性值.
-     *
+     * 
      * @param shardingPropertiesConstant 配置项常量
-     * @param <T>                        返回值类型
+     * @param <T> 返回值类型
      * @return 配置项属性值
      */
     @SuppressWarnings("unchecked")

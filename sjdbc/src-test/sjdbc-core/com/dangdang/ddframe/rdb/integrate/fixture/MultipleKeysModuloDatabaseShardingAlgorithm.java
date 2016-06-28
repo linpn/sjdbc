@@ -26,23 +26,23 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 
 public final class MultipleKeysModuloDatabaseShardingAlgorithm implements MultipleKeysDatabaseShardingAlgorithm {
-
+    
     @SuppressWarnings("unchecked")
     @Override
     public Collection<String> doSharding(final Collection<String> availableTargetNames, final Collection<ShardingValue<?>> shardingValues) {
         ShardingValue<?> shardingValue = shardingValues.iterator().next();
         switch (shardingValue.getType()) {
-            case SINGLE:
+            case SINGLE: 
                 return doEqualSharding(availableTargetNames, (ShardingValue<Integer>) shardingValue);
-            case LIST:
+            case LIST: 
                 return doInSharding(availableTargetNames, (ShardingValue<Integer>) shardingValue);
-            case RANGE:
+            case RANGE: 
                 return doBetweenSharding(availableTargetNames, (ShardingValue<Integer>) shardingValue);
-            default:
+            default: 
                 throw new UnsupportedOperationException();
         }
     }
-
+    
     private Collection<String> doEqualSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         Integer modulo = Integer.parseInt(shardingValue.getValue().toString()) % 10;
         for (String each : availableTargetNames) {
@@ -52,7 +52,7 @@ public final class MultipleKeysModuloDatabaseShardingAlgorithm implements Multip
         }
         throw new UnsupportedOperationException();
     }
-
+    
     private Collection<String> doInSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
         Collection<Integer> values = shardingValue.getValues();
@@ -65,7 +65,7 @@ public final class MultipleKeysModuloDatabaseShardingAlgorithm implements Multip
         }
         return result;
     }
-
+    
     private Collection<String> doBetweenSharding(final Collection<String> availableTargetNames, final ShardingValue<Integer> shardingValue) {
         Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
         Range<Integer> range = shardingValue.getValueRange();

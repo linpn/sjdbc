@@ -26,7 +26,7 @@ import lombok.ToString;
 
 /**
  * 表解析对象.
- *
+ * 
  * @author gaohongtao
  * @author zhangliang
  */
@@ -35,11 +35,11 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class Table {
-
+    
     private final String name;
-
+    
     private final Optional<String> alias;
-
+    
     public Table(final String name, final String alias) {
         this(name, Optional.fromNullable(alias));
     }

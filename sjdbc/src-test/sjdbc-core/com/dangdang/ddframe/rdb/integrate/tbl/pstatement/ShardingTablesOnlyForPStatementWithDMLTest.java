@@ -33,14 +33,14 @@ import org.junit.Test;
 import com.dangdang.ddframe.rdb.sharding.jdbc.ShardingDataSource;
 
 public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractShardingTablesOnlyDBUnitTest {
-
+    
     private ShardingDataSource shardingDataSource;
-
+    
     @Before
     public void init() throws SQLException {
         shardingDataSource = getShardingDataSource();
     }
-
+    
     @Test
     public void assertInsert() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` (`order_id`, `user_id`, `status`) VALUES (?, ?, ?)";
@@ -55,7 +55,7 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertInsertWithAllPlaceholders() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` (`order_id`, `user_id`, `status`) VALUES (?, ?, ?)";
@@ -70,7 +70,7 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertInsertWithoutPlaceholder() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` (`order_id`, `user_id`, `status`) VALUES (%s, %s, 'insert')";
@@ -82,7 +82,7 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertInsertWithPlaceholdersForShardingKeys() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` (`order_id`, `user_id`, `status`) VALUES (%s, %s, ?)";
@@ -95,7 +95,7 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertInsertWithPlaceholdersForNotShardingKeys() throws SQLException, DatabaseUnitException {
         String sql = "INSERT INTO `t_order` (`order_id`, `user_id`, `status`) VALUES (%s, %s, ?)";
@@ -108,7 +108,7 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("insert", "insert");
     }
-
+    
     @Test
     public void assertUpdateWithoutAlias() throws SQLException, DatabaseUnitException {
         ShardingDataSource shardingDataSource = getShardingDataSource();
@@ -126,7 +126,7 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("update", "updated");
     }
-
+    
     @Test
     public void assertUpdateWithAlias() throws SQLException, DatabaseUnitException {
         ShardingDataSource shardingDataSource = getShardingDataSource();
@@ -144,7 +144,7 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("update", "updated");
     }
-
+    
     @Test
     public void assertUpdateWithoutShardingValue() throws SQLException, DatabaseUnitException {
         ShardingDataSource shardingDataSource = getShardingDataSource();
@@ -157,7 +157,7 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("update", "updated");
     }
-
+    
     @Test
     public void assertDeleteWithoutAlias() throws SQLException, DatabaseUnitException {
         ShardingDataSource shardingDataSource = getShardingDataSource();
@@ -171,11 +171,11 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
                     preparedStatement.setString(3, "init");
                     assertThat(preparedStatement.executeUpdate(), is(1));
                 }
-            }
+            }   
         }
         assertDataSet("delete", "init");
     }
-
+    
     @Test
     public void assertDeleteWithoutShardingValue() throws SQLException, DatabaseUnitException {
         ShardingDataSource shardingDataSource = getShardingDataSource();
@@ -187,11 +187,11 @@ public final class ShardingTablesOnlyForPStatementWithDMLTest extends AbstractSh
         }
         assertDataSet("delete", "init");
     }
-
+    
     private void assertDataSet(final String expectedDataSetPattern, final String status) throws SQLException, DatabaseUnitException {
         for (int i = 0; i < 10; i++) {
-            assertDataSet(String.format("com/dangdang/ddframe/rdb/integrate/dataset/tbl/expect/%s/db_single.xml", expectedDataSetPattern),
-                    shardingDataSource.getConnection().getConnection("dataSource_db_single", SQLStatementType.SELECT),
+            assertDataSet(String.format("integrate/dataset/tbl/expect/%s/db_single.xml", expectedDataSetPattern), 
+                    shardingDataSource.getConnection().getConnection("dataSource_db_single", SQLStatementType.SELECT), 
                     String.format("t_order_%s", i), String.format("SELECT * FROM `t_order_%s` WHERE `status`=?", i), status);
         }
     }

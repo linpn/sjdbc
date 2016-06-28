@@ -22,13 +22,13 @@ import lombok.NoArgsConstructor;
 
 /**
  * 读写分离解析标签.
- *
+ * 
  * @author zhangliang
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MasterSlaveDataSourceBeanDefinitionParserTag {
-
+    
     public static final String MASTER_DATA_SOURCE_REF_ATTRIBUTE = "master-data-source-ref";
-
+    
     public static final String SLAVE_DATA_SOURCES_REF_ATTRIBUTE = "slave-data-sources-ref";
 }

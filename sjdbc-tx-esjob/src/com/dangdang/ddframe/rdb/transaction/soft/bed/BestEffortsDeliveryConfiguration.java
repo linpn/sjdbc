@@ -33,31 +33,31 @@ import java.util.Map;
 @Getter
 @Setter
 public class BestEffortsDeliveryConfiguration {
-
+    
     /**
      * 事务管理器管理的数据源.
      */
     private Map<String, DataSource> targetDataSource;
-
+    
     /**
      * 存储事务日志的数据源.
      */
     private Map<String, DataSource> transactionLogDataSource;
-
+    
     /**
      * 注册中心配置对象.
      */
     private AsyncSoftTransactionZookeeperConfiguration zkConfig;
-
+    
     /**
      * 作业配置对象.
      */
     private AsyncSoftTransactionJobConfiguration jobConfig;
-
+    
     public DataSource getTargetDataSource(final String dataSourceName) {
         return targetDataSource.get(dataSourceName);
     }
-
+    
     public DataSource getDefaultTransactionLogDataSource() {
         return transactionLogDataSource.values().iterator().next();
     }

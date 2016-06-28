@@ -27,11 +27,11 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public final class ShardingPropertiesTest {
-
+    
     private final Properties prop = new Properties();
-
+    
     private ShardingProperties shardingProperties;
-
+    
     @Before
     public void setUp() {
         prop.put(ShardingPropertiesConstant.METRICS_ENABLE.getKey(), "true");
@@ -40,7 +40,7 @@ public final class ShardingPropertiesTest {
         prop.put(ShardingPropertiesConstant.EXECUTOR_MAX_SIZE.getKey(), "10");
         shardingProperties = new ShardingProperties(prop);
     }
-
+    
     @Test
     public void assertGetValueForDefaultValue() {
         ShardingProperties shardingProperties = new ShardingProperties(new Properties());
@@ -53,31 +53,31 @@ public final class ShardingPropertiesTest {
         assertThat(actualMetricsPackageName, is(ShardingPropertiesConstant.METRICS_LOGGER_NAME.getDefaultValue()));
         assertThat(executorMaxSize, is(Integer.valueOf(ShardingPropertiesConstant.EXECUTOR_MAX_SIZE.getDefaultValue())));
     }
-
+    
     @Test
     public void assertGetValueForBoolean() {
         boolean actualMetricsEnabled = shardingProperties.getValue(ShardingPropertiesConstant.METRICS_ENABLE);
         assertTrue(actualMetricsEnabled);
     }
-
+    
     @Test
     public void assertGetValueForInteger() {
         int actualExecutorMaxSize = shardingProperties.getValue(ShardingPropertiesConstant.EXECUTOR_MAX_SIZE);
         assertThat(actualExecutorMaxSize, is(10));
     }
-
+    
     @Test
     public void assertGetValueForLong() {
         long actualMetricsMillisecondsPeriod = shardingProperties.getValue(ShardingPropertiesConstant.METRICS_MILLISECONDS_PERIOD);
         assertThat(actualMetricsMillisecondsPeriod, is(1000L));
     }
-
+    
     @Test
     public void assertGetValueForString() {
         String actualMetricsPackageName = shardingProperties.getValue(ShardingPropertiesConstant.METRICS_LOGGER_NAME);
         assertThat(actualMetricsPackageName, is("example"));
     }
-
+    
     @Test(expected = IllegalArgumentException.class)
     public void assertValidateFailure() {
         Properties prop = new Properties();

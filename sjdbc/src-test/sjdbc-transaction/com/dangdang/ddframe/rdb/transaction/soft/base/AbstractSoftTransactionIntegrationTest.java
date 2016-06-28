@@ -37,16 +37,16 @@ import java.util.Map;
 
 @Getter(AccessLevel.PROTECTED)
 public abstract class AbstractSoftTransactionIntegrationTest {
-
+    
     private ShardingDataSource shardingDataSource;
-
+    
     private DataSource transactionDataSource;
-
+    
     @Before
     public void setup() throws SQLException {
         prepareEnv();
     }
-
+    
     private void prepareEnv() throws SQLException {
         DataSourceRule dataSourceRule = new DataSourceRule(createDataSourceMap());
         TableRule tableRule = TableRule.builder("transaction_test").dataSourceRule(dataSourceRule).build();
@@ -55,21 +55,21 @@ public abstract class AbstractSoftTransactionIntegrationTest {
         createTable(shardingDataSource);
         transactionDataSource = createTransactionLogDataSource();
     }
-
+    
     private Map<String, DataSource> createDataSourceMap() {
         Map<String, DataSource> result = new HashMap<>(1);
         result.put("db_trans", createBizDataSource());
         return result;
     }
-
+    
     private DataSource createBizDataSource() {
         return createDataSource("db_trans");
     }
-
+    
     private DataSource createTransactionLogDataSource() {
         return createDataSource("trans_log");
     }
-
+    
     private DataSource createDataSource(final String dataSourceName) {
         BasicDataSource result = new BasicDataSource();
         result.setDriverClassName(org.h2.Driver.class.getName());
@@ -78,11 +78,11 @@ public abstract class AbstractSoftTransactionIntegrationTest {
         result.setPassword("");
         return result;
     }
-
+    
     private void createTable(final ShardingDataSource shardingDataSource) throws SQLException {
         String dbSchema = "CREATE TABLE IF NOT EXISTS `transaction_test` ("
-                + "`id` int NOT NULL, "
-                + "PRIMARY KEY (`id`));";
+            + "`id` int NOT NULL, "
+            + "PRIMARY KEY (`id`));";
         try (
                 Connection conn = shardingDataSource.getConnection().getConnection("db_trans", SQLStatementType.SELECT);
                 PreparedStatement preparedStatement = conn.prepareStatement(dbSchema)) {

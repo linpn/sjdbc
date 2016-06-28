@@ -30,12 +30,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public final class SoftTransactionManagerTest extends AbstractSoftTransactionMockTest {
-
+    
     @Test
     public void assertInitTransactionManager() throws SQLException {
         getSoftTransactionManager().init();
     }
-
+    
     @Test
     public void assertGetBEDCurrentTransaction() throws SQLException {
         getSoftTransactionManager().getTransaction(SoftTransactionType.BestEffortsDelivery);
@@ -43,7 +43,7 @@ public final class SoftTransactionManagerTest extends AbstractSoftTransactionMoc
         assertNotNull(SoftTransactionManager.getCurrentTransactionConfiguration().get());
         SoftTransactionManager.closeCurrentTransactionManager();
     }
-
+    
     @Test
     public void assertGetTCCCurrentTransaction() throws SQLException {
         getSoftTransactionManager().getTransaction(SoftTransactionType.TryConfirmCancel);
@@ -51,12 +51,12 @@ public final class SoftTransactionManagerTest extends AbstractSoftTransactionMoc
         assertNotNull(SoftTransactionManager.getCurrentTransactionConfiguration().get());
         SoftTransactionManager.closeCurrentTransactionManager();
     }
-
+    
     @Test
     public void assertCloseCurrentTransactionManager() {
         SoftTransactionManager.closeCurrentTransactionManager();
         assertThat(SoftTransactionManager.getCurrentTransaction(), is(Optional.<AbstractSoftTransaction>absent()));
         assertThat(SoftTransactionManager.getCurrentTransactionConfiguration(), is(Optional.<SoftTransactionConfiguration>absent()));
     }
-
+    
 }

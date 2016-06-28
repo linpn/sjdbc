@@ -22,8 +22,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        ShardingPropertiesConstantTest.class,
-        ShardingPropertiesTest.class
-})
+    ShardingPropertiesConstantTest.class, 
+    ShardingPropertiesTest.class
+    })
 public class AllConfigTests {
 }

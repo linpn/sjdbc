@@ -28,16 +28,16 @@ import lombok.AllArgsConstructor;
 
 /**
  * 只包含OR的节点.
- *
+ * 
  * @author gaohongtao
  */
 @AllArgsConstructor
 public class SimpleOrASTNode extends AbstractOrASTNode {
-
+    
     private SQLBinaryOpExpr canSplitExpr;
-
+    
     private final OrVisitor orVisitor;
-
+    
     @Override
     public void createOrASTAsRootNode() {
         if (SQLBinaryOperator.BooleanOr == canSplitExpr.getOperator()) {
@@ -52,12 +52,12 @@ public class SimpleOrASTNode extends AbstractOrASTNode {
             finishParseThisNode(canSplitExpr);
         }
     }
-
+    
     private void finishParseThisNode(final SQLExpr expr) {
         parseExprIfNotFalse(expr);
         mergeSubConditions();
     }
-
+    
     private void parseExprIfNotFalse(final SQLExpr expr) {
         if (Boolean.FALSE.equals(WallVisitorUtils.getValue(expr))) {
             return;
