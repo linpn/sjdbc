@@ -17,16 +17,17 @@
 
 package com.dangdang.ddframe.rdb.transaction.soft;
 
-import com.dangdang.ddframe.rdb.transaction.soft.integrate.AllIntegrateTests;
-import com.dangdang.ddframe.rdb.transaction.soft.storage.AllStorageTest;
+import com.dangdang.ddframe.rdb.transaction.soft.api.SoftTransactionManagerTest;
+import com.dangdang.ddframe.rdb.transaction.soft.bed.BEDSoftTransactionTest;
+import com.dangdang.ddframe.rdb.transaction.soft.integrate.SoftTransactionTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({
-    AllStorageTest.class,
-    AllIntegrateTests.class
+@Suite.SuiteClasses({
+    SoftTransactionManagerTest.class,
+    BEDSoftTransactionTest.class,
+    SoftTransactionTest.class
     })
 public class AllTests {
 }

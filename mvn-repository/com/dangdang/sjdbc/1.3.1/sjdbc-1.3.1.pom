@@ -54,8 +54,11 @@
                         <configuration>
                             <sources>
                                 <source>${basedir}/src/sjdbc-core</source>
-                                <source>${basedir}/src/sjdbc-config</source>
+                                <source>${basedir}/src/sjdbc-config-common</source>
+                                <source>${basedir}/src/sjdbc-config-yaml</source>
+                                <source>${basedir}/src/sjdbc-config-spring</source>
                                 <source>${basedir}/src/sjdbc-transaction</source>
+                                <source>${basedir}/src/sjdbc-transaction-storage</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -74,13 +77,31 @@
                                     </excludes>
                                 </resource>
                                 <resource>
-                                    <directory>${basedir}/src/sjdbc-config</directory>
+                                    <directory>${basedir}/src/sjdbc-config-common</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>${basedir}/src/sjdbc-config-yaml</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>${basedir}/src/sjdbc-config-spring</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
                                 </resource>
                                 <resource>
                                     <directory>${basedir}/src/sjdbc-transaction</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>${basedir}/src/sjdbc-transaction-storage</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
@@ -97,8 +118,11 @@
                         <configuration>
                             <sources>
                                 <source>${basedir}/src-test/sjdbc-core</source>
-                                <source>${basedir}/src-test/sjdbc-config</source>
+                                <source>${basedir}/src-test/sjdbc-config-common</source>
+                                <source>${basedir}/src-test/sjdbc-config-yaml</source>
+                                <source>${basedir}/src-test/sjdbc-config-spring</source>
                                 <source>${basedir}/src-test/sjdbc-transaction</source>
+                                <source>${basedir}/src-test/sjdbc-transaction-storage</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -117,13 +141,31 @@
                                     </excludes>
                                 </resource>
                                 <resource>
-                                    <directory>${basedir}/src-test/sjdbc-config</directory>
+                                    <directory>${basedir}/src-test/sjdbc-config-common</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>${basedir}/src-test/sjdbc-config-yaml</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>${basedir}/src-test/sjdbc-config-spring</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
                                 </resource>
                                 <resource>
                                     <directory>${basedir}/src-test/sjdbc-transaction</directory>
+                                    <excludes>
+                                        <exclude>**/*.java</exclude>
+                                    </excludes>
+                                </resource>
+                                <resource>
+                                    <directory>${basedir}/src-test/sjdbc-transaction-storage</directory>
                                     <excludes>
                                         <exclude>**/*.java</exclude>
                                     </excludes>
