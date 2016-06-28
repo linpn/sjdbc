@@ -115,8 +115,7 @@ public class ShardingValueWrapper {
      * @param format 时间格式化格式
      * @return 代表时间的字符串
      */
-    // TODO: Linpn修改标记
-    public String dateString(final String format) {
+    public String toString(final String format) {
         if (value instanceof Date) {
             return new SimpleDateFormat(format).format(((Date) value).getTime());
         }
