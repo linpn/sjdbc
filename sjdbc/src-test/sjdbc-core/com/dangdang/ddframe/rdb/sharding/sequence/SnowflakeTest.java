@@ -38,11 +38,11 @@ public class SnowflakeTest {
 
     @Test
     public void testNextId() throws Exception {
-        Set<Long> set = new HashSet<Long>();
-        final Snowflake idWorker1 = new Snowflake(0, 0);
-        final Snowflake idWorker2 = new Snowflake(1, 0);
-        Thread t1 = new Thread(new SnowflakeThread(set, idWorker1));
-        Thread t2 = new Thread(new SnowflakeThread(set, idWorker2));
+        Set<Long> set = new HashSet<>();
+        final Snowflake snowflake1 = new Snowflake(0, 0);
+        final Snowflake snowflake2 = new Snowflake(1, 0);
+        Thread t1 = new Thread(new SnowflakeThread(set, snowflake1));
+        Thread t2 = new Thread(new SnowflakeThread(set, snowflake2));
         t1.setDaemon(true);
         t2.setDaemon(true);
         t1.start();
