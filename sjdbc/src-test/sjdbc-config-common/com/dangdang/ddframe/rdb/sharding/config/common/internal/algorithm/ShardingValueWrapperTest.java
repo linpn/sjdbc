@@ -28,23 +28,23 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public final class ShardingValueWrapperTest {
-    
+
     private static final String FORMAT_TEXT = "yyyy-MM-dd";
-    
+
     private static final String DATE_TEXT = "2016-02-13";
-    
+
     private static final Date NOW = new Date();
-    
+
     private static SimpleDateFormat format;
-    
+
     private static Date date;
-    
+
     @BeforeClass
     public static void init() throws ParseException {
         format = new SimpleDateFormat(FORMAT_TEXT);
         date = format.parse(DATE_TEXT);
     }
-    
+
     @Test
     public void testLongValue() throws Exception {
         assertThat(new ShardingValueWrapper((short) 1).longValue(), is(1L));
@@ -56,7 +56,7 @@ public final class ShardingValueWrapperTest {
         Date now = new Date();
         assertThat(new ShardingValueWrapper(now).longValue(), is(now.getTime()));
     }
-    
+
     @Test
     public void testDoubleValue() throws Exception {
         assertThat(new ShardingValueWrapper((short) 1).doubleValue(), is(1.0D));
@@ -67,7 +67,7 @@ public final class ShardingValueWrapperTest {
         assertThat(new ShardingValueWrapper("1").doubleValue(), is(1.0D));
         assertThat(new ShardingValueWrapper(NOW).doubleValue(), is((double) NOW.getTime()));
     }
-    
+
     @Test
     public void testDateValue() throws Exception {
         Date now = new Date();
@@ -75,7 +75,7 @@ public final class ShardingValueWrapperTest {
         assertThat(new ShardingValueWrapper(now.getTime()).dateValue(), is(now));
         assertThat(new ShardingValueWrapper(format.format(date)).dateValue(FORMAT_TEXT), is(date));
     }
-    
+
     @Test
     public void testString() throws Exception {
         assertThat(new ShardingValueWrapper((short) 1).toString(), is("1"));
@@ -88,6 +88,14 @@ public final class ShardingValueWrapperTest {
         assertThat(new ShardingValueWrapper(date).toString(FORMAT_TEXT), is(DATE_TEXT));
         assertThat(new ShardingValueWrapper(date.getTime()).toString(FORMAT_TEXT), is(DATE_TEXT));
         assertThat(new ShardingValueWrapper(DATE_TEXT).toString(FORMAT_TEXT), is(DATE_TEXT));
+    }
+
+    // TODO: Linpn修改标记
+    @Test
+    public void testFormat() throws Exception {
+        assertThat(new ShardingValueWrapper((short) 1).format("%02d"), is("01"));
+        assertThat(new ShardingValueWrapper(1).format("%02d"), is("01"));
+        assertThat(new ShardingValueWrapper(1L).format("%02d"), is("01"));
     }
     
     @Test(expected = IllegalArgumentException.class)

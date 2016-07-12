@@ -41,29 +41,6 @@ public class ShardingValueWrapper {
     }
 
     /**
-     * 字符串格式化, 使用了String.format的方法
-     *
-     * @param format String.format的参数格式
-     * @return 返回String.format的结果
-     */
-    // TODO: Linpn修改标记
-    public String format(final String format) {
-        return format(format, value);
-    }
-
-    /**
-     * 字符串格式化, 使用了String.format的方法
-     *
-     * @param format String.format的参数格式
-     * @param value  要格式化的值
-     * @return 返回String.format的结果
-     */
-    // TODO: Linpn修改标记
-    public String format(final String format, Object value) {
-        return String.format(format, value);
-    }
-
-    /**
      * 获取long值.
      *
      * @return long型返回值
@@ -81,14 +58,14 @@ public class ShardingValueWrapper {
         return numberValue().doubleValue();
     }
 
-    /**
-     * 将字符串转换为时间.
-     *
-     * @return 时间类型的值
-     * @throws ParseException
-     */
-    public Date dateValue() throws ParseException {
-        return dateValue(null);
+    private Number numberValue() {
+        if (value instanceof Number) {
+            return (Number) value;
+        }
+        if (value instanceof Date) {
+            return ((Date) value).getTime();
+        }
+        return new BigDecimal(value.toString());
     }
 
     /**
@@ -107,6 +84,16 @@ public class ShardingValueWrapper {
         }
         Preconditions.checkArgument(!Strings.isNullOrEmpty(format));
         return new SimpleDateFormat(format).parse(value.toString());
+    }
+
+    /**
+     * 将字符串转换为时间.
+     *
+     * @return 时间类型的值
+     * @throws ParseException
+     */
+    public Date dateValue() throws ParseException {
+        return dateValue(null);
     }
 
     /**
@@ -130,13 +117,26 @@ public class ShardingValueWrapper {
         return value.toString();
     }
 
-    private Number numberValue() {
-        if (value instanceof Number) {
-            return (Number) value;
-        }
-        if (value instanceof Date) {
-            return ((Date) value).getTime();
-        }
-        return new BigDecimal(value.toString());
+    /**
+     * 字符串格式化, 使用了String.format的方法
+     *
+     * @param format String.format的参数格式
+     * @return 返回String.format的结果
+     */
+    // TODO: Linpn修改标记
+    public String format(final String format) {
+        return format(format, value);
+    }
+
+    /**
+     * 字符串格式化, 使用了String.format的方法
+     *
+     * @param format String.format的参数格式
+     * @param value  要格式化的值
+     * @return 返回String.format的结果
+     */
+    // TODO: Linpn修改标记
+    public String format(final String format, Object value) {
+        return String.format(format, value);
     }
 }
