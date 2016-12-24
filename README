@@ -7,14 +7,7 @@ Changes:
 2. Extend class ShardingValueWrapper to add a format string method.
 
 
-在 pom.xml 中加入:
-
-<repositories>
-    <repository>
-        <id>sjdbc-mvn-github</id>
-        <url>https://raw.githubusercontent.com/lpn520/sjdbc/master/mvn-repository</url>
-    </repository>
-</repositories>
+Add in pom.xml:
 
 <dependencies>
     <dependency>
@@ -22,4 +15,4 @@ Changes:
         <artifactId>sjdbc</artifactId>
         <version>1.3.1</version>
     </dependency>
-</dependencies>
+</dependencies>``
